@@ -223,6 +223,46 @@ rm -rf node_modules packages/*/node_modules apps/*/node_modules
 pnpm install
 ```
 
+### 🤔 pnpm vs turbo - Mikor melyiket?
+
+A projektben **mindkét parancs** használható, de van különbség:
+
+#### pnpm parancsok (Ajánlott mindennapi használatra)
+```bash
+pnpm dev:client-a        # Egyszerű, előre definiált
+pnpm build:client-a      # Kényelmes shortcut
+```
+
+**Előnyök:**
+- ✅ Egyszerűbb szintaxis
+- ✅ Nem kell turbo-t globálisan telepíteni
+- ✅ Jó a 90%-os használati esetekhez
+- ✅ Könnyebb megjegyezni
+
+**Háttérben:** A `pnpm dev:client-a` valójában futtatja a `turbo run dev --filter=client-a` parancsot.
+
+#### turbo parancsok (Haladó használatra)
+```bash
+turbo run dev --filter=client-a --filter=client-b    # Több app egyszerre
+turbo run build --force                              # Cache figyelmen kívül hagyása
+turbo run build --graph                              # Függőségi gráf megjelenítése
+turbo run test --concurrency=5                       # Párhuzamosság beállítása
+```
+
+**Előnyök:**
+- ✅ Több filter egyidejűleg
+- ✅ Speciális Turborepo funkciók
+- ✅ Debug és elemzési lehetőségek
+- ✅ Teljes kontroll a build folyamat felett
+
+**Használd amikor:**
+- 🎯 Több projektet akarsz egyszerre futtatni
+- 🎯 Cache-t szeretnél manipulálni
+- 🎯 Build optimalizálást végezel
+- 🎯 CI/CD pipeline-t állítasz be
+
+**💡 Tipp:** Fejlesztés közben használd a **pnpm** parancsokat, haladó esetekben pedig a **turbo** parancsokat közvetlenül.
+
 ---
 
 ## 📦 Package-ek
