@@ -2,17 +2,29 @@
   "name": "@spektra/config",
   "version": "1.0.0",
   "main": "./index.js",
-  "types": "./index.d.ts",
   "exports": {
+    "./paths": "./paths.js",
     "./eslint": "./eslint/index.js",
-    "./typescript": "./typescript/index.json",
-    "./tailwind": "./tailwind/index.js",
-    "./paths": "./paths.js"
+    "./typescript/base.json": "./typescript/base.json",
+    "./typescript/react.json": "./typescript/react.json",
+    "./tailwind/base": "./tailwind/base.js",
+    "./tailwind/base.js": "./tailwind/base.js"
   },
   "files": [
+    "paths.js",
     "eslint",
     "typescript",
-    "tailwind",
-    "paths.js"
-  ]
+    "tailwind"
+  ],
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.50.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
 }
