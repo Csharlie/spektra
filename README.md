@@ -204,6 +204,53 @@ pnpm build:client-a
 pnpm build --filter=@spektra/core
 ```
 
+### 🔍 Miért kell a `pnpm build --filter=@spektra/core`?
+
+A **monorepo környezetben** ez a parancs **kritikus fontosságú**, mert:
+
+#### 1. Szelektív Build
+```bash
+# ❌ Minden csomag buildelése (lassú)
+pnpm build                  # ~5 perc az egész projekthez
+
+# ✅ Csak a core buildelése (gyors)
+pnpm build --filter=@spektra/core   # ~30 másodperc
+```
+
+#### 2. Függőségi Sorrend
+A `turbo.json`-ban definiált `"dependsOn": ["^build"]` miatt:
+- A `^` karakter jelzi, hogy először a **függőségek** buildelődnek
+- Ha módosítod a `@spektra/core`-t, csak azt kell újrabuildelni
+- A többi csomag (client-a, themes stb.) használja a friss build-et
+
+#### 3. Gyakorlati Példa
+
+**Helyzet:** Módosítottad a `packages/core/components/ui/Button.tsx` fájlt
+
+```bash
+# 1. Csak a core buildelése
+pnpm build --filter=@spektra/core
+
+# 2. App indítása a friss core-ral
+pnpm dev:client-a
+```
+
+**Időmegtakarítás:**
+- 🚫 Teljes build: ~5 perc
+- ✅ Filter build: ~30 másodperc
+- 💰 **Megtakarítás: 90%**
+
+#### 4. Mikor használd?
+
+| Eset | Parancs | Idő |
+|------|---------|-----|
+| Első telepítés után | `pnpm build --filter=@spektra/core` | 30s |
+| Core komponens módosítása | `pnpm build --filter=@spektra/core` | 30s |
+| Minden csomag frissítése | `pnpm build` | 5m |
+| CI/CD teljes build | `pnpm build` | 5m |
+
+**💡 Pro Tipp:** Fejlesztés közben csak a módosított csomagot build-eld a `--filter` használatával!
+
 #### Linting & Testing
 ```bash
 # Lint minden package
