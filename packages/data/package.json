@@ -1,0 +1,32 @@
+{
+  "name": "@spektra/data",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./wp": "./wp/index.ts",
+    "./json": "./json/index.ts"
+  },
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts,.tsx",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "@apollo/client": "^3.9.0",
+    "graphql": "^16.8.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "typescript": "^5.3.3",
+    "@spektra/config": "workspace:*",
+    "react": "^18.3.1"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  }
+}

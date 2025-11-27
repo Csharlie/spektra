@@ -1,0 +1,18 @@
+{
+  "name": "@spektra/config",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "./eslint": "./eslint/index.js",
+    "./typescript": "./typescript/index.json",
+    "./tailwind": "./tailwind/index.js",
+    "./paths": "./paths.js"
+  },
+  "files": [
+    "eslint",
+    "typescript",
+    "tailwind",
+    "paths.js"
+  ]
+}

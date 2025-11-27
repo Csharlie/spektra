@@ -1,0 +1,22 @@
+{
+  "name": "@spektra/themes",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./corporate": "./corporate/index.ts",
+    "./ecommerce": "./ecommerce/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@spektra/core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@spektra/config": "workspace:*"
+  }
+}
