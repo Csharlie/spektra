@@ -5,6 +5,8 @@ import {
   Features,
   About,
   Contact,
+  useDocumentTitle,
+  useMetaDescription,
 } from '@spektra/core';
 import { 
   Zap, 
@@ -21,6 +23,10 @@ import { siteConfig } from '../../config/site';
 import { navigationLinks, footerSections } from '../../config/navigation';
 
 const HomePage: React.FC = () => {
+  // Set document title and meta description
+  useDocumentTitle(`${siteConfig.name} - ${siteConfig.description}`);
+  useMetaDescription(siteConfig.description);
+
   const handleContactSubmit = async (data: any) => {
     console.log('Contact form submitted:', data);
     await new Promise(resolve => setTimeout(resolve, 1000));
