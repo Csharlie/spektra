@@ -548,6 +548,7 @@ Jelenleg a különböző projekttípusok (free template-ek, premium rendszer, eg
 - **⚡ Enhanced Turborepo Pipeline**: Fejlettebb cache stratégiák és párhuzamos build-ek
 - **🔗 Cross-Repository Sync**: Automatikus frissítések a shared komponensekben
 - **🏗️ Modular Architecture**: Plugin-alapú rendszer új design system-ek integrálására
+- **📱 PWA Support**: Progressive Web App fejlesztési lehetőségek és offline funkcionalitás
 
 ### 📈 **Várható Előnyök**
 
