@@ -38,3 +38,6 @@ yarn-error.log*
 *.swp
 *.swo
 *~
+
+# Separate repos (managed independently)
+apps/fox-design/
