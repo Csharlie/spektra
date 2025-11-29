@@ -538,6 +538,36 @@ apps/client-a/dist/
 
 ---
 
+## 🚧 Jövőbeli Fejlesztési Terv
+
+Jelenleg a különböző projekttípusok (free template-ek, premium rendszer, egyedi ügyfélprojektek) külön repókban vannak kezelve. **Hosszútávú célunk egy hibrid monorepo/turborepo architektúra kialakítása**, amelyben:
+
+### 🎯 **Tervezett Fejlesztések**
+
+- **📦 GitHub Packages Integration**: Core komponensek verziózott publikálása és újrahasznosítása
+- **⚡ Enhanced Turborepo Pipeline**: Fejlettebb cache stratégiák és párhuzamos build-ek
+- **🔗 Cross-Repository Sync**: Automatikus frissítések a shared komponensekben
+- **🏗️ Modular Architecture**: Plugin-alapú rendszer új design system-ek integrálására
+
+### 📈 **Várható Előnyök**
+
+- **Központi Komponenskezelés**: Hatékony shared library management
+- **Gyorsabb Fejlesztés**: Optimalizált build és deployment pipeline-ok  
+- **Projekt Izoláció**: Ügyfelek függetlensége megőrzése közös core frissítések mellett
+- **Verziókompatibilitás**: Seamless átmenet free és premium verziók között
+- **Minimal Disruption**: Zökkenőmentes migráció minimális downtime-mal
+
+### 🛣️ **Roadmap**
+
+1. **Phase 1**: GitHub Packages setup és core library publikálás
+2. **Phase 2**: Enhanced Turborepo konfigurációk és cache optimalizálás  
+3. **Phase 3**: Cross-repo synchronization tools fejlesztése
+4. **Phase 4**: Migration tooling és dokumentáció
+
+> **💡 Megjegyzés**: Az átállás során minden meglévő projekt és ügyfél továbbra is zavartalanul működik. A migráció fokozatos lesz, visszafelé kompatibilitással.
+
+---
+
 ## 🤝 Közreműködés
 
 Örömmel fogadunk közreműködéseket! Kérjük:
