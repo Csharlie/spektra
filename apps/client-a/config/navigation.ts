@@ -2,6 +2,7 @@ export const navigationLinks = [
   { label: 'Főoldal', href: '#home' },
   { label: 'Szolgáltatások', href: '#features' },
   { label: 'Rólunk', href: '#about' },
+  { label: 'Galéria', href: '#gallery' },
   { label: 'Kapcsolat', href: '#contact' },
 ];
 
