@@ -15,9 +15,9 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
 
 ## Repository struktúra
 
-### 1. **spektra** (Public Repository)
+### 1. **spektra** (Public Upstream Repository)
 - **URL:** `https://github.com/Csharlie/spektra`
-- **Cél:** Nyílt forráskódú, közösségi projekt
+- **Cél:** Nyílt forráskódú, közösségi projekt - **UPSTREAM**
 - **Tartalom:**
   - `packages/core` - Alapvető, újrafelhasználható komponensek
   - `packages/data` - Adatkezelési utilities
@@ -26,15 +26,18 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
   - `apps/client-a` - Demo alkalmazás (public)
 - **NEM tartalmazza:** Privát klienseket és projekteket
 
-### 2. **spektra-private** (Private Repository)
+### 2. **spektra-private** (Private Fork)
 - **URL:** `https://github.com/Csharlie/spektra-private`
-- **Cél:** Privát fejlesztési környezet
+- **Cél:** Privát fejlesztési környezet - **FORK az upstream-ből**
 - **Tartalom:**
-  - Ugyanazok a `packages/` mint a public repo
+  - Ugyanazok a `packages/` mint az upstream (szinkronizálva)
   - `apps/bellator-gym` - Privát ügyfél projekt
-  - `apps/client-a` - Szinkronban a public verzióval
+  - `apps/client-a` - Szinkronban az upstream verzióval
   - Egyéb privát projektek
-- **Különbség:** Itt fejlesztünk, aztán szelektíven pusholjuk a public repo-ba
+- **Működés:** 
+  - Fejlesztés itt történik
+  - Upstream változások lehúzhatók: `git pull upstream main`
+  - Core változások szelektíven push-olhatók upstream-be
 
 ### 3. **spektra-bellator-gym** (Dedikált Client Repository)
 - **URL:** `https://github.com/Csharlie/spektra-bellator-gym`
@@ -45,14 +48,23 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
 
 ## Fejlesztési workflow
 
-### Alapelv
+### Alapelv: Fork & Sync
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  1. Fejlesztés a spektra-private-ban                        │
-│  2. Privát kliens használja az új feature-t                 │
-│  3. Core komponensek → spektra (public)                     │
-│  4. Privát kliens → dedikált repo (opcionális)              │
+│  spektra (upstream)          spektra-private (fork)         │
+│  ────────────────            ───────────────────            │
+│       │                             │                        │
+│       │  git pull upstream main     │                        │
+│       │ <──────────────────────────┐│                        │
+│       │                             ││                        │
+│       │                      [Fejlesztés]                    │
+│       │                             ││                        │
+│       │  git push upstream main     ││                        │
+│       │ ────────────────────────────>│                        │
+│       │  (csak packages/core)        │                        │
+│       │                              │                        │
+│   [Public]                    [Private clients]              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -61,6 +73,7 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
 - **Biztonság:** Privát kliensek nem kerülnek nyilvános repo-ba
 - **Tesztelés:** Privát projektben teszteljük az új komponenseket
 - **Reusability:** Core komponensek mindenki számára elérhetők
+- **Szinkronizáció:** Upstream változások könnyen lehúzhatók
 - **Verziókezelés:** Egyértelmű, mi privát és mi public
 
 ---
@@ -379,7 +392,63 @@ import { Gallery } from '@spektra/core';
 
 ## Git workflow és repo szinkronizáció
 
-### 1. Commit a spektra-private-ban
+### Setup: Upstream kapcsolat beállítása
+
+Ha még nem tetted meg, add hozzá a spektra upstream remote-ot a spektra-private-hoz:
+
+```powershell
+cd d:\localhost\spektra-private
+
+# Ellenőrizd a remote-okat
+git remote -v
+
+# Add hozzá az upstream-et (ha még nincs)
+git remote add upstream https://github.com/Csharlie/spektra.git
+
+# Ellenőrizd újra
+git remote -v
+# origin    https://github.com/Csharlie/spektra-private (fetch)
+# origin    https://github.com/Csharlie/spektra-private (push)
+# upstream  https://github.com/Csharlie/spektra.git (fetch)
+# upstream  https://github.com/Csharlie/spektra.git (push)
+```
+
+### 1. Upstream változások lehúzása (spektra → spektra-private)
+
+**Amikor:** Valaki más (vagy te a spektra repo-ban) változtatott a core-on, és szeretnéd lehúzni a spektra-private-ba.
+
+### 3. Core változások push-olása upstream-be (spektra-private → spektra)
+
+**FONTOS:** Csak a `packages/` változásokat push-oljuk, privát kliensek nélkül!
+
+#### Módszer 1: Fájlok manuális másolása (biztonságosabb)
+
+Ez a módszer garantálja, hogy csak a kívánt fájlok kerülnek át.
+```
+
+**Konfliktus esetén:**
+
+```powershell
+# Nézd meg a konfliktusokat
+git status
+
+# Oldd meg manuálisan a konfliktusokat, majd
+git add .
+git commit -m "Merge upstream changes"
+git push origin main
+```
+
+**Automatikus merge privát módosításokkal:**
+
+```powershell
+# Ha csak a packages/ változott upstream-ben, és nem akarsz konfliktust
+git fetch upstream main
+git merge upstream/main -X ours  # Privát változások előnyben
+# vagy
+git merge upstream/main -X theirs  # Upstream változások előnyben
+```
+
+### 2. Commit a spektra-private-ban (új fejlesztés)
 
 ```powershell
 cd d:\localhost\spektra-private
@@ -444,7 +513,27 @@ git status
 **Várható kimenet:**
 ```
 Changes not staged for commit:
-        modified:   packages/core/components/sections/index.ts
+#### Módszer 2: Git selective push (haladó)
+
+Ha biztos vagy benne, hogy csak core változásokat akarsz push-olni:
+
+```powershell
+cd d:\localhost\spektra-private
+
+# Cherry-pick specifikus commit-okat upstream-be
+#### Build a spektra core-bana commit hash-t
+
+# Push csak specifikus fájlokat
+git push upstream HEAD:main --force-with-lease  # VIGYÁZZ: csak core commit-ok esetén!
+```
+
+**⚠️ FIGYELEM:** Ez az egész private branch-et push-olná! Csak akkor használd, ha:
+- Biztos vagy benne, hogy csak packages/ változott
+- Nincs privát kliens módosítás a branch-ben
+
+**Biztonságosabb módszer továbbra is a manuális másolás (Módszer 1).**
+
+#### Ellenőrizd a változásokat/components/sections/index.ts
         modified:   packages/core/contexts/DesignSystemContext.tsx
         modified:   packages/core/hooks/useDesignSystem.ts
 
@@ -471,7 +560,7 @@ cd packages\core
 pnpm add -D @types/node
 ```
 
-#### E) Commit és push a public repo-ba
+#### Commit és push a public repo-ba
 
 ```powershell
 cd d:\localhost\spektra
@@ -492,7 +581,7 @@ git commit -m "feat(core): Add Gallery component to core
 git push origin main
 ```
 
-### 3. Dedikált kliens repo frissítése (opcionális)
+### 4. Dedikált kliens repo frissítése (opcionális)
 
 Ha van dedikált repo a privát kliensnek:
 
@@ -865,11 +954,98 @@ module.exports = {
 
 ---
 
+## Upstream szinkronizáció use-case-ek
+
+### Use Case 1: Kollaborátor push-olt core változást
+
+```powershell
+# 1. Fetch upstream
+cd d:\localhost\spektra-private
+git fetch upstream main
+
+# 2. Nézd meg mi változott
+git log HEAD..upstream/main --oneline
+
+# 3. Merge vagy rebase
+git merge upstream/main
+# vagy
+git rebase upstream/main
+
+# 4. Resolve conflicts (ha van)
+git status
+# Javítsd a konfliktusokat, majd
+git add .
+git commit -m "Merge upstream changes"
+
+# 5. Push private repo-ba
+git push origin main
+
+# 6. Test: Build és privát kliens ellenőrzés
+cd packages\core
+pnpm build
+cd ..\..\apps\bellator-gym
+pnpm dev
+```
+
+### Use Case 2: Upstream hotfix érkezett
+
+```powershell
+# Gyors sync kritikus fix esetén
+cd d:\localhost\spektra-private
+git fetch upstream main
+git merge upstream/main --no-edit
+git push origin main
+```
+
+### Use Case 3: Periodikus sync (hetente/havonta)
+
+```powershell
+## Checklist új komponenshez
+
+### Fejlesztés (spektra-private)
+- [ ] Komponens generikus és újrafelhasználható
+- [ ] Props interface-ek definiálva
+- [ ] TypeScript típusok helyesek
+- [ ] Responsive design
+- [ ] Accessibility (aria-labels)
+- [ ] Core utilities használata (cn, stb.)
+- [ ] Export hozzáadva sections/index.ts-hez
+- [ ] Core build sikeres
+- [ ] Privát kliens tesztelve
+- [ ] Commit spektra-private-ba
+
+### Upstream push (spektra)
+- [ ] Csak core fájlok másolva spektra-ba
+- [ ] Build sikeres spektra-ban
+- [ ] Commit és push spektra public-ba
+- [ ] Client-A frissítve és tesztelve
+- [ ] Dokumentáció frissítve
+
+### Upstream sync (amikor mások módosítottak)
+- [ ] `git fetch upstream main` lefutott
+- [ ] Változások átnézve
+- [ ] Merge/rebase sikeres
+- [ ] Konfliktusok megoldva (ha voltak)
+- [ ] Build sikeres spektra-private-ban
+- [ ] Privát kliensek tesztelve
+- [ ] Push spektra-private-ba
+# Push
+git push origin main
+```
+
+---
+
 ## Összefoglaló parancsok
 
 ### Gyors referencia
 
 ```powershell
+# ===== UPSTREAM SYNC (spektra → spektra-private) =====
+cd d:\localhost\spektra-private
+git fetch upstream main
+git merge upstream/main
+git push origin main
+
 # ===== FEJLESZTÉS spektra-private-ban =====
 cd d:\localhost\spektra-private
 git checkout -b feature/new-component
