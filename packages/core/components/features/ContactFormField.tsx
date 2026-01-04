@@ -9,6 +9,8 @@ export interface ContactFormFieldProps {
   placeholder?: string;
   required?: boolean;
   error?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 export const ContactFormField: React.FC<ContactFormFieldProps> = ({
@@ -18,6 +20,8 @@ export const ContactFormField: React.FC<ContactFormFieldProps> = ({
   placeholder,
   required = false,
   error,
+  value,
+  onChange,
 }) => {
   const commonProps = {
     name,
@@ -25,6 +29,8 @@ export const ContactFormField: React.FC<ContactFormFieldProps> = ({
     placeholder,
     required,
     error,
+    value,
+    onChange,
   };
 
   if (type === 'textarea') {
