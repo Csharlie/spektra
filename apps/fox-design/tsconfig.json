@@ -1,0 +1,12 @@
+{
+  "extends": "@spektra/config/typescript/react.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules", "dist"]
+}
