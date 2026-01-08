@@ -135,6 +135,8 @@ export const Contact: React.FC<ContactProps> = ({
                   label="Név"
                   placeholder="Az Ön neve"
                   required
+                  value={formData.name}
+                  onChange={handleChange}
                   error={errors.name}
                 />
                 
@@ -144,6 +146,8 @@ export const Contact: React.FC<ContactProps> = ({
                   label="Email cím"
                   placeholder="pelda@email.com"
                   required
+                  value={formData.email}
+                  onChange={handleChange}
                   error={errors.email}
                 />
                 
@@ -152,6 +156,8 @@ export const Contact: React.FC<ContactProps> = ({
                   name="phone"
                   label="Telefonszám"
                   placeholder="+36 20 123 4567"
+                  value={formData.phone}
+                  onChange={handleChange}
                   error={errors.phone}
                 />
                 
@@ -161,6 +167,8 @@ export const Contact: React.FC<ContactProps> = ({
                   label="Üzenet"
                   placeholder="Írja le, miben tudunk segíteni..."
                   required
+                  value={formData.message}
+                  onChange={handleChange}
                   error={errors.message}
                 />
                 

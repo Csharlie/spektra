@@ -26,6 +26,7 @@
 - [WordPress Integráció](#-wordpress-integráció)
 - [Deployment](#-deployment)
 - [Közreműködés](#-közreműködés)
+- [Contributing Guide](#-contributing-guide)
 
 ---
 
@@ -40,6 +41,7 @@ A **Spektra** egy modern, skálázható monorepo architektúra, amely lehetővé
 - 🎨 **Design System**: Konzisztens UI minden projekten keresztül
 - 📦 **Monorepo előnyök**: Közös kód, könnyű frissítések
 - ⚡ **Fejlesztői Élmény**: Hot reload, TypeScript, modern tooling
+- 🔒 **Fork & Sync**: Privát projektek elkülönítése upstream szinkronizációval
 
 ---
 
@@ -587,6 +589,13 @@ Jelenleg a különböző projekttípusok (free template-ek, premium rendszer, eg
 - Tesztelj minden új funkciót
 - Frissítsd a dokumentációt szükség esetén
 
+**📚 Részletes útmutató:** Lásd a [CONTRIBUTING.md](CONTRIBUTING.md) fájlt a teljes fejlesztési workflow-hoz, beleértve:
+- Új core komponensek létrehozása
+- Fork & sync workflow (spektra ↔ spektra-private)
+- Upstream változások szinkronizálása
+- Git best practices
+- Troubleshooting
+
 ---
 
 ## 📄 License
@@ -608,10 +617,12 @@ MIT License - lásd a [LICENSE](LICENSE) fájlt a részletekért.
 
 - **GitHub Issues**: [github.com/Csharlie/spektra/issues](https://github.com/Csharlie/spektra/issues)
 - **GitHub Repo**: [github.com/Csharlie/spektra](https://github.com/Csharlie/spektra)
+- **Contributing Guide**: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
 
 <div align="center">
   <p>Készítve ❤️-vel a modern web fejlesztésért</p>
   <p>⭐ Ha hasznosnak találod, adj egy csillagot a GitHub-on! ⭐</p>
+
 </div>

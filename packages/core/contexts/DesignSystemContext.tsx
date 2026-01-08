@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { baseTheme, Theme } from '../design-systems/base/theme';
 
-interface DesignSystemContextType {
+export interface DesignSystemContextType {
   currentSystem: 'base' | 'material' | 'radix';
   theme: Theme;
   switchDesignSystem: (system: 'base' | 'material' | 'radix') => void;
