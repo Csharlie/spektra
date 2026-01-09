@@ -2,23 +2,21 @@
   "name": "spektra",
   "version": "1.0.0",
   "private": true,
+  "description": "Spektra - Multi-workspace monorepo with isolated engine and projects",
   "repository": {
     "type": "git",
     "url": "https://github.com/Csharlie/spektra"
   },
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "clean": "turbo run clean",
-    "dev:client-a": "turbo run dev --filter=client-a",
-    "build:client-a": "turbo run build --filter=client-a",
-    "create-client": "node scripts/create-client.js"
-  },
-  "devDependencies": {
-    "turbo": "^2.0.0",
-    "typescript": "^5.3.3"
+    "engine:install": "cd engine && pnpm install",
+    "engine:dev": "cd engine && pnpm dev",
+    "engine:build": "cd engine && pnpm build",
+    "projects:install": "cd projects && pnpm install",
+    "projects:dev:bellator": "cd projects && pnpm dev:bellator",
+    "projects:dev:autozeno": "cd projects && pnpm dev:autozeno",
+    "projects:build:bellator": "cd projects && pnpm build:bellator",
+    "projects:build:autozeno": "cd projects && pnpm build:autozeno",
+    "install:all": "pnpm engine:install && pnpm projects:install"
   },
   "packageManager": "pnpm@8.15.0",
   "engines": {
