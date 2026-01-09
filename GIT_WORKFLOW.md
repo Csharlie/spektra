@@ -12,7 +12,7 @@ A **spektra-private** egy **privát fork** a nyilvános **Spektra** repository-b
 ┌─────────────────────────────────────────────────────────────┐
 │  github.com/Csharlie/spektra (UPSTREAM - Nyilvános)         │
 │  - Nyilvános Spektra projekt                                │
-│  - Csak client-a app és core packages                       │
+│  - Core packages és közösségi projektek                     │
 │  - Közösségi hozzájárulások                                 │
 └──────────────────┬──────────────────────────────────────────┘
                    │
@@ -21,7 +21,7 @@ A **spektra-private** egy **privát fork** a nyilvános **Spektra** repository-b
 ┌─────────────────────────────────────────────────────────────┐
 │  github.com/Csharlie/spektra-private (ORIGIN - Privát)      │
 │  - Privát munkafolyamat                                     │
-│  - Tartalmazza az összes app-ot (client-a ÉS fox-design)    │
+│  - Tartalmazza az összes privát app-ot                      │
 │  - Extra features, kísérletek                               │
 │  - Sync upstream-mel amikor szükséges                       │
 └─────────────────────────────────────────────────────────────┘
@@ -47,9 +47,9 @@ A **spektra-private** egy **privát fork** a nyilvános **Spektra** repository-b
   - Nyílt forráskódú landing page framework
   - Általános célú komponensek
 - **Tartalom:**
-  - `apps/client-a/` - referencia implementáció
   - `packages/` - core, config, data, themes
-  - **NEM tartalmazza:** fox-design vagy más privát projektek
+  - `projects/` - példa projektek (bellator, autozeno, baseline)
+  - **NEM tartalmazza:** privát projektek
 
 ### 2. Spektra-Private (ORIGIN - Privát Fork)
 - **URL:** `https://github.com/Csharlie/spektra-private.git`
@@ -62,8 +62,8 @@ A **spektra-private** egy **privát fork** a nyilvános **Spektra** repository-b
   - Kísérleti features tesztelése
 - **Tartalom:** 
   - MINDEN az upstream-ből + extra dolgok
-  - `apps/client-a/` - szinkronban az upstream-mel
   - `apps/fox-design/` - **csak itt érhető el** (upstream-be nem kerül)
+  - `apps/bellator-gym/` - privát projektek
   - `packages/` - lehet extra package is
   - Konfigurációs fájlok
 
@@ -95,7 +95,7 @@ git commit -m "Your commit message"
 git push origin main
 ```
 
-**Fontos:** Minden változtatás (client-a, fox-design, packages) felkerül a spektra-private-ra.
+**Fontos:** Minden változtatás (projektek, packages) felkerül a spektra-private-ra.
 
 #### 2. Upstream szinkronizálás (upstream → private)
 
@@ -150,9 +150,9 @@ git push origin feature/awesome-feature
 ```
 
 **Fontos szabályok:**
-- ❌ A fox-design mappa automatikusan ki van zárva (.gitignore)
+- ❌ A privát app mappák automatikusan ki vannak zárva (.gitignore)
 - ✅ Csak olyan változtatásokat küldj, amik relevánsak a közösségnek
-- ✅ Client-a módosítások OK
+- ✅ Közösségi projektek módosításai OK
 - ✅ Package fejlesztések OK
 
 ### B) Fox Design Repository (Nested munkafolyamat)
@@ -234,7 +234,7 @@ Készítesz egy általános komponenst, amit megosztanál a közösséggel.
 # 1. Branch létrehozása
 git checkout -b feature/new-component
 
-# 2. Fejlesztés (packages/core vagy client-a)
+# 2. Fejlesztés (packages/core vagy projektek)
 # ... kód írás ...
 
 # 3. Commit
@@ -535,9 +535,9 @@ pnpm dev
 ### 6. Pull Request szabályok upstream-be
 
 Mielőtt PR-t küldesz spektra-ba:
-1. ✅ Csak releváns változtatások (client-a, packages)
-2. ✅ Ne legyen fox-design referencia
-3. ✅ Ne legyen fox-design script a root package.json-ban
+1. ✅ Csak releváns változtatások (packages)
+2. ✅ Ne legyen privát projekt referencia
+3. ✅ Ne legyen privát script a root package.json-ban
 4. ✅ Tests passed
 5. ✅ Dokumentáció frissítve
 6. ✅ Conventional commits használata
@@ -572,9 +572,9 @@ REMOTE FOX (spektra-fox-design GitHub)
 
 | Változtatás | spektra-private | spektra (upstream) | spektra-fox-design |
 |-------------|-----------------|--------------------|--------------------|
-| client-a módosítás | ✅ Igen | ✅ Igen (PR-rel) | ❌ Nem |
 | packages/ módosítás | ✅ Igen | ✅ Igen (PR-rel) | ❌ Nem |
 | fox-design módosítás | ✅ Igen | ❌ NEM | ✅ Igen |
+| bellator-gym módosítás | ✅ Igen | ❌ NEM | ❌ Nem |
 | config/ módosítás | ✅ Igen | ⚠️ Esetleg (ha általános) | ❌ Nem |
 
 ## Kérdések és támogatás
