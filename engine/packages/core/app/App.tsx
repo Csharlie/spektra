@@ -8,10 +8,10 @@ interface AppProps {
 
 export const App: React.FC<AppProps> = ({ data }) => {
   // This is the main engine component that renders based on SiteData
-  const { theme, pages } = data;
+  const { pages } = data;
 
   return (
-    <DesignSystemProvider theme={theme}>
+    <DesignSystemProvider>
       <div className="app">
         {/* Render logic based on data */}
         {pages.map((page, index) => (

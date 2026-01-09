@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { baseTheme, Theme } from '../design-systems/base/theme';
+import { baseTheme, Theme } from './base/theme';
 
 export interface DesignSystemContextType {
   currentSystem: 'base' | 'material' | 'radix';
