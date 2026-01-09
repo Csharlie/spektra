@@ -1,0 +1,14 @@
+# Build artifacts
+dist/
+*.d.ts
+
+# Dependencies
+node_modules/
+
+# Cache
+.turbo/
+.cache/
+
+# IDE
+.vscode/
+.idea/

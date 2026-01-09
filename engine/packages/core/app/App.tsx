@@ -2,7 +2,7 @@ import React from 'react';
 import { DesignSystemProvider } from '../design-system/DesignSystemContext';
 import type { SiteData } from '../types/SiteData';
 
-interface AppProps {
+export interface AppProps {
   data: SiteData;
 }
 

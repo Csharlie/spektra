@@ -11,12 +11,14 @@
     "engine:install": "cd engine && pnpm install",
     "engine:dev": "cd engine && pnpm dev",
     "engine:build": "cd engine && pnpm build",
+    "engine:lint": "cd engine && pnpm lint",
     "projects:install": "cd projects && pnpm install",
     "projects:dev:bellator": "cd projects && pnpm dev:bellator",
     "projects:dev:autozeno": "cd projects && pnpm dev:autozeno",
     "projects:build:bellator": "cd projects && pnpm build:bellator",
     "projects:build:autozeno": "cd projects && pnpm build:autozeno",
-    "install:all": "pnpm engine:install && pnpm projects:install"
+    "install:all": "pnpm engine:install && pnpm projects:install",
+    "prepare": "cd engine && pnpm exec husky"
   },
   "packageManager": "pnpm@8.15.0",
   "engines": {

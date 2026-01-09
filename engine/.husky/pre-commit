@@ -1,0 +1,10 @@
+#!/bin/sh
+# Spektra Engine - Pre-commit Hook
+# Purpose: Enforce architectural guardrails before code is committed
+
+echo "🔒 Running ENGINE guardrail checks..."
+
+# Run lint-staged to check only staged files
+pnpm exec lint-staged
+
+echo "✅ All guardrails passed!"

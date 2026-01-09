@@ -1,0 +1,84 @@
+name: Engine Guardrails CI
+
+on:
+  pull_request:
+    paths:
+      - 'engine/**'
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'engine/**'
+
+jobs:
+  engine-lint:
+    name: 🔒 Enforce Engine Guardrails
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+      
+      - name: Install dependencies
+        working-directory: ./engine
+        run: pnpm install --frozen-lockfile
+      
+      - name: Run ESLint Guardrails
+        working-directory: ./engine
+        run: pnpm lint
+      
+      - name: ✅ Guardrails passed
+        if: success()
+        run: echo "All architectural guardrails enforced successfully!"
+      
+      - name: ❌ Guardrails violated
+        if: failure()
+        run: |
+          echo "GUARDRAIL VIOLATION DETECTED!"
+          echo "Engine code must remain:"
+          echo "  - Client-agnostic (no imports from projects/)"
+          echo "  - Data-source-agnostic (no CMS imports)"
+          echo "  - Free of client names in code"
+          exit 1
+
+  engine-build:
+    name: 🏗️ Build Engine
+    runs-on: ubuntu-latest
+    needs: engine-lint
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+      
+      - name: Install dependencies
+        working-directory: ./engine
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build engine packages
+        working-directory: ./engine
+        run: pnpm build
+      
+      - name: ✅ Build successful
+        if: success()
+        run: echo "Engine build completed successfully!"

@@ -8,7 +8,7 @@ export interface ValidationResult {
   errors: string[];
 }
 
-export function validate(data: any, schema: any): ValidationResult {
+export function validate(data: any, _schema: any): ValidationResult {
   const errors: string[] = [];
   
   // Basic validation logic
