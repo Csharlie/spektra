@@ -1,5 +1,6 @@
 import React from 'react';
 import { DesignSystemProvider } from '../design-system/DesignSystemContext';
+import { Hero } from '../components/sections/Hero';
 import type { SiteData } from '../types/SiteData';
 
 export interface AppProps {
@@ -7,16 +8,32 @@ export interface AppProps {
 }
 
 export const App: React.FC<AppProps> = ({ data }) => {
-  // This is the main engine component that renders based on SiteData
   const { pages } = data;
+
+  const renderSection = (section: any) => {
+    switch (section.type) {
+      case 'hero':
+        return (
+          <Hero
+            key={section.id}
+            title={section.data.title}
+            subtitle={section.data.subtitle}
+            description={section.data.description || ''}
+            primaryCTA={section.data.primaryCTA}
+            secondaryCTA={section.data.secondaryCTA}
+          />
+        );
+      default:
+        return <div key={section.id}>Unknown section type: {section.type}</div>;
+    }
+  };
 
   return (
     <DesignSystemProvider>
       <div className="app">
-        {/* Render logic based on data */}
         {pages.map((page, index) => (
           <div key={index} data-page={page.slug}>
-            {/* Page rendering logic will go here */}
+            {page.sections?.map((section) => renderSection(section))}
           </div>
         ))}
       </div>
