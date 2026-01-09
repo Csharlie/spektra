@@ -7,7 +7,9 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "dev:YourProject": "turbo run dev --filter=YourProject",
+    "build:YourProject": "turbo run build --filter=YourProject"
   },
   "dependencies": {
     "react": "^18.3.1",

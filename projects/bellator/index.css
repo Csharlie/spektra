@@ -12,6 +12,12 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Lexend', system-ui, sans-serif;
   }
+
+  
+  
+  p {
+    font-family: 'Roboto', system-ui, sans-serif;
+  }
 }
 
 @layer utilities {

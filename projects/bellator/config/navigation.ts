@@ -1,36 +1,39 @@
 export const navigationLinks = [
   { label: 'Főoldal', href: '#home' },
-  { label: 'Szolgáltatások', href: '#features' },
-  { label: 'Rólunk', href: '#about' },
+  { label: 'Programok', href: '#programs' },
+  { label: 'Edzőink', href: '#coaches' },
   { label: 'Galéria', href: '#gallery' },
+  { label: 'Bérlet', href: '#membership' },
+  { label: 'Vélemények', href: '#testimonials' },
   { label: 'Kapcsolat', href: '#contact' },
 ];
 
 export const footerSections = [
   {
-    title: 'Cég',
+    title: 'Edzőterem',
     links: [
       { label: 'Rólunk', href: '#about' },
-      { label: 'Csapatunk', href: '#team' },
-      { label: 'Karrier', href: '#career' },
-      { label: 'Sajtó', href: '#press' },
+      { label: 'Edzőink', href: '#coaches' },
+      { label: 'Programjaink', href: '#programs' },
+      { label: 'Órárend', href: '#schedule' },
     ],
   },
   {
     title: 'Szolgáltatások',
     links: [
-      { label: 'Webfejlesztés', href: '#web' },
-      { label: 'Marketing', href: '#marketing' },
-      { label: 'Consulting', href: '#consulting' },
-      { label: 'Support', href: '#support' },
+      { label: 'Személyi edzés', href: '#personal' },
+      { label: 'Csoportos órák', href: '#group' },
+      { label: 'Táplálkozási tanácsadás', href: '#nutrition' },
+      { label: 'Online coaching', href: '#online' },
     ],
   },
   {
-    title: 'Jogi',
+    title: 'Információ',
     links: [
+      { label: 'Bérletek', href: '#membership' },
+      { label: 'ÁSZF', href: '#terms' },
       { label: 'Adatvédelem', href: '#privacy' },
-      { label: 'Felhasználási feltételek', href: '#terms' },
-      { label: 'Cookie Policy', href: '#cookies' },
+      { label: 'Gyakori kérdések', href: '#faq' },
     ],
   },
 ];

@@ -1,17 +1,18 @@
 export const siteConfig = {
-  name: import.meta.env.VITE_SITE_NAME || 'Client A',
+  name: import.meta.env.VITE_SITE_NAME || 'Bellator Gym',
   url: import.meta.env.VITE_SITE_URL || 'http://localhost:3000',
-  description: 'Professzionális megoldások vállalkozásoknak',
+  description: 'Erő, kitartás, karakter - A te utad a győzelemhez',
+  tagline: 'Transform Your Body, Transform Your Life',
   
   contact: {
-    email: 'info@clienta.hu',
-    phone: '+36 20 123 4567',
-    address: '1234 Budapest, Példa utca 12.',
+    email: 'info@bellatorgym.hu',
+    phone: '+36 30 123 4567',
+    address: 'Budapest, XIII. kerület, Váci út 123.',
   },
   
   social: {
-    facebook: 'https://facebook.com/clienta',
-    instagram: 'https://instagram.com/clienta',
-    linkedin: 'https://linkedin.com/company/clienta',
+    facebook: 'https://facebook.com/bellatorgym',
+    instagram: 'https://instagram.com/bellatorgym',
+    youtube: 'https://youtube.com/@bellatorgym',
   },
 };
