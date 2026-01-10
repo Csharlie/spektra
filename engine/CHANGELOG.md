@@ -1,3 +1,9 @@
+## [0.5.2](https://github.com/Csharlie/spektra/compare/engine-v0.5.1...engine-v0.5.2) (2026-01-10)
+
+### 🔨 Maintenance
+
+* **docs:** Add Release Communication Strategy documentation ([0ca0771](https://github.com/Csharlie/spektra/commit/0ca077122cd0f92b4627891c7f843d4c0ca019bb))
+
 ## [0.5.1](https://github.com/Csharlie/spektra/compare/engine-v0.5.0...engine-v0.5.1) (2026-01-10)
 
 ### 📚 Documentation
