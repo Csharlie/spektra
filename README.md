@@ -94,6 +94,24 @@ pnpm dev:bellator
 pnpm dev:autozeno
 ```
 
+## Testing
+
+Spektra uses Vitest for unit and integration testing.
+
+**Test Structure:**
+- Tests live in `packages/*/test/` folders
+- Tests protect **public API**, not implementation details
+- Projects (`projects/*`) do **not** contain tests
+
+**Running Tests:**
+
+```bash
+cd engine
+pnpm test
+```
+
+Tests are also executed automatically in CI on every push and pull request.
+
 ## Benefits
 
 - ✅ **Clean separation**: Engine is client-agnostic

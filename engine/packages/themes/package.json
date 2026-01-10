@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "vitest run",
     "clean": "rm -rf dist"
   },
   "dependencies": {
@@ -17,6 +18,8 @@
   },
   "devDependencies": {
     "typescript": "^5.3.3",
-    "@spektra/config": "workspace:*"
+    "@spektra/config": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
