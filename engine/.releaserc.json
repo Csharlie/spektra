@@ -14,8 +14,7 @@
           { "type": "chore", "release": false },
           { "scope": "ci", "release": false },
           { "scope": "version", "release": false },
-          { "subject": "*version*", "release": false },
-          { "subject": "*release*", "release": false }
+          { "scope": "release", "release": false }
         ]
       }
     ],
