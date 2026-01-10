@@ -1,3 +1,5 @@
+## [0.6.1](https://github.com/Csharlie/spektra/compare/engine-v0.6.0...engine-v0.6.1) (2026-01-10)
+
 ## [0.6.0](https://github.com/Csharlie/spektra/compare/engine-v0.5.2...engine-v0.6.0) (2026-01-10)
 
 ### ✨ Features
