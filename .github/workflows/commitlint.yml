@@ -1,0 +1,63 @@
+name: Commit Message Enforcement
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  commitlint:
+    name: Lint Commit Messages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install commitlint
+        run: |
+          npm install -g @commitlint/cli @commitlint/config-conventional
+
+      - name: Create commitlint config
+        run: |
+          cat > commitlint.config.js << 'EOF'
+          module.exports = {
+            extends: ['@commitlint/config-conventional'],
+            rules: {
+              'type-enum': [
+                2,
+                'always',
+                ['breaking', 'feat', 'fix', 'refactor', 'chore', 'docs', 'style', 'test', 'perf', 'ci', 'build', 'revert']
+              ],
+              'subject-case': [0],
+              'header-max-length': [2, 'always', 100]
+            }
+          };
+          EOF
+
+      - name: Validate PR commits
+        run: |
+          echo "Validating commits from ${{ github.event.pull_request.base.sha }} to ${{ github.event.pull_request.head.sha }}"
+          npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+      - name: Validation failed
+        if: failure()
+        run: |
+          echo "❌ Commit message validation failed"
+          echo ""
+          echo "Valid commit types:"
+          echo "  - breaking: introduces breaking changes (triggers MAJOR release)"
+          echo "  - feat: new feature (triggers MINOR release)"
+          echo "  - fix: bug fix (triggers PATCH release)"
+          echo "  - refactor: code refactoring (triggers PATCH release)"
+          echo "  - chore: maintenance tasks (no release)"
+          echo ""
+          echo "Format: type(scope): subject"
+          echo "Example: feat(core): add new theme support"
+          exit 1
