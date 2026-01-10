@@ -1,3 +1,13 @@
+## [0.6.0](https://github.com/Csharlie/spektra/compare/engine-v0.5.2...engine-v0.6.0) (2026-01-10)
+
+### ✨ Features
+
+* Storybook integrated ([463af55](https://github.com/Csharlie/spektra/commit/463af5541770eb9995a6ff84939ee28dddecf911))
+
+### 🐛 Bug Fixes
+
+* **themes:** add explicit type annotation to Hero.stories meta ([9f25aaf](https://github.com/Csharlie/spektra/commit/9f25aaf10fce609d73fe1c92e5b67551f2c1ed32))
+
 ## [0.5.2](https://github.com/Csharlie/spektra/compare/engine-v0.5.1...engine-v0.5.2) (2026-01-10)
 
 ### 🔨 Maintenance
