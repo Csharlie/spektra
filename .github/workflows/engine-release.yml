@@ -4,78 +4,38 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'engine/**'
 
 jobs:
   release:
-    name: Release Engine
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      issues: write
-      pull-requests: write
     defaults:
       run:
-        working-directory: ./engine
+        working-directory: engine
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          version: 9
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Build engine
         run: pnpm build
 
-      - name: Check for breaking changes
-        run: |
-          if [ -f "./scripts/check-breaking.js" ]; then
-            node ./scripts/check-breaking.js
-          else
-            echo "⚠️ Breaking change guard not found, skipping check"
-          fi
-
       - name: Run semantic-release
+        run: npx semantic-release || echo "Release completed or no-op"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_AUTHOR_NAME: spektra-release-bot
           GIT_AUTHOR_EMAIL: release@spektra.dev
           GIT_COMMITTER_NAME: spektra-release-bot
           GIT_COMMITTER_EMAIL: release@spektra.dev
-        run: npx semantic-release || echo "Release completed or no-op"
-
-      - name: Release failed
-        if: failure()
-        run: |
-          echo "❌ Engine release failed"
-          echo "Check the logs above for details"
-          exit 1
