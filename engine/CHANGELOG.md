@@ -1,3 +1,9 @@
+## [0.5.1](https://github.com/Csharlie/spektra/compare/engine-v0.5.0...engine-v0.5.1) (2026-01-10)
+
+### 📚 Documentation
+
+* **engine:** update README with current version and release process details ([42e469e](https://github.com/Csharlie/spektra/commit/42e469e0575a5393cb6254c308473dc0b3ec16e7))
+
 ## [0.5.0](https://github.com/Csharlie/spektra/compare/engine-v0.4.0...engine-v0.5.0) (2026-01-10)
 
 ### ✨ Features
