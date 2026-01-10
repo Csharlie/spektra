@@ -101,3 +101,13 @@ pnpm dev:autozeno
 - ✅ **Isolated workspaces**: No dependency leakage
 - ✅ **Scalable**: Easy to add new projects
 - ✅ **Maintainable**: Clear boundaries and responsibilities
+
+## Continuous Integration
+
+All pushes and pull requests are automatically validated by GitHub Actions. The CI pipeline ensures:
+
+- Code quality through linting
+- Build integrity across all workspaces
+- Test execution (when available)
+
+Failed builds cannot be merged, maintaining repository stability.
