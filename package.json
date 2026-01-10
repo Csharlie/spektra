@@ -12,6 +12,7 @@
     "engine:dev": "cd engine && pnpm dev",
     "engine:build": "cd engine && pnpm build",
     "engine:lint": "cd engine && pnpm lint",
+    "storybook": "cd engine && pnpm storybook",
     "projects:install": "cd projects && pnpm install",
     "projects:dev:bellator": "cd projects && pnpm dev:bellator",
     "projects:dev:autozeno": "cd projects && pnpm dev:autozeno",
