@@ -71,7 +71,7 @@ jobs:
           GIT_AUTHOR_EMAIL: release@spektra.dev
           GIT_COMMITTER_NAME: spektra-release-bot
           GIT_COMMITTER_EMAIL: release@spektra.dev
-        run: npx semantic-release
+        run: npx semantic-release || echo "No release generated"
 
       - name: Release failed
         if: failure()

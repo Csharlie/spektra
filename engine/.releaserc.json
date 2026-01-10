@@ -11,7 +11,11 @@
           { "type": "feat", "release": "minor" },
           { "type": "fix", "release": "patch" },
           { "type": "refactor", "release": "patch" },
-          { "type": "chore", "release": false }
+          { "type": "chore", "release": false },
+          { "scope": "ci", "release": false },
+          { "scope": "version", "release": false },
+          { "subject": "*version*", "release": false },
+          { "subject": "*release*", "release": false }
         ]
       }
     ],
