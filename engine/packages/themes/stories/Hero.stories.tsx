@@ -18,7 +18,7 @@ import { Hero } from '@spektra/core';
  * Hero uses core Button component and follows the design system.
  * It combines typography, spacing, and color tokens consistently.
  */
-const meta = {
+const meta: Meta<typeof Hero> = {
   title: 'Themes/Sections/Hero',
   component: Hero,
   parameters: {
