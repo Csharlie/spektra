@@ -1,3 +1,9 @@
+## [0.9.0](https://github.com/Csharlie/spektra/compare/engine-v0.8.3...engine-v0.9.0) (2026-01-11)
+
+### ✨ Features
+
+* add routeline template with routing and AppShell components ([fee2608](https://github.com/Csharlie/spektra/commit/fee26086e6986293b7453fefd588d53b750063b6))
+
 ## [0.8.3](https://github.com/Csharlie/spektra/compare/engine-v0.8.2...engine-v0.8.3) (2026-01-11)
 
 ### ♻️ Code Refactoring
