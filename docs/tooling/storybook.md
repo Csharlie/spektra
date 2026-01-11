@@ -315,7 +315,7 @@ title: 'Core/UI/Button'
 - `Core/Form/*` - Form components
 - `Core/Layout/*` - Layout components
 - `Themes/Sections/*` - Theme sections
-- `Themes/Templates/*` - Full pages
+- `Themes/Layouts/*` - Full pages
 
 #### Parameters
 

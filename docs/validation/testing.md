@@ -181,11 +181,11 @@ describe('Button', () => {
 // packages/themes/test/CorporateTheme.test.tsx
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { LandingPageTemplate } from '@spektra/core';
+import { LandingLayout } from '@spektra/core';
 import { corporateTheme } from '../corporate/theme';
 
 describe('CorporateTheme Integration', () => {
-  it('renders LandingPageTemplate with corporate theme colors', () => {
+  it('renders LandingLayout with corporate theme colors', () => {
     const mockNavigation = {
       links: [
         { label: 'Home', href: '/' },
@@ -205,9 +205,9 @@ describe('CorporateTheme Integration', () => {
     };
 
     render(
-      <LandingPageTemplate navigation={mockNavigation} footer={mockFooter}>
+      <LandingLayout navigation={mockNavigation} footer={mockFooter}>
         <div>Test Content</div>
-      </LandingPageTemplate>
+      </LandingLayout>
     );
 
     expect(screen.getByText('Corporate')).toBeInTheDocument();

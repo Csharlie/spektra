@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  LandingPageTemplate,
+  LandingLayout,
   Hero,
   Features,
   About,
@@ -34,7 +34,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <LandingPageTemplate
+    <LandingLayout
       navigation={{
         logoText: siteConfig.name,
         links: navigationLinks.map(link => ({
@@ -168,7 +168,7 @@ const HomePage: React.FC = () => {
           contactInfo={siteConfig.contact}
         />
       </div>
-    </LandingPageTemplate>
+    </LandingLayout>
   );
 };
 

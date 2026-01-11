@@ -138,7 +138,7 @@ import {
   About, 
   Gallery, 
   Contact,
-  LandingPageTemplate 
+  LandingLayout 
 } from '@spektra/core';
 ```
 

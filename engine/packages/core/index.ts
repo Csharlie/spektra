@@ -51,9 +51,9 @@ export { Footer } from './components/sections/Footer';
 export { Gallery } from './components/sections/Gallery';
 
 // ============================================================================
-// COMPONENTS - TEMPLATES
+// COMPONENTS - LAYOUTS
 // ============================================================================
-export { LandingPageTemplate } from './components/templates/LandingPageTemplate';
+export { LandingLayout } from './components/layouts/LandingLayout';
 
 // ============================================================================
 // HOOKS

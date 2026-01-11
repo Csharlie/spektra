@@ -48,6 +48,8 @@ When a component is needed by 2+ projects:
 2. Move to `engine/packages/core/components/`
 3. Import from engine instead of duplicating
 
+**Note:** For page-level compositions, use layouts from `engine/packages/core/components/layouts/`
+
 ## Rules
 
 ✅ **DO:**

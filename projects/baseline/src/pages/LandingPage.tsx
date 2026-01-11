@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  LandingPageTemplate,
+  LandingLayout,
   Hero,
   Features,
   About,
@@ -86,7 +86,7 @@ const LandingPage: React.FC<HomePageProps> = ({ data }) => {
   };
 
   return (
-    <LandingPageTemplate
+    <LandingLayout
       navigation={{
         logoText: site.name,
         links: content.navigation.links.map((link: any) => ({
@@ -130,11 +130,11 @@ const LandingPage: React.FC<HomePageProps> = ({ data }) => {
           description={content.hero.description}
           primaryCTA={{
             text: content.hero.primaryCTA.text,
-            onClick: () => scrollToSection(content.hero.primaryCTA.href),
+            onClick: () => handleNavClick(content.hero.primaryCTA.href),
           }}
           secondaryCTA={{
             text: content.hero.secondaryCTA.text,
-            onClick: () => scrollToSection(content.hero.secondaryCTA.href),
+            onClick: () => handleNavClick(content.hero.secondaryCTA.href),
           }}
         />
       </div>
@@ -171,7 +171,7 @@ const LandingPage: React.FC<HomePageProps> = ({ data }) => {
           stats={content.about.stats}
           cta={{
             text: content.about.cta.text,
-            onClick: () => scrollToSection('#contact'),
+            onClick: () => handleNavClick('#contact'),
           }}
           image={content.about.image}
           imagePosition="right"
@@ -198,7 +198,7 @@ const LandingPage: React.FC<HomePageProps> = ({ data }) => {
           contactInfo={site.contact}
         />
       </div>
-    </LandingPageTemplate>
+    </LandingLayout>
   );
 };
 

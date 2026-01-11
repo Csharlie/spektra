@@ -19,7 +19,7 @@ A Spektra az Atomic Design-t alkalmazza a következő explicit leképezéssel:
 | **Atoms** | **UI** | `engine/packages/core/components/ui/` | Primitív, egycélú elemek (gombok, inputok, ikonok) |
 | **Molecules** | **Features** | `engine/packages/core/components/features/` | Egyszerű funkcionális egységek (kártyák, form csoportok, navigációs elemek) |
 | **Organisms** | **Sections** | `engine/packages/core/components/sections/` | Komplex, önálló elrendezési blokkok (hero-k, galériák, footer-ek) |
-| **Templates** | **Templates** | `engine/packages/core/components/templates/` | Oldal szintű elrendezések (landing page, blog layout) |
+| **Templates** | **Layouts** | `engine/packages/core/components/layouts/` | Oldal szintű elrendezések (landing page, blog layout) |
 
 ### Miért ez a leképezés?
 
@@ -45,7 +45,7 @@ engine/packages/core/
 │   │   ├── Hero.tsx
 │   │   ├── Gallery.tsx
 │   │   └── Footer.tsx
-│   └── templates/             # Templates: LandingPage, BlogLayout
+│   └── layouts/               # Layouts: LandingLayout, BlogLayout
 │       ├── LandingPage.tsx
 │       └── BlogLayout.tsx
 ├── hooks/                     # Újrafelhasználható React hook-ok

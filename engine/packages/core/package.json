@@ -11,7 +11,7 @@
     "./ui": "./components/ui/index.ts",
     "./features": "./components/features/index.ts",
     "./sections": "./components/sections/index.ts",
-    "./templates": "./components/templates/index.ts",
+    "./layouts": "./components/layouts/index.ts",
     "./hooks": "./hooks/index.ts",
     "./design-system": "./design-system/index.ts",
     "./types/*": "./types/*.ts",

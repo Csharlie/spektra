@@ -659,7 +659,7 @@ packages/core/
     ├── ui/           # Alapvető UI komponensek (Button, Card, stb.)
     ├── features/     # Komplex feature komponensek
     ├── sections/     # Teljes szekciók (Hero, Gallery, stb.)
-    └── templates/    # Page template-ek
+    └── layouts/      # Oldal szintű elrendezések
 ```
 
 ### 4. Import sorrend

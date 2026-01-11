@@ -315,7 +315,7 @@ title: 'Core/UI/Button'
 - `Core/Form/*` - Űrlap komponensek
 - `Core/Layout/*` - Layout komponensek
 - `Themes/Sections/*` - Téma szekciók
-- `Themes/Templates/*` - Teljes oldalak
+- `Themes/Layouts/*` - Teljes oldalak
 
 #### Parameters
 

@@ -2,13 +2,13 @@ import React from 'react';
 import { Navigation, NavigationProps } from '../sections/Navigation';
 import { Footer, FooterProps } from '../sections/Footer';
 
-export interface LandingPageTemplateProps {
+export interface LandingLayoutProps {
   navigation: NavigationProps;
   footer: FooterProps;
   children: React.ReactNode;
 }
 
-export const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
+export const LandingLayout: React.FC<LandingLayoutProps> = ({
   navigation,
   footer,
   children,

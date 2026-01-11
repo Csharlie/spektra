@@ -19,14 +19,14 @@ Spektra adopts Atomic Design with the following explicit mapping:
 | **Atoms** | **UI** | `engine/packages/core/components/ui/` | Primitive, single-purpose elements (buttons, inputs, icons) |
 | **Molecules** | **Features** | `engine/packages/core/components/features/` | Simple functional units (cards, form groups, navigation items) |
 | **Organisms** | **Sections** | `engine/packages/core/components/sections/` | Complex, standalone layout blocks (heroes, galleries, footers) |
-| **Templates** | **Templates** | `engine/packages/core/components/templates/` | Page-level layouts (landing page, blog layout) |
+| **Templates** | **Layouts** | `engine/packages/core/components/layouts/` | Page-level layouts (landing page, blog layout) |
 
 ### Why this mapping?
 
 - **UI** = Atoms: Clear naming - these are pure UI primitives
 - **Features** = Molecules: Features are composed of UI elements
 - **Sections** = Organisms: Sections are visible on pages as distinct blocks
-- **Templates** = Templates: 1:1 mapping, no confusion
+- **Layouts** = Templates: Page-level compositions
 
 ## Structure
 
@@ -45,8 +45,8 @@ engine/packages/core/
 │   │   ├── Hero.tsx
 │   │   ├── Gallery.tsx
 │   │   └── Footer.tsx
-│   └── templates/             # Templates: LandingPage, BlogLayout
-│       ├── LandingPage.tsx
+│   └── layouts/               # Layouts: LandingLayout, BlogLayout
+│       ├── LandingLayout.tsx
 │       └── BlogLayout.tsx
 ├── hooks/                     # Reusable React hooks
 ├── utils/                     # Helper functions
@@ -60,7 +60,7 @@ engine/packages/core/
 Components can ONLY import from layers below them:
 
 ```
-Templates
+Layouts
     ↑ can import
 Sections (Organisms)
     ↑ can import

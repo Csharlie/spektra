@@ -18,8 +18,8 @@ Place a page here when:
 ## Promotion Path
 
 When 2+ projects need the same page structure:
-1. Refactor into a generic engine template
-2. Move to `engine/packages/core/templates/`
+1. Refactor into a generic engine layout
+2. Move to `engine/packages/core/components/layouts/`
 3. Import from engine rather than duplicate
 
 ## Structure
