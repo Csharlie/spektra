@@ -1,3 +1,53 @@
+## [0.6.2](https://github.com/Csharlie/spektra/compare/engine-v0.6.1...engine-v0.6.2) (2026-01-11)
+
+### ⚠ BREAKING CHANGES
+
+* **core:** Architectural refactoring for naming clarity
+
+## Changes
+
+### Renamed Components
+- LandingPageTemplate  LandingLayout
+- LandingPageTemplateProps  LandingLayoutProps
+
+### Folder Structure
+- engine/packages/core/components/templates/  layouts/
+- Created engine/templates/ for future project scaffolding
+
+### Updated Imports/Exports
+- @spektra/core exports updated
+- package.json exports map updated
+- All project imports updated (baseline, autozeno)
+- All test files updated
+- All documentation updated
+
+## Rationale
+
+Establishes clear separation:
+- 'layout' = UI page composition (React components)
+- 'template' = project scaffolding (future use)
+
+This eliminates naming ambiguity and prevents confusion between
+UI components and project starter templates.
+
+## Migration Guide
+
+Projects using LandingPageTemplate must update imports:
+
+\\\	ypescript
+// Before
+import { LandingPageTemplate } from '@spektra/core';
+
+// After
+import { LandingLayout } from '@spektra/core';
+\\\
+
+Component usage remains identical, only the name changes.
+
+### ♻️ Code Refactoring
+
+* **core:** rename UI templates to layouts (v0.6.2) ([6a5899e](https://github.com/Csharlie/spektra/commit/6a5899e4c875b0e8879cf660059dc247bfbf503a)), closes [#architecture](https://github.com/Csharlie/spektra/issues/architecture)
+
 ## [0.6.1](https://github.com/Csharlie/spektra/compare/engine-v0.6.0...engine-v0.6.1) (2026-01-10)
 
 ## [0.6.0](https://github.com/Csharlie/spektra/compare/engine-v0.5.2...engine-v0.6.0) (2026-01-10)
