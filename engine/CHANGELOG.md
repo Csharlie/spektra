@@ -1,3 +1,15 @@
+## [Unreleased]
+
+### ✨ Features
+
+* **templates:** Promote projects/baseline to canonical project template at engine/templates/baseline
+
+### 🔨 Maintenance
+
+* **templates:** Archive original projects/baseline as deprecated reference
+* **scripts:** Update create-client.js to use engine/templates/baseline
+* **docs:** Add comprehensive template documentation and usage guidelines
+
 ## [0.6.2](https://github.com/Csharlie/spektra/compare/engine-v0.6.1...engine-v0.6.2) (2026-01-11)
 
 ### ⚠ BREAKING CHANGES

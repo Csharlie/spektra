@@ -14,11 +14,12 @@ The **platform/engine** - contains only reusable, client-agnostic platform logic
 - **packages/themes**: Design tokens and theme configurations
 - **packages/data-utils**: Pure utility functions for data manipulation (NO fetch/CMS logic)
 - **packages/config**: Build tooling and configuration
+- **templates/**: Project scaffolding templates (baseline, etc.)
 
 **Rules:**
 - ❌ NO client names
 - ❌ NO CMS logic (GraphQL, REST, fetch)
-- ✅ ONLY render logic, components, utilities
+- ✅ ONLY render logic, components, utilities, templates
 
 ### 2. Projects Workspace (`/projects`)
 
@@ -73,6 +74,21 @@ loadSiteData().then((siteData) => {
 ```
 
 ## Development
+
+### Creating New Projects
+
+Use the create-client script to scaffold new projects from the canonical template:
+
+```bash
+cd scripts
+node create-client.js
+
+# Follow the prompts:
+# - Projekt neve: new-client
+# - Oldal neve: New Client Name
+```
+
+This creates a new project in `projects/new-client/` based on `engine/templates/baseline`.
 
 ### Engine Development
 
