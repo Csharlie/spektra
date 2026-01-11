@@ -1,3 +1,9 @@
+## [0.8.1](https://github.com/Csharlie/spektra/compare/engine-v0.8.0...engine-v0.8.1) (2026-01-11)
+
+### 🔨 Maintenance
+
+* **pages:** add LandingPage component and project-specific UI structure ([a218a00](https://github.com/Csharlie/spektra/commit/a218a008f78b4013c15deb8685ebf2bbb8551f47))
+
 ## [0.8.0](https://github.com/Csharlie/spektra/compare/engine-v0.7.0...engine-v0.8.0) (2026-01-11)
 
 ### ✨ Features
