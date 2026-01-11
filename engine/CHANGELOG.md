@@ -1,3 +1,9 @@
+## [0.8.3](https://github.com/Csharlie/spektra/compare/engine-v0.8.2...engine-v0.8.3) (2026-01-11)
+
+### ♻️ Code Refactoring
+
+* remove Bellator project files and configurations ([2099b55](https://github.com/Csharlie/spektra/commit/2099b551a6c6211c153bb3209bd3d0c9f1ba802b))
+
 ## [0.8.2](https://github.com/Csharlie/spektra/compare/engine-v0.8.1...engine-v0.8.2) (2026-01-11)
 
 ## [0.8.1](https://github.com/Csharlie/spektra/compare/engine-v0.8.0...engine-v0.8.1) (2026-01-11)
