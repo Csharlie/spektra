@@ -1,3 +1,20 @@
+## [0.7.0](https://github.com/Csharlie/spektra/compare/engine-v0.6.2...engine-v0.7.0) (2026-01-11)
+
+### ⚠ BREAKING CHANGES
+
+* **templates:** Project creation now uses engine/templates/baseline instead of projects/baseline
+
+Migration path:
+- Use 'node scripts/create-client.js' for new projects
+- Remove or archive projects/baseline when ready
+- Template is now the single source of truth
+
+Refs: baseline promotion, template scaffolding
+
+### ✨ Features
+
+* **templates:** promote baseline to canonical project template ([131bda8](https://github.com/Csharlie/spektra/commit/131bda89d0a50109862fc3c16fb1e271bf8060bf))
+
 ## [Unreleased]
 
 ### ✨ Features
