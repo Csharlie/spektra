@@ -6,7 +6,7 @@
 
 Migration path:
 - Use 'node scripts/create-client.js' for new projects
-- Remove or archive projects/baseline when ready
+- projects/baseline removed (2026-01-11)
 - Template is now the single source of truth
 
 Refs: baseline promotion, template scaffolding

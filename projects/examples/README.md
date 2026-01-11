@@ -4,15 +4,15 @@ This directory contains archived reference projects that are no longer actively 
 
 ## Contents
 
-### baseline (archived)
+### baseline (removed)
 
-The original `projects/baseline` reference implementation has been **promoted to a canonical template** at:
+The original `projects/baseline` reference implementation has been **removed** after being promoted to a canonical template at:
 
 ```
 engine/templates/baseline/
 ```
 
-**DO NOT** use `projects/examples/baseline` for new projects.
+The project served as a proof-of-concept for the Spektra architecture and was successfully promoted to the canonical template on 2026-01-11.
 
 **DO** use the template via:
 

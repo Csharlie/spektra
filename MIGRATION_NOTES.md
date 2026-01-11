@@ -48,9 +48,9 @@ Project-specific data was replaced with neutral placeholders:
 
 ### 4. Archival
 
-**Status**: `projects/baseline/` marked as DEPRECATED
+**Status**: `projects/baseline/` REMOVED (2026-01-11)
 
-A `DEPRECATED.md` file was added to the original baseline project directory to guide users to the new template location. The directory should be manually deleted or moved to `projects/examples/baseline-archived/` when ready.
+The deprecated baseline project has been removed from the repository. All future projects should use the canonical template at `engine/templates/baseline/` via the `scripts/create-client.js` script.
 
 ## Usage After Migration
 
@@ -117,24 +117,18 @@ None. This is an internal structural change that does not affect existing projec
    pnpm dev
    ```
 
-3. **Remove deprecated baseline** (when ready):
-   ```bash
-   rm -rf projects/baseline
-   # or
-   mv projects/baseline projects/examples/baseline-archived
-   ```
-
-4. **Update workspace configs** (if needed):
-   - `projects/pnpm-workspace.yaml`
-   - `projects/package.json`
+3. **Remove deprecated baseline**: ✅ COMPLETED (2026-01-11)
+   - Removed `projects/baseline/` directory
+   - Updated `projects/pnpm-workspace.yaml`
 
 ## Rollback Plan
 
-If issues are discovered:
+**Note**: The original `projects/baseline/` has been removed (2026-01-11).
 
-1. The original `projects/baseline/` still exists (marked deprecated)
+If rollback is needed:
+1. Restore from git history: `git checkout <commit> -- projects/baseline`
 2. Revert `scripts/create-client.js` to use `projects/baseline/`
-3. Remove `engine/templates/baseline/`
+3. Update `projects/pnpm-workspace.yaml` to include baseline
 4. Document issues for future migration attempt
 
 ## Related Documentation

@@ -19,11 +19,13 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
 - **URL:** `https://github.com/Csharlie/spektra`
 - **Cél:** Nyílt forráskódú, közösségi projekt - **UPSTREAM**
 - **Tartalom:**
-  - `packages/core` - Alapvető, újrafelhasználható komponensek
-  - `packages/data` - Adatkezelési utilities
-  - `packages/themes` - Téma rendszer
-  - `packages/config` - Konfigurációs fájlok
-  - `apps/client-a` - Demo alkalmazás (public)
+  - `engine/packages/core` - Alapvető, újrafelhasználható komponensek
+  - `engine/packages/data-utils` - Adatkezelési utilities
+  - `engine/packages/themes` - Téma rendszer
+  - `engine/packages/config` - Konfigurációs fájlok
+  - `engine/templates/baseline` - Project template
+  - `projects/bellator` - Demo alkalmazás (public)
+  - `projects/autozeno` - Demo alkalmazás (public)
 - **NEM tartalmazza:** Privát klienseket és projekteket
 
 ### 2. **spektra-private** (Private Fork)
@@ -31,8 +33,7 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
 - **Cél:** Privát fejlesztési környezet - **FORK az upstream-ből**
 - **Tartalom:**
   - Ugyanazok a `packages/` mint az upstream (szinkronizálva)
-  - `apps/bellator-gym` - Privát ügyfél projekt
-  - `apps/client-a` - Szinkronban az upstream verzióval
+  - `projects/` mappában privát ügyfél projektek
   - Egyéb privát projektek
 - **Működés:** 
   - Fejlesztés itt történik
@@ -815,10 +816,10 @@ git commit -m "feat(core): Add Gallery component to core
 git push origin main
 ```
 
-#### 6. Client-A frissítése (public demo)
+#### 6. Demo projekt frissítése (public)
 
 ```powershell
-cd d:\localhost\spektra\apps\client-a
+cd d:\localhost\spektra\projects\bellator
 
 # 1. Frissítsd a HomePage-t
 # pages/Home/index.tsx
@@ -852,12 +853,12 @@ import { Gallery } from '@spektra/core';
 # 3. Dev indítása
 pnpm dev
 
-# 4. Teszt: http://localhost:3001
+# 4. Teszt: http://localhost:5173
 
 # 5. Commit
 cd d:\localhost\spektra
-git add apps/client-a/
-git commit -m "feat(client-a): Add Gallery section to homepage"
+git add projects/bellator/
+git commit -m "feat(bellator): Add Gallery section to homepage"
 git push origin main
 ```
 
@@ -1018,7 +1019,7 @@ git push origin main
 - [ ] Csak core fájlok másolva spektra-ba
 - [ ] Build sikeres spektra-ban
 - [ ] Commit és push spektra public-ba
-- [ ] Client-A frissítve és tesztelve
+- [ ] Demo projektek frissítve és tesztelve
 - [ ] Dokumentáció frissítve
 
 ### Upstream sync (amikor mások módosítottak)
@@ -1067,13 +1068,13 @@ git add packages/core/
 git commit -m "feat(core): Add new component"
 git push origin main
 
-# ===== CLIENT UPDATE =====
-cd apps\client-a
+# ===== PROJECT UPDATE =====
+cd projects\bellator
 # ... frissítsd a kódot ...
 pnpm dev
-# Teszt: http://localhost:3001
-git add apps/client-a/
-git commit -m "feat(client-a): Use new component"
+# Teszt: http://localhost:5173
+git add projects/bellator/
+git commit -m "feat(bellator): Use new component"
 git push origin main
 
 # ===== DEDIKÁLT CLIENT REPO (opcionális) =====

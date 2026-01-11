@@ -120,8 +120,8 @@ Once a project is created from this template:
 
 This template was promoted from `projects/baseline`, which was the original reference implementation.
 
-**Migration Path**:
-- `projects/baseline` → archived/removed
+**Migration Path**: COMPLETED (2026-01-11)
+- `projects/baseline` → removed
 - `engine/templates/baseline` → canonical template
 - New projects → created from this template via script
 
