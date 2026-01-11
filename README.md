@@ -23,9 +23,12 @@ The **platform/engine** - contains only reusable, client-agnostic platform logic
 
 ### 2. Projects Workspace (`/projects`)
 
-**Deployable applications** - each project is a standalone app:
+**Deployable applications** - each project is a standalone app.
 
-- **bellator**: Bellator project application
+**Version-Controlled:**
+- **baseline**: Canonical reference implementation (tracked in git)
+
+**Note:** Additional client projects may exist locally but are excluded from version control by design.
 
 **Structure per project:**
 ```
@@ -76,11 +79,11 @@ loadSiteData().then((siteData) => {
 
 ### Creating New Projects
 
-Use the create-client script to scaffold new projects from the canonical template:
+Use the create-project script to scaffold new projects from the canonical template:
 
 ```bash
 cd scripts
-node create-client.js
+npx tsx create-project.ts
 
 # Follow the prompts:
 # - Projekt neve: new-client

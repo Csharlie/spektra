@@ -60,7 +60,7 @@ jobs:
       - name: Build projects
         run: |
           cd projects
-          pnpm build:bellator || echo "Bellator build skipped"
+          pnpm build:baseline || echo "Baseline build skipped"
 
       - name: CI Status
         if: success()

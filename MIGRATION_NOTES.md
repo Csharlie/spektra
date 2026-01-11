@@ -38,7 +38,6 @@ Project-specific data was replaced with neutral placeholders:
 **Created**:
 - `engine/templates/baseline/README.md` - Comprehensive template guide
 - `engine/templates/README.md` - Templates directory overview
-- `projects/examples/README.md` - Examples directory explanation
 - `projects/baseline/DEPRECATED.md` - Deprecation notice
 
 **Updated**:

@@ -4,10 +4,10 @@
   "private": true,
   "description": "Spektra Projects - Deployable applications workspace",
   "scripts": {
-    "dev": "pnpm --filter ./bellator dev",
-    "build": "pnpm --filter ./bellator build",
-    "dev:bellator": "pnpm --filter ./bellator dev",
-    "build:bellator": "pnpm --filter ./bellator build"
+    "dev": "pnpm --filter ./baseline dev",
+    "build": "pnpm --filter ./baseline build",
+    "dev:baseline": "pnpm --filter ./baseline dev",
+    "build:baseline": "pnpm --filter ./baseline build"
   },
   "packageManager": "pnpm@8.15.0",
   "engines": {

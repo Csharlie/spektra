@@ -15,34 +15,17 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
 
 ## Repository struktúra
 
-### 1. **spektra** (Public Upstream Repository)
+### 1. **spektra** (Mono-repository)
 - **URL:** `https://github.com/Csharlie/spektra`
-- **Cél:** Nyílt forráskódú, közösségi projekt - **UPSTREAM**
+- **Cél:** Spektra platform and canonical reference project
 - **Tartalom:**
-  - `engine/packages/core` - Alapvető, újrafelhasználható komponensek
-  - `engine/packages/data-utils` - Adatkezelési utilities
-  - `engine/packages/themes` - Téma rendszer
-  - `engine/packages/config` - Konfigurációs fájlok
-  - `engine/templates/baseline` - Project template
-  - `projects/bellator` - Demo alkalmazás (public)
-- **NEM tartalmazza:** Privát klienseket és projekteket
-
-### 2. **spektra-private** (Private Fork)
-- **URL:** `https://github.com/Csharlie/spektra-private`
-- **Cél:** Privát fejlesztési környezet - **FORK az upstream-ből**
-- **Tartalom:**
-  - Ugyanazok a `packages/` mint az upstream (szinkronizálva)
-  - `projects/` mappában privát ügyfél projektek
-  - Egyéb privát projektek
-- **Működés:** 
-  - Fejlesztés itt történik
-  - Upstream változások lehúzhatók: `git pull upstream main`
-  - Core változások szelektíven push-olhatók upstream-be
-
-### 3. **spektra-bellator-gym** (Dedikált Client Repository)
-- **URL:** `https://github.com/Csharlie/spektra-bellator-gym`
-- **Cél:** Egyedi kliens projekt önálló repo-ban
-- **Tartalom:** Csak a Bellator Gym projekt fájljai
+  - `engine/packages/core` - Core rendering engine and UI components
+  - `engine/packages/data-utils` - Data manipulation utilities
+  - `engine/packages/themes` - Theme system
+  - `engine/packages/config` - Build tooling and configuration
+  - `engine/templates/baseline` - Project scaffolding template
+  - `projects/baseline` - Canonical reference implementation (tracked)
+- **Note:** Other client projects may exist locally but are excluded from version control.
 
 ---
 
