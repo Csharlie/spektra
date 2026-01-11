@@ -1,0 +1,32 @@
+{
+  "name": "spektra-routeline-template",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Spektra routeline template - routing and AppShell foundation",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@spektra/core": "link:../../engine/packages/core",
+    "@spektra/themes": "link:../../engine/packages/themes",
+    "lucide-react": "^0.263.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.12.0"
+  },
+  "devDependencies": {
+    "@spektra/config": "link:../../engine/packages/config",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0"
+  }
+}
