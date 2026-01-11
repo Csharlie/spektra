@@ -1,3 +1,9 @@
+## [0.8.0](https://github.com/Csharlie/spektra/compare/engine-v0.7.0...engine-v0.8.0) (2026-01-11)
+
+### ✨ Features
+
+* **scripts:** add interactive create-project script with brand integration ([4eea1dc](https://github.com/Csharlie/spektra/commit/4eea1dc32b4a9325a5313b10051526fa16b4a579))
+
 ## [0.7.0](https://github.com/Csharlie/spektra/compare/engine-v0.6.2...engine-v0.7.0) (2026-01-11)
 
 ### ⚠ BREAKING CHANGES
