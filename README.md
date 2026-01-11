@@ -26,7 +26,6 @@ The **platform/engine** - contains only reusable, client-agnostic platform logic
 **Deployable applications** - each project is a standalone app:
 
 - **bellator**: Bellator project application
-- **autozeno**: Autozeno project application
 
 **Structure per project:**
 ```
@@ -106,8 +105,6 @@ pnpm install
 
 # Run specific project
 pnpm dev:bellator
-# or
-pnpm dev:autozeno
 ```
 
 ## Testing

@@ -61,7 +61,6 @@ jobs:
         run: |
           cd projects
           pnpm build:bellator || echo "Bellator build skipped"
-          pnpm build:autozeno || echo "Autozeno build skipped"
 
       - name: CI Status
         if: success()

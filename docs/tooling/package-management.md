@@ -64,7 +64,6 @@ packages:
 # projects/pnpm-workspace.yaml
 packages:
   - 'bellator'
-  - 'autozeno'
   - 'baseline'
   - 'client-a'
 ```

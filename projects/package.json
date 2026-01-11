@@ -7,9 +7,7 @@
     "dev": "pnpm --filter ./bellator dev",
     "build": "pnpm --filter ./bellator build",
     "dev:bellator": "pnpm --filter ./bellator dev",
-    "build:bellator": "pnpm --filter ./bellator build",
-    "dev:autozeno": "pnpm --filter ./autozeno dev",
-    "build:autozeno": "pnpm --filter ./autozeno build"
+    "build:bellator": "pnpm --filter ./bellator build"
   },
   "packageManager": "pnpm@8.15.0",
   "engines": {

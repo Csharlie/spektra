@@ -65,7 +65,7 @@ engine/packages/config/
 ```javascript
 'no-restricted-syntax': ['error',
   {
-    selector: "Literal[value=/bellator|autozeno|client-a/i]",
+    selector: "Literal[value=/bellator|client-a/i]",
     message: '🔒 Nincsenek kliens nevek az engine kódban'
   },
   {
@@ -84,7 +84,6 @@ engine/packages/config/
 ```typescript
 // ❌ SOHA - Engine függ a projekttől
 import { BellatorConfig } from '../../../projects/bellator/config';
-import { loadSiteData } from '../../projects/autozeno/data';
 ```
 
 **Miért:** Az engine-nek projekt-agnosztikusnak kell lennie. A projektek importálnak az engine-ből, soha fordítva.
@@ -105,7 +104,6 @@ import { getWordPressData } from 'wordpress-lib';
 ```typescript
 // ❌ SOHA - Kliens-specifikus logika
 const clientName = 'bellator';
-const url = 'https://autozeno.com';
 if (project === 'client-a') {
   // ...
 }

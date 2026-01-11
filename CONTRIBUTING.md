@@ -25,7 +25,6 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
   - `engine/packages/config` - Konfigurációs fájlok
   - `engine/templates/baseline` - Project template
   - `projects/bellator` - Demo alkalmazás (public)
-  - `projects/autozeno` - Demo alkalmazás (public)
 - **NEM tartalmazza:** Privát klienseket és projekteket
 
 ### 2. **spektra-private** (Private Fork)

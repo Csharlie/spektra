@@ -288,7 +288,7 @@ Engine:
 
 Projects:
   bellator: 1.0.0 (nincs változás)
-  autozeno: 2.1.0 (nincs változás)
+
 ```
 
 **Akció:** Frissítsd az engine-t, újratelepítsd a projekteket csak ha szükséges.
@@ -301,7 +301,7 @@ Engine:
 
 Projects:
   bellator: 1.0.0 → 2.0.0 (nagy refaktor szükséges)
-  autozeno: 2.1.0 → 3.0.0 (nagy refaktor szükséges)
+
 ```
 
 **Akció:** 

@@ -288,7 +288,6 @@ Engine:
 
 Projects:
   bellator: 1.0.0 (no change)
-  autozeno: 2.1.0 (no change)
 ```
 
 **Action:** Update engine, redeploy projects only if needed.
@@ -301,7 +300,6 @@ Engine:
 
 Projects:
   bellator: 1.0.0 → 2.0.0 (major refactor needed)
-  autozeno: 2.1.0 → 3.0.0 (major refactor needed)
 ```
 
 **Action:** 

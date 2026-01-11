@@ -65,7 +65,7 @@ engine/packages/config/
 ```javascript
 'no-restricted-syntax': ['error',
   {
-    selector: "Literal[value=/bellator|autozeno|client-a/i]",
+    selector: "Literal[value=/bellator|client-a/i]",
     message: '🔒 No client names in engine code'
   },
   {
@@ -84,7 +84,6 @@ engine/packages/config/
 ```typescript
 // ❌ NEVER - Engine depends on project
 import { BellatorConfig } from '../../../projects/bellator/config';
-import { loadSiteData } from '../../projects/autozeno/data';
 ```
 
 **Why:** Engine must be project-agnostic. Projects import from engine, never the reverse.
@@ -105,7 +104,6 @@ import { getWordPressData } from 'wordpress-lib';
 ```typescript
 // ❌ NEVER - Client-specific logic
 const clientName = 'bellator';
-const url = 'https://autozeno.com';
 if (project === 'client-a') {
   // ...
 }

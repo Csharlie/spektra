@@ -57,16 +57,16 @@ module.exports = {
     'no-restricted-syntax': [
       'error',
       {
-        selector: 'Literal[value=/bellator|autozeno/i]',
-        message: '❌ ENGINE VIOLATION: Client names (bellator, autozeno) found in engine code. Engine must be client-agnostic.',
+        selector: 'Literal[value=/bellator|client-[a-z]/i]',
+        message: '❌ ENGINE VIOLATION: Client names found in engine code. Engine must be client-agnostic.',
       },
       {
         selector: 'Literal[value=/wordpress|graphql|cms|wp-/i]',
         message: '❌ ENGINE VIOLATION: CMS-related literals (wordpress, graphql, cms) found in engine code. Engine must be data-source-agnostic.',
       },
       {
-        selector: 'TemplateLiteral[quasis.*.value.raw=/bellator|autozeno/i]',
-        message: '❌ ENGINE VIOLATION: Client names (bellator, autozeno) found in template string. Engine must be client-agnostic.',
+        selector: 'TemplateLiteral[quasis.*.value.raw=/bellator|client-[a-z]/i]',
+        message: '❌ ENGINE VIOLATION: Client names found in template string. Engine must be client-agnostic.',
       },
       {
         selector: 'TemplateLiteral[quasis.*.value.raw=/wordpress|graphql|cms|wp-/i]',

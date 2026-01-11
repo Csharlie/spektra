@@ -16,9 +16,7 @@
     "storybook": "cd engine && pnpm storybook",
     "projects:install": "cd projects && pnpm install",
     "projects:dev:bellator": "cd projects && pnpm dev:bellator",
-    "projects:dev:autozeno": "cd projects && pnpm dev:autozeno",
     "projects:build:bellator": "cd projects && pnpm build:bellator",
-    "projects:build:autozeno": "cd projects && pnpm build:autozeno",
     "install:all": "pnpm engine:install && pnpm projects:install",
     "prepare": "cd engine && pnpm exec husky"
   },

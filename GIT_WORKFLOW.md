@@ -48,7 +48,7 @@ A **spektra-private** egy **privát fork** a nyilvános **Spektra** repository-b
   - Általános célú komponensek
 - **Tartalom:**
   - `packages/` - core, config, data, themes
-  - `projects/` - példa projektek (bellator, autozeno, baseline)
+  - `projects/` - példa projektek (bellator, baseline)
   - **NEM tartalmazza:** privát projektek
 
 ### 2. Spektra-Private (ORIGIN - Privát Fork)

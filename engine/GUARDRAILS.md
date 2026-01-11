@@ -26,7 +26,6 @@ Az **engine** workspace egy **platform-szintű** réteg, amely **kliens-agnoszti
    ```typescript
    // ❌ TILOS - hardcoded client names
    const clientName = 'bellator';
-   const url = 'https://autozeno.com';
    ```
 
 4. **CMS referenciák a kódban**
