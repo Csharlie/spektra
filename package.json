@@ -8,6 +8,7 @@
     "url": "https://github.com/Csharlie/spektra"
   },
   "scripts": {
+    "create-project": "tsx scripts/create-project.ts",
     "engine:install": "cd engine && pnpm install",
     "engine:dev": "cd engine && pnpm dev",
     "engine:build": "cd engine && pnpm build",
@@ -25,5 +26,9 @@
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.6",
+    "tsx": "^4.21.0"
   }
 }
