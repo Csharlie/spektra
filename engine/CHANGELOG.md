@@ -1,3 +1,9 @@
+## [0.10.0](https://github.com/Csharlie/spektra/compare/engine-v0.9.0...engine-v0.10.0) (2026-01-11)
+
+### ✨ Features
+
+* implement routeline template with structured data and page components ([bef0149](https://github.com/Csharlie/spektra/commit/bef0149767c342a1a7ae93c84a137692c0c8a113))
+
 ## [0.9.0](https://github.com/Csharlie/spektra/compare/engine-v0.8.3...engine-v0.9.0) (2026-01-11)
 
 ### ✨ Features
