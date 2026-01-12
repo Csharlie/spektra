@@ -1,3 +1,26 @@
+## [0.10.1](https://github.com/Csharlie/spektra/compare/engine-v0.10.0...engine-v0.10.1) (2026-01-12)
+
+### ⚠ BREAKING CHANGES
+
+* Major architectural simplification
+
+- Rename components/ui  components/primitives for clearer atomic design terminology
+- Remove @spektra/themes package entirely (corporate, ecommerce themes)
+- Remove DesignSystemContext and design system infrastructure
+- Update all imports across engine and templates
+- Update documentation (storybook, guardrails, testing) with new paths
+- Move Button, Input, Textarea, Card to primitives folder
+- Update package.json exports to reflect new structure
+- Clean up workspace config (remove bellator project)
+- Enhance create-project script with workspace config auto-update
+
+This simplification reduces complexity and aligns with the core principle
+that theming should be handled at the project level, not in the engine.
+
+### ♻️ Code Refactoring
+
+* simplify architecture - rename ui to primitives and remove themes package ([74a047c](https://github.com/Csharlie/spektra/commit/74a047c464c9865199a810855f3fb30e2e147c41))
+
 ## [0.10.0](https://github.com/Csharlie/spektra/compare/engine-v0.9.0...engine-v0.10.0) (2026-01-11)
 
 ### ✨ Features
