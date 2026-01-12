@@ -65,20 +65,20 @@ Ez a dokumentáció részletesen leírja, hogyan kell új core komponenseket fej
 
 ### 1. lépés: Komponens fejlesztése privát projektben
 
-Ha van egy **privát kliens** (pl. `bellator-gym`), amely tartalmaz egy új funkciót, amit később core komponensnek szeretnénk:
+Ha van egy **privát kliens** (pl. `client-project`), amely tartalmaz egy új funkciót, amit később core komponensnek szeretnénk:
 
-#### Példa: Gallery komponens a Bellator-ban
+#### Példa: Gallery komponens egy privát projektben
 
 ```
 spektra-private/
-└── apps/bellator-gym/
+└── apps/client-project/
     └── components/sections/
         └── Gallery.tsx  ← Kliens-specifikus implementáció
 ```
 
 **A komponens jellemzői:**
 - Tartalmaz kliens-specifikus stílusokat (pl. `gym-yellow` szín)
-- Bellator brand elemeket használ
+- Client brand elemeket használ
 - Működik, tesztelt a kliens projektben
 
 ### 2. lépés: Generic verzió készítése a core-ba
@@ -315,7 +315,7 @@ Most, hogy a Gallery a core-ban van, frissítsd a privát klienst, hogy onnan ha
 Ha a kliens szeretné megtartani saját stílusát:
 
 ```tsx
-// spektra-private/apps/bellator-gym/components/sections/Gallery.tsx
+// spektra-private/apps/client-project/components/sections/Gallery.tsx
 import React from 'react';
 import { Gallery as CoreGallery, GalleryProps as CoreGalleryProps } from '@spektra/core';
 import { SectionHeading } from '../atoms';
@@ -480,10 +480,6 @@ Copy-Item -Path "d:\localhost\spektra-private\packages\core\components\sections\
 
 # Index export
 Copy-Item -Path "d:\localhost\spektra-private\packages\core\components\sections\index.ts" -Destination "d:\localhost\spektra\packages\core\components\sections\index.ts" -Force
-
-# Ha voltak egyéb core változások (pl. TypeScript fixek)
-Copy-Item -Path "d:\localhost\spektra-private\packages\core\hooks\useDesignSystem.ts" -Destination "d:\localhost\spektra\packages\core\hooks\useDesignSystem.ts" -Force
-Copy-Item -Path "d:\localhost\spektra-private\packages\core\contexts\DesignSystemContext.tsx" -Destination "d:\localhost\spektra\packages\core\contexts\DesignSystemContext.tsx" -Force
 ```
 
 #### C) Ellenőrizd a változásokat
@@ -515,14 +511,6 @@ git push upstream HEAD:main --force-with-lease  # VIGYÁZZ: csak core commit-ok 
 - Nincs privát kliens módosítás a branch-ben
 
 **Biztonságosabb módszer továbbra is a manuális másolás (Módszer 1).**
-
-#### Ellenőrizd a változásokat/components/sections/index.ts
-        modified:   packages/core/contexts/DesignSystemContext.tsx
-        modified:   packages/core/hooks/useDesignSystem.ts
-
-Untracked files:
-        packages/core/components/sections/Gallery.tsx
-```
 
 #### D) Build a spektra core-ban
 
@@ -556,9 +544,7 @@ git commit -m "feat(core): Add Gallery component to core
 
 - Add generic Gallery component with lightbox and category filtering
 - Customizable props: columns, gap, filter styles
-- Responsive grid layout
-- Fix TypeScript exports in useDesignSystem hook
-- Export DesignSystemContextType interface"
+- Responsive grid layout"
 
 # Push a public repo-ba
 git push origin main
@@ -760,9 +746,7 @@ git add apps/bellator-gym/components/sections/Gallery.tsx
 git commit -m "feat(core): Add Gallery component to core
 
 - Add generic Gallery component with lightbox and category filtering
-- Update Bellator to use core Gallery with custom styling wrapper
-- Fix TypeScript exports in useDesignSystem hook
-- Export DesignSystemContextType interface"
+- Update Bellator to use core Gallery with custom styling wrapper"
 
 git push origin feature/gallery-component
 ```

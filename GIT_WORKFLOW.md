@@ -47,8 +47,8 @@ A **spektra-private** egy **privát fork** a nyilvános **Spektra** repository-b
   - Nyílt forráskódú landing page framework
   - Általános célú komponensek
 - **Tartalom:**
-  - `packages/` - core, config, data, themes
-  - `projects/` - példa projektek (bellator, baseline)
+  - `packages/` - core, config, data
+  - `projects/` - példa projektek (baseline)
   - **NEM tartalmazza:** privát projektek
 
 ### 2. Spektra-Private (ORIGIN - Privát Fork)
@@ -63,7 +63,7 @@ A **spektra-private** egy **privát fork** a nyilvános **Spektra** repository-b
 - **Tartalom:** 
   - MINDEN az upstream-ből + extra dolgok
   - `apps/fox-design/` - **csak itt érhető el** (upstream-be nem kerül)
-  - `apps/bellator-gym/` - privát projektek
+  - `apps/client-project/` - privát projektek
   - `packages/` - lehet extra package is
   - Konfigurációs fájlok
 
@@ -238,7 +238,7 @@ git checkout -b feature/new-component
 # ... kód írás ...
 
 # 3. Commit
-git add packages/core/components/ui/NewComponent.tsx
+git add packages/core/components/primitives/NewComponent.tsx
 git commit -m "Add NewComponent to core package"
 
 # 4. Push private repo-ba
@@ -574,7 +574,7 @@ REMOTE FOX (spektra-fox-design GitHub)
 |-------------|-----------------|--------------------|--------------------|
 | packages/ módosítás | ✅ Igen | ✅ Igen (PR-rel) | ❌ Nem |
 | fox-design módosítás | ✅ Igen | ❌ NEM | ✅ Igen |
-| bellator-gym módosítás | ✅ Igen | ❌ NEM | ❌ Nem |
+| Privát projekt módosítás | ✅ Igen | ❌ NEM | ❌ Nem |
 | config/ módosítás | ✅ Igen | ⚠️ Esetleg (ha általános) | ❌ Nem |
 
 ## Kérdések és támogatás

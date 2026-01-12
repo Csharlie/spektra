@@ -13,24 +13,12 @@ export { App } from './app/App';
 export type { AppProps } from './app/App';
 
 // ============================================================================
-// DESIGN SYSTEM
+// COMPONENTS - PRIMITIVES
 // ============================================================================
-export {
-  DesignSystemProvider,
-  useDesignSystem,
-  type DesignSystemContextType,
-  type DesignSystemProviderProps,
-} from './design-system/DesignSystemContext';
-
-export { baseTheme, type Theme } from './design-system/base/theme';
-
-// ============================================================================
-// COMPONENTS - UI
-// ============================================================================
-export { Button } from './components/ui/Button';
-export { Card } from './components/ui/Card';
-export { Input } from './components/ui/Input';
-export { Textarea } from './components/ui/Textarea';
+export { Button } from './components/primitives/Button';
+export { Card } from './components/primitives/Card';
+export { Input } from './components/primitives/Input';
+export { Textarea } from './components/primitives/Textarea';
 
 // ============================================================================
 // COMPONENTS - FEATURES

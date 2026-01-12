@@ -42,7 +42,7 @@ Runs ESLint across all engine packages via Turborepo.
 #### Build
 ```bash
 cd engine && pnpm build
-cd projects && pnpm build:bellator
+cd projects/baseline && pnpm build
 ```
 Builds all packages and projects to ensure compilation succeeds.
 
@@ -100,9 +100,9 @@ pnpm build
 pnpm test
 
 # Projects checks
-cd projects
+cd projects/baseline
 pnpm install
-pnpm build:bellator
+pnpm build
 ```
 
 ## Troubleshooting

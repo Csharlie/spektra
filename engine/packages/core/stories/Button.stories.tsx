@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '../components/ui/Button';
+import { Button } from '../components/primitives/Button';
 
 /**
  * Button component for triggering actions and navigation.
@@ -15,7 +15,7 @@ import { Button } from '../components/ui/Button';
  * - Inside interactive elements like other buttons
  */
 const meta = {
-  title: 'Core/UI/Button',
+  title: 'Core/Primitives/Button',
   component: Button,
   parameters: {
     layout: 'centered',

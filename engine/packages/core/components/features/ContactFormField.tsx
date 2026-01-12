@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input } from '../ui/Input';
-import { Textarea } from '../ui/Textarea';
+import { Input } from '../primitives/Input';
+import { Textarea } from '../primitives/Textarea';
 
 export interface ContactFormFieldProps {
   type?: 'text' | 'email' | 'tel' | 'textarea';

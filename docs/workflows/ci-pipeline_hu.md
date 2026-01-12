@@ -42,7 +42,7 @@ ESLint futtatása minden engine package-en Turborepo-n keresztül.
 #### Build
 ```bash
 cd engine && pnpm build
-cd projects && pnpm build:bellator
+cd projects/baseline && pnpm build
 ```
 Minden package és projekt build-elése a sikeres fordítás biztosítására.
 
@@ -100,9 +100,9 @@ pnpm build
 pnpm test
 
 # Projects ellenőrzések
-cd projects
+cd projects/baseline
 pnpm install
-pnpm build:bellator
+pnpm build
 
 ```
 

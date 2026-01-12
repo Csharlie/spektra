@@ -11,7 +11,7 @@ Az **engine** workspace egy **platform-szintű** réteg, amely **kliens-agnoszti
 1. **Importálás a projects/ workspace-ből**
    ```typescript
    // ❌ TILOS - engine NEM függhet projektek-specifikus kódtól
-   import { something } from '../../projects/bellator/...';
+   import { something } from '../../projects/my-project/...';
    ```
 
 2. **CMS-specifikus könyvtárak importálása**
@@ -25,7 +25,7 @@ Az **engine** workspace egy **platform-szintű** réteg, amely **kliens-agnoszti
 3. **Kliens nevek a kódban**
    ```typescript
    // ❌ TILOS - hardcoded client names
-   const clientName = 'bellator';
+   const clientName = 'my-project';
    ```
 
 4. **CMS referenciák a kódban**

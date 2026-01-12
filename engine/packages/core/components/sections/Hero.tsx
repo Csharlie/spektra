@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../ui/Button';
+import { Button } from '../primitives/Button';
 import { cn } from '../../utils/cn';
 import { ArrowRight } from 'lucide-react';
 

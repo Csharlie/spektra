@@ -10,7 +10,7 @@ The repository consists of two **isolated** pnpm workspaces:
 
 The **platform/engine** - contains only reusable, client-agnostic platform logic:
 
-- **packages/core**: Render engine, UI components, hooks, design system
+- **packages/core**: Render engine, UI components, hooks, design tokens
 - **packages/themes**: Design tokens and theme configurations
 - **packages/data-utils**: Pure utility functions for data manipulation (NO fetch/CMS logic)
 - **packages/config**: Build tooling and configuration
@@ -32,15 +32,15 @@ The **platform/engine** - contains only reusable, client-agnostic platform logic
 
 **Structure per project:**
 ```
-projects/bellator/
+projects/baseline/
 ├── src/
 │   ├── data/                    # Single source of truth
 │   │   ├── site.ts             # Manifest
-│   │   ├── sources/            # CMS/static data sources
-│   │   │   ├── wp/             # WordPress integration (optional)
-│   │   │   └── static/         # Static data
-│   │   └── loaders/
-│   │       └── loadSiteData.ts # Data loading logic
+│   │   ├── content.ts          # Content data
+│   │   ├── gallery.ts          # Gallery data (optional)
+│   │   └── index.ts            # Data exports
+│   ├── pages/                  # Page compositions
+│   ├── ui/                     # Project-level UI components
 │   └── main.tsx                # Application entry point
 ├── index.html
 └── package.json
@@ -66,13 +66,12 @@ Projects use the engine via **link:** dependencies:
 The engine components receive data ONLY via props:
 
 ```tsx
-// In project: bellator/src/main.tsx
-import { App } from '@spektra/core/app/App';
-import { loadSiteData } from './data';
+// In project: baseline/src/pages/LandingPage.tsx
+import { LandingLayout, Hero, Features } from '@spektra/core';
+import { getBaselineData } from '../data';
 
-loadSiteData().then((siteData) => {
-  <App data={siteData} />
-});
+const data = getBaselineData();
+<LandingLayout {...data.site} />
 ```
 
 ## Development
@@ -106,8 +105,9 @@ pnpm dev
 cd projects
 pnpm install
 
-# Run specific project
-pnpm dev:bellator
+# Run specific project (example)
+cd baseline
+pnpm dev
 ```
 
 ## Testing

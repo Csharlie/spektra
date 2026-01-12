@@ -30,7 +30,7 @@ Ez az irányelv meghatározza a **verziószámok szemantikus jelentését** a Sp
 
 ### Engine mint Platform
 
-A Spektra engine egy **belső platform**, amelyet több fogyasztó projekt használ (baseline, autozeno, bellator, stb.). A verziókezelési döntések prioritásai:
+A Spektra engine egy **belső platform**, amelyet több fogyasztó projekt használ (baseline és más kliens projektek). A verziókezelési döntések prioritásai:
 - **Stabilitás**: A fogyasztók megbízhatnak a verzió szerződésekben
 - **Auditálhatóság**: Minden verzió visszavezethető specifikus változtatásokhoz
 - **Kiszámíthatóság**: A verzió növelések determinisztikus szabályokat követnek
@@ -339,7 +339,7 @@ A Spektra verziókezelési irányelv **szándékosan konzervatív**:
 
 ### Projekt Csapatok Számára
 
-A fogyasztó projektek (baseline, autozeno, bellator) az engine verzióival a `package.json`-ön keresztül lépnek kapcsolatba.
+A fogyasztó projektek (baseline és mások) az engine verzióival a `package.json`-ön keresztül lépnek kapcsolatba.
 
 #### Verzió Rögzítés
 ```json

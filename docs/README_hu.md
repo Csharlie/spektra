@@ -157,8 +157,9 @@ pnpm test      # Tesztek futtatása (jövőbeli)
 # Projects
 cd projects
 pnpm install
-pnpm dev:bellator    # Projekt futtatása
-pnpm build:bellator  # Projekt build-elése
+cd projects/baseline
+pnpm dev         # Projekt futtatása
+pnpm build       # Projekt build-elése
 ```
 
 ### Verzió Emelési Szabályok
@@ -173,13 +174,13 @@ pnpm build:bellator  # Projekt build-elése
 
 ```typescript
 // ❌ SOHA - Project importok
-import x from '../../../projects/bellator';
+import x from '../../../projects/my-project';
 
 // ❌ SOHA - CMS könyvtárak
 import axios from 'axios';
 
 // ❌ SOHA - Kliens nevek
-const client = 'bellator';
+const client = 'my-project';
 
 // ❌ SOHA - Lefelé irányuló réteg importok
 // (Atoms importálnak Molecules-t, stb.)

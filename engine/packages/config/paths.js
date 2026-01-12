@@ -8,7 +8,6 @@ module.exports = {
   packages: {
     core: '@spektra/core',
     data: '@spektra/data',
-    themes: '@spektra/themes',
     config: '@spektra/config',
   },
   
@@ -24,7 +23,6 @@ module.exports = {
   locations: {
     core: 'packages/core',
     data: 'packages/data',
-    themes: 'packages/themes',
     config: 'packages/config',
   },
   
@@ -32,7 +30,6 @@ module.exports = {
   aliases: {
     '@core': 'packages/core',
     '@data': 'packages/data',
-    '@themes': 'packages/themes',
     '@ui': 'packages/core/components/ui',
     '@features': 'packages/core/components/features',
     '@sections': 'packages/core/components/sections',

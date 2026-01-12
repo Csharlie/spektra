@@ -126,7 +126,7 @@ const query = gql`{ posts { title } }`;
 
 ```typescript
 // ❌ SOHA - Atoms nem importálhat Molecules-ból
-// components/ui/Button.tsx-ben
+// components/primitives/Button.tsx-ben
 import { Card } from '../features/Card';
 
 // ❌ SOHA - Molecules nem importálhat Organisms-ból
@@ -194,8 +194,8 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
 ```typescript
 // ✅ OK - Molecules importálhat Atoms-ból
 // components/features/Card.tsx-ben
-import { Button } from '../ui/Button';
-import { Heading } from '../ui/Heading';
+import { Button } from '../primitives/Button';
+import { Heading } from '../primitives/Heading';
 
 // ✅ OK - Organisms importálhat Molecules-ból
 // components/sections/Hero.tsx-ben

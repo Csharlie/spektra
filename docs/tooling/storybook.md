@@ -216,7 +216,7 @@ Storybook interface sections:
 2. **Canvas**: Live component preview
 3. **Docs tab**: Generated documentation
 4. **Addons panel** (bottom): Controls, actions, etc.
-5. **Toolbar** (top): Viewport, background, theme switching
+5. **Toolbar** (top): Viewport, background, Storybook display modes (light/dark)
 
 ### Navigation
 
@@ -454,10 +454,10 @@ export const Interactive: Story = {
 ```typescript
 // engine/packages/core/stories/Button.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '../components/ui/Button';
+import { Button } from '../components/primitives/Button';
 
 const meta = {
-  title: 'Core/UI/Button',
+  title: 'Core/Primitives/Button',
   component: Button,
   parameters: {
     layout: 'centered',

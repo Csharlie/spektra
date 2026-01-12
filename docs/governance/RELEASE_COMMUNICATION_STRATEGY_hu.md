@@ -108,7 +108,7 @@ Egy **kommunikált esemény**, ahol az érdekelt feleket tájékoztatjuk egy ver
 ```
 
 #### Projekt Csapat Csatornák
-**Közönség**: Fogyasztó projekt csapatok (baseline, autozeno, bellator, stb.)  
+**Közönség**: Fogyasztó projekt csapatok (baseline és más kliens projektek)  
 **Gyakoriság**: Csak MINOR és MAJOR verziók  
 **Formátum**: Manuális értesítés migrációs jegyzetekkel
 

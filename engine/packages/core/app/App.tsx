@@ -1,5 +1,4 @@
 import React from 'react';
-import { DesignSystemProvider } from '../design-system/DesignSystemContext';
 import { Hero } from '../components/sections/Hero';
 import type { SiteData } from '../types/SiteData';
 
@@ -29,14 +28,12 @@ export const App: React.FC<AppProps> = ({ data }) => {
   };
 
   return (
-    <DesignSystemProvider>
-      <div className="app">
-        {pages.map((page, index) => (
-          <div key={index} data-page={page.slug}>
-            {page.sections?.map((section) => renderSection(section))}
-          </div>
-        ))}
-      </div>
-    </DesignSystemProvider>
+    <div className="app">
+      {pages.map((page, index) => (
+        <div key={index} data-page={page.slug}>
+          {page.sections?.map((section) => renderSection(section))}
+        </div>
+      ))}
+    </div>
   );
 };

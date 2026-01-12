@@ -23,7 +23,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { DesignSystemProvider } from '@spektra/core';
 import LandingPage from './pages/LandingPage';
 import GalleryPage from './pages/GalleryPage';
 import { getBaselineData } from './data';
@@ -37,16 +36,14 @@ const baselineData = getBaselineData();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <DesignSystemProvider initialSystem="base">
-      <BrowserRouter>
-        <Routes>
-          {/* Landing Page - default route */}
-          <Route path="/" element={<LandingPage data={baselineData} />} />
-          
-          {/* Gallery Page - demonstrates project-level organism usage */}
-          <Route path="/gallery" element={<GalleryPage />} />
-        </Routes>
-      </BrowserRouter>
-    </DesignSystemProvider>
+    <BrowserRouter>
+      <Routes>
+        {/* Landing Page - default route */}
+        <Route path="/" element={<LandingPage data={baselineData} />} />
+        
+        {/* Gallery Page - demonstrates project-level organism usage */}
+        <Route path="/gallery" element={<GalleryPage />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
 );

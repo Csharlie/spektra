@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Logo } from '../features/Logo';
-import { Button } from '../ui/Button';
+import { Button } from '../primitives/Button';
 import { cn } from '../../utils/cn';
 import { Menu, X } from 'lucide-react';
 

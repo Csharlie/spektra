@@ -114,6 +114,33 @@ function createOrUpdateEnvFile(targetDir: string, displayName: string): void {
   fs.writeFileSync(envPath, newEnvLines.join('\n') + '\n', 'utf-8');
 }
 
+function updateWorkspaceConfig(folderName: string): void {
+  const rootDir = process.cwd();
+  const workspaceYamlPath = path.join(rootDir, 'projects', 'pnpm-workspace.yaml');
+
+  if (!fs.existsSync(workspaceYamlPath)) {
+    console.error('⚠️  Figyelmeztetés: pnpm-workspace.yaml nem található.');
+    return;
+  }
+
+  let yamlContent = fs.readFileSync(workspaceYamlPath, 'utf-8');
+  const lines = yamlContent.split('\n');
+  
+  // Check if project already in workspace
+  const projectEntry = `  - '${folderName}'`;
+  if (yamlContent.includes(projectEntry)) {
+    return; // Already added
+  }
+
+  // Find packages: line and add new project
+  const packagesIndex = lines.findIndex(line => line.trim() === 'packages:');
+  if (packagesIndex !== -1) {
+    // Insert after packages: line
+    lines.splice(packagesIndex + 1, 0, projectEntry);
+    fs.writeFileSync(workspaceYamlPath, lines.join('\n'), 'utf-8');
+  }
+}
+
 // ========================================
 // MAIN LOGIC
 // ========================================
@@ -209,14 +236,24 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  // 8. Success
+  // 8. Update workspace config
+  console.log('📦 Workspace konfiguráció frissítése...');
+  try {
+    updateWorkspaceConfig(folderName);
+    console.log('✅ pnpm-workspace.yaml frissítve');
+  } catch (error) {
+    console.error('⚠️  Figyelmeztetés: workspace config frissítése sikertelen:', error);
+  }
+
+  // 9. Success
   console.log('\n✅ Projekt sikeresen létrehozva!\n');
   console.log(`📦 Mappa név:        ${folderName}`);
   console.log(`🏷️  Megjelenített név: ${displayName}`);
   console.log(`📍 Helye:            projects/${folderName}\n`);
   console.log('Következő lépések:');
-  console.log(`  cd projects/${folderName}`);
+  console.log(`  cd projects`);
   console.log('  pnpm install');
+  console.log(`  cd ${folderName}`);
   console.log('  pnpm dev\n');
 }
 

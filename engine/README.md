@@ -8,7 +8,7 @@ Current version: 0.5.0 ✨
 
 ## Features
 
-- Core design system components
+- Core UI components
 - Theme system
 - Data utilities
 - Type-safe configuration

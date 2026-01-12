@@ -63,9 +63,7 @@ packages:
 ```yaml
 # projects/pnpm-workspace.yaml
 packages:
-  - 'bellator'
-  - 'baseline'
-  - 'client-a'
+  - '*'  # Automatikusan felismeri az összes projektet
 ```
 
 ```json
@@ -102,13 +100,12 @@ packages:
 #### Project Csomag
 
 ```json
-// projects/bellator/package.json
+// projects/baseline/package.json
 {
-  "name": "bellator",
+  "name": "baseline",
   "private": true,
   "dependencies": {
     "@spektra/core": "link:../../engine/packages/core",
-    "@spektra/themes": "link:../../engine/packages/themes",
     "axios": "^1.6.0"
   }
 }
@@ -168,7 +165,7 @@ packages:
    pnpm add some-library
 
    # Project
-   cd projects/bellator
+   cd projects/baseline
    pnpm add axios
    ```
 
@@ -381,15 +378,15 @@ A Turbo automatikusan detektálja:
 - Melyek build-elhetők párhuzamosan
 
 ```
-@spektra/themes → @spektra/core → bellator
-                ↗
+@spektra/core → baseline
+        ↑
 @spektra/data-utils
 ```
 
 A Turbo build-eli:
-1. `themes` és `data-utils` párhuzamosan
-2. `core` miután mindkettő befejeződött
-3. `bellator` miután a core befejeződött
+1. `data-utils` először
+2. `core` miután befejeeződött
+3. `baseline` miután a core befejeződött
 
 #### 3. Inkrementális Build-ek
 
@@ -412,8 +409,7 @@ Csak újra build-el amikor:
   "npm.packageManager": "pnpm",
   "eslint.workingDirectories": [
     "engine/packages/core",
-    "engine/packages/themes",
-    "projects/bellator"
+    "projects/baseline"
   ]
 }
 ```
@@ -489,7 +485,7 @@ cd ../projects && pnpm install
 
 ```bash
 # Ellenőrizd a symlink-eket
-ls -la projects/bellator/node_modules/@spektra/
+ls -la projects/baseline/node_modules/@spektra/
 
 # Ezt kell látnod:
 # core -> ../../../engine/packages/core
@@ -497,7 +493,7 @@ ls -la projects/bellator/node_modules/@spektra/
 
 Ha törött:
 ```bash
-cd projects/bellator
+cd projects/baseline
 rm -rf node_modules
 pnpm install
 ```

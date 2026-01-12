@@ -16,15 +16,15 @@ Spektra adopts Atomic Design with the following explicit mapping:
 
 | Atomic Design | Spektra Layer | Location | Description |
 |---------------|---------------|----------|-------------|
-| **Atoms** | **UI** | `engine/packages/core/components/ui/` | Primitive, single-purpose elements (buttons, inputs, icons) |
+| **Atoms** | **Primitives** | `engine/packages/core/components/primitives/` | Primitive, single-purpose elements (buttons, inputs, icons) |
 | **Molecules** | **Features** | `engine/packages/core/components/features/` | Simple functional units (cards, form groups, navigation items) |
 | **Organisms** | **Sections** | `engine/packages/core/components/sections/` | Complex, standalone layout blocks (heroes, galleries, footers) |
 | **Templates** | **Layouts** | `engine/packages/core/components/layouts/` | Page-level layouts (landing page, blog layout) |
 
 ### Why this mapping?
 
-- **UI** = Atoms: Clear naming - these are pure UI primitives
-- **Features** = Molecules: Features are composed of UI elements
+- **Primitives** = Atoms: Clear naming - these are pure UI primitives
+- **Features** = Molecules: Features are composed of primitive elements
 - **Sections** = Organisms: Sections are visible on pages as distinct blocks
 - **Layouts** = Templates: Page-level compositions
 
@@ -33,24 +33,22 @@ Spektra adopts Atomic Design with the following explicit mapping:
 ```
 engine/packages/core/
 ├── components/
-│   ├── ui/                    # Atoms: Button, Input, Icon, Badge
+│   ├── primitives/            # Atoms: Button, Input, Card, Textarea
 │   │   ├── Button.tsx
 │   │   ├── Input.tsx
-│   │   └── Icon.tsx
-│   ├── features/              # Molecules: Card, NavItem, FormGroup
-│   │   ├── Card.tsx
-│   │   ├── NavItem.tsx
-│   │   └── FormGroup.tsx
+│   │   └── Card.tsx
+│   ├── features/              # Molecules: FeatureCard, Logo, ContactFormField
+│   │   ├── FeatureCard.tsx
+│   │   ├── Logo.tsx
+│   │   └── ContactFormField.tsx
 │   ├── sections/              # Organisms: Hero, Gallery, Footer
 │   │   ├── Hero.tsx
 │   │   ├── Gallery.tsx
 │   │   └── Footer.tsx
-│   └── layouts/               # Layouts: LandingLayout, BlogLayout
-│       ├── LandingLayout.tsx
-│       └── BlogLayout.tsx
+│   └── layouts/               # Layouts: LandingLayout
+│       └── LandingLayout.tsx
 ├── hooks/                     # Reusable React hooks
-├── utils/                     # Helper functions
-└── design-system/             # Theme and design tokens
+└── utils/                     # Helper functions
 ```
 
 ## Rules
@@ -66,30 +64,30 @@ Sections (Organisms)
     ↑ can import
 Features (Molecules)
     ↑ can import
-UI (Atoms)
+Primitives (Atoms)
     ↑ can import
 Utils / Hooks / Design System
 ```
 
 ### ✅ ALLOWED:
 
-1. **UI (Atoms)**
+1. **Primitives (Atoms)**
    - Import: utils, hooks, design system
    - Export: primitive components
    - Props: minimal, generic (text, onClick, variant)
 
 2. **Features (Molecules)**
-   - Import: UI components, utils, hooks
+   - Import: Primitives, utils, hooks
    - Export: functional units
    - Props: typed, specific (user: User, onSubmit: Function)
 
 3. **Sections (Organisms)**
-   - Import: Features, UI, utils, hooks
+   - Import: Features, Primitives, utils, hooks
    - Export: layout sections
    - Props: data-driven (data: HeroData)
 
 4. **Templates**
-   - Import: Sections, Features, UI
+   - Import: Sections, Features, Primitives
    - Export: full page layouts
    - Props: comprehensive data (pageData: PageData)
 
@@ -124,14 +122,14 @@ Utils / Hooks / Design System
 
 ### Component Responsibility Rules
 
-#### UI (Atoms)
+#### Primitives (Atoms)
 - **Purpose:** Primitive, generic, reusable
 - **Data:** No business logic, no data fetching
-- **Styling:** Design tokens only
-- **Example:** Button, Input, Icon, Badge, Link
+- **Styling:** Tailwind utilities only
+- **Example:** Button, Input, Card, Textarea
 
 ```tsx
-// ✅ Good Atom
+// ✅ Good Primitive
 export const Button: React.FC<ButtonProps> = ({ 
   children, 
   variant = 'primary', 
@@ -146,10 +144,10 @@ export const Button: React.FC<ButtonProps> = ({
 ```
 
 #### Features (Molecules)
-- **Purpose:** Functional units combining UI atoms
+- **Purpose:** Functional units combining primitives
 - **Data:** Receives typed data via props
-- **Composition:** Uses 2-4 UI components
-- **Example:** Card, NavItem, FormGroup, PriceBox
+- **Composition:** Uses 2-4 primitive components
+- **Example:** FeatureCard, Logo, ContactFormField
 
 ```tsx
 // ✅ Good Molecule

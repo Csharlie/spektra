@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/Button';
+import { Button } from '../primitives/Button';
 import { ContactFormField } from '../features/ContactFormField';
 import { cn } from '../../utils/cn';
 import { Mail, Phone, MapPin } from 'lucide-react';

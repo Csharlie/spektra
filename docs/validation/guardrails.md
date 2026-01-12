@@ -126,7 +126,7 @@ const query = gql`{ posts { title } }`;
 
 ```typescript
 // ❌ NEVER - Atoms cannot import Molecules
-// In components/ui/Button.tsx
+// In components/primitives/Button.tsx
 import { Card } from '../features/Card';
 
 // ❌ NEVER - Molecules cannot import Organisms
@@ -194,8 +194,8 @@ export const Hero: React.FC<HeroProps> = ({ data }) => {
 ```typescript
 // ✅ OK - Molecules can import Atoms
 // In components/features/Card.tsx
-import { Button } from '../ui/Button';
-import { Heading } from '../ui/Heading';
+import { Button } from '../primitives/Button';
+import { Heading } from '../primitives/Heading';
 
 // ✅ OK - Organisms can import Molecules
 // In components/sections/Hero.tsx

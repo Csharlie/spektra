@@ -15,8 +15,6 @@
     "engine:lint": "cd engine && pnpm lint",
     "storybook": "cd engine && pnpm storybook",
     "projects:install": "cd projects && pnpm install",
-    "projects:dev:bellator": "cd projects && pnpm dev:bellator",
-    "projects:build:bellator": "cd projects && pnpm build:bellator",
     "install:all": "pnpm engine:install && pnpm projects:install",
     "prepare": "cd engine && pnpm exec husky"
   },

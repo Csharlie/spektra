@@ -43,6 +43,11 @@ yarn-error.log*
 apps/fox-design/
 
 # Projects: ignore all except baseline
-projects/**
-!projects/baseline/**
-!projects/baseline/**/**
+projects/*
+!projects/package.json
+!projects/pnpm-workspace.yaml
+!projects/baseline/
+projects/baseline/*
+!projects/baseline/package.json
+!projects/baseline/README.md
+!projects/baseline/src/

@@ -16,7 +16,7 @@ A Spektra az Atomic Design-t alkalmazza a következő explicit leképezéssel:
 
 | Atomic Design | Spektra Réteg | Hely | Leírás |
 |---------------|---------------|----------|-------------|
-| **Atoms** | **UI** | `engine/packages/core/components/ui/` | Primitív, egycélú elemek (gombok, inputok, ikonok) |
+| **Atoms** | **Primitives** | `engine/packages/core/components/primitives/` | Primitív, egycélú elemek (gombok, inputok, ikonok) |
 | **Molecules** | **Features** | `engine/packages/core/components/features/` | Egyszerű funkcionális egységek (kártyák, form csoportok, navigációs elemek) |
 | **Organisms** | **Sections** | `engine/packages/core/components/sections/` | Komplex, önálló elrendezési blokkok (hero-k, galériák, footer-ek) |
 | **Templates** | **Layouts** | `engine/packages/core/components/layouts/` | Oldal szintű elrendezések (landing page, blog layout) |
@@ -49,8 +49,7 @@ engine/packages/core/
 │       ├── LandingPage.tsx
 │       └── BlogLayout.tsx
 ├── hooks/                     # Újrafelhasználható React hook-ok
-├── utils/                     # Segédfüggvények
-└── design-system/             # Téma és design tokenek
+└── utils/                     # Segédfüggvények
 ```
 
 ## Szabályok
@@ -66,30 +65,30 @@ Sections (Organisms)
     ↑ importálhat
 Features (Molecules)
     ↑ importálhat
-UI (Atoms)
+Primitives (Atoms)
     ↑ importálhat
 Utils / Hooks / Design System
 ```
 
 ### ✅ ENGEDÉLYEZETT:
 
-1. **UI (Atoms)**
+1. **Primitives (Atoms)**
    - Import: utils, hooks, design system
    - Export: primitív komponensek
    - Props: minimális, generikus (text, onClick, variant)
 
 2. **Features (Molecules)**
-   - Import: UI komponensek, utils, hooks
+   - Import: Primitives, utils, hooks
    - Export: funkcionális egységek
    - Props: típusos, specifikus (user: User, onSubmit: Function)
 
 3. **Sections (Organisms)**
-   - Import: Features, UI, utils, hooks
+   - Import: Features, Primitives, utils, hooks
    - Export: elrendezési szekciók
    - Props: adatvezérelt (data: HeroData)
 
 4. **Templates**
-   - Import: Sections, Features, UI
+   - Import: Sections, Features, Primitives
    - Export: teljes oldal elrendezések
    - Props: átfogó adatok (pageData: PageData)
 
@@ -124,14 +123,14 @@ Utils / Hooks / Design System
 
 ### Komponens Felelősségi Szabályok
 
-#### UI (Atoms)
+#### Primitives (Atoms)
 - **Cél:** Primitív, generikus, újrafelhasználható
 - **Adat:** Nincs üzleti logika, nincs adat lekérés
-- **Stílus:** Csak design tokenek
-- **Példa:** Button, Input, Icon, Badge, Link
+- **Stílus:** Csak Tailwind utility osztályok
+- **Példa:** Button, Input, Card, Textarea
 
 ```tsx
-// ✅ Jó Atom
+// ✅ Jó Primitív
 export const Button: React.FC<ButtonProps> = ({ 
   children, 
   variant = 'primary', 
@@ -146,10 +145,10 @@ export const Button: React.FC<ButtonProps> = ({
 ```
 
 #### Features (Molecules)
-- **Cél:** Funkcionális egységek UI atomok kombinálásával
+- **Cél:** Funkcionális egységek primitívek kombinálásával
 - **Adat:** Típusos adatokat kap props-on keresztül
-- **Kompozíció:** 2-4 UI komponenst használ
-- **Példa:** Card, NavItem, FormGroup, PriceBox
+- **Kompozíció:** 2-4 primitív komponenst használ
+- **Példa:** FeatureCard, Logo, ContactFormField
 
 ```tsx
 // ✅ Jó Molecule

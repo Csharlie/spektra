@@ -30,7 +30,7 @@ This policy defines the **semantic meaning of version numbers** in the Spektra e
 
 ### Engine as Platform
 
-The Spektra engine is an **internal platform** consumed by multiple consumer projects (baseline, autozeno, bellator, etc.). Versioning decisions prioritize:
+The Spektra engine is an **internal platform** consumed by multiple consumer projects (baseline, and other client projects). Versioning decisions prioritize:
 - **Stability**: Consumers can trust version contracts
 - **Auditability**: Every version is traceable to specific changes
 - **Predictability**: Version bumps follow deterministic rules
@@ -339,7 +339,7 @@ The Spektra versioning policy is **intentionally conservative**:
 
 ### For Project Teams
 
-Consumer projects (baseline, autozeno, bellator) interact with engine versions via `package.json`.
+Consumer projects (baseline and others) interact with engine versions via `package.json`.
 
 #### Version Pinning
 ```json

@@ -108,7 +108,7 @@ A **communicated event** where stakeholders are informed of a version's existenc
 ```
 
 #### Project Team Channels
-**Audience**: Consumer project teams (baseline, autozeno, bellator, etc.)  
+**Audience**: Consumer project teams (baseline and other client projects)  
 **Frequency**: MINOR and MAJOR versions only  
 **Format**: Manual notification with migration notes
 

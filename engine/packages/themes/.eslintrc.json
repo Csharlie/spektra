@@ -1,4 +1,0 @@
-{
-  "extends": ["../config/eslint/engine-guardrails.js"],
-  "root": true
-}

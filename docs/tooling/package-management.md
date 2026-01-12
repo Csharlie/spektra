@@ -63,9 +63,7 @@ packages:
 ```yaml
 # projects/pnpm-workspace.yaml
 packages:
-  - 'bellator'
-  - 'baseline'
-  - 'client-a'
+  - '*'  # Automatically discovers all projects
 ```
 
 ```json
@@ -102,13 +100,12 @@ packages:
 #### Project Package
 
 ```json
-// projects/bellator/package.json
+// projects/baseline/package.json
 {
-  "name": "bellator",
+  "name": "baseline",
   "private": true,
   "dependencies": {
     "@spektra/core": "link:../../engine/packages/core",
-    "@spektra/themes": "link:../../engine/packages/themes",
     "axios": "^1.6.0"
   }
 }
@@ -168,7 +165,7 @@ packages:
    pnpm add some-library
 
    # Project
-   cd projects/bellator
+   cd projects/baseline
    pnpm add axios
    ```
 
@@ -413,7 +410,7 @@ Skips when:
   "eslint.workingDirectories": [
     "engine/packages/core",
     "engine/packages/themes",
-    "projects/bellator"
+    "projects/baseline"
   ]
 }
 ```

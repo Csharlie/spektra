@@ -454,10 +454,10 @@ export const Interactive: Story = {
 ```typescript
 // engine/packages/core/stories/Button.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '../components/ui/Button';
+import { Button } from '../components/primitives/Button';
 
 const meta = {
-  title: 'Core/UI/Button',
+  title: 'Core/Primitives/Button',
   component: Button,
   parameters: {
     layout: 'centered',

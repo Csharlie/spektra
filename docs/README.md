@@ -157,8 +157,9 @@ pnpm test      # Run tests (future)
 # Projects
 cd projects
 pnpm install
-pnpm dev:bellator    # Run project
-pnpm build:bellator  # Build project
+cd projects/baseline
+pnpm dev         # Run project
+pnpm build       # Build project
 ```
 
 ### Version Bump Rules
@@ -173,13 +174,13 @@ pnpm build:bellator  # Build project
 
 ```typescript
 // ❌ NEVER - Project imports
-import x from '../../../projects/bellator';
+import x from '../../../projects/my-project';
 
 // ❌ NEVER - CMS libraries
 import axios from 'axios';
 
 // ❌ NEVER - Client names
-const client = 'bellator';
+const client = 'my-project';
 
 // ❌ NEVER - Downward layer imports
 // (Atoms importing Molecules, etc.)
