@@ -1,3 +1,9 @@
+## [0.11.0](https://github.com/Csharlie/spektra/compare/engine-v0.10.1...engine-v0.11.0) (2026-01-13)
+
+### ✨ Features
+
+* add data attributes for improved accessibility and UI testing ([df2bc69](https://github.com/Csharlie/spektra/commit/df2bc6932a66e7bd0df6047b79fab8ec77b825d1))
+
 ## [0.10.1](https://github.com/Csharlie/spektra/compare/engine-v0.10.0...engine-v0.10.1) (2026-01-12)
 
 ### ⚠ BREAKING CHANGES
