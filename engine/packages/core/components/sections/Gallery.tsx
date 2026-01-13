@@ -54,20 +54,45 @@ export const Gallery: React.FC<GalleryProps> = ({
   );
 
   return (
-    <section className={cn('py-20 md:py-32 bg-white', className)}>
+    <section 
+      data-ui-id="gallery-section"
+      data-ui-class="gallery-section"
+      data-ui-role="gallery"
+      className={cn('py-20 md:py-32 bg-white', className)}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-12">
+        <div 
+          data-ui-id="gallery-header"
+          data-ui-class="section-header"
+          data-ui-role="section-header"
+          className="text-center mb-12"
+        >
           {subtitle && (
-            <p className="text-sm font-semibold tracking-wider uppercase text-primary-600 mb-2">
+            <p 
+              data-ui-id="gallery-subtitle"
+              data-ui-class="section-subtitle"
+              data-ui-role="subtitle"
+              className="text-sm font-semibold tracking-wider uppercase text-primary-600 mb-2"
+            >
               {subtitle}
             </p>
           )}
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+          <h2 
+            data-ui-id="gallery-title"
+            data-ui-class="section-title"
+            data-ui-role="heading"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4"
+          >
             {title}
           </h2>
           {description && (
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            <p 
+              data-ui-id="gallery-description"
+              data-ui-class="section-description"
+              data-ui-role="description"
+              className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
+            >
               {description}
             </p>
           )}
@@ -75,11 +100,19 @@ export const Gallery: React.FC<GalleryProps> = ({
         
         {/* Category Filters */}
         {showCategories && categories.length > 1 && (
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div 
+            data-ui-id="gallery-filters"
+            data-ui-class="filter-group"
+            data-ui-role="category-filters"
+            className="flex flex-wrap justify-center gap-4 mb-12"
+          >
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category || 'all')}
+                data-ui-id={`gallery-filter-${category}`}
+                data-ui-class="filter-button"
+                data-ui-role="filter-button"
                 className={cn(
                   'px-6 py-2 font-semibold uppercase tracking-wider text-sm transition-all rounded-md',
                   filter === category
@@ -94,10 +127,18 @@ export const Gallery: React.FC<GalleryProps> = ({
         )}
         
         {/* Image Grid */}
-        <div className={cn('grid', gridColsClasses, gap)}>
+        <div 
+          data-ui-id="gallery-grid"
+          data-ui-class="gallery-grid"
+          data-ui-role="image-grid"
+          className={cn('grid', gridColsClasses, gap)}
+        >
           {filteredImages.map((image, index) => (
             <div
               key={index}
+              data-ui-id={`gallery-item-${index}`}
+              data-ui-class="gallery-item"
+              data-ui-role="gallery-image"
               className={cn(
                 'relative aspect-square overflow-hidden cursor-pointer group rounded-lg',
                 imageClassName
@@ -122,10 +163,16 @@ export const Gallery: React.FC<GalleryProps> = ({
       {/* Lightbox Modal */}
       {selectedImage && (
         <div
+          data-ui-id="gallery-lightbox"
+          data-ui-class="lightbox-modal"
+          data-ui-role="lightbox"
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
           <button
+            data-ui-id="gallery-lightbox-close"
+            data-ui-class="close-button"
+            data-ui-role="close-button"
             className="absolute top-4 right-4 text-white hover:text-primary-400 transition-colors"
             onClick={() => setSelectedImage(null)}
             aria-label="Close lightbox"

@@ -14,9 +14,19 @@ export const LandingLayout: React.FC<LandingLayoutProps> = ({
   children,
 }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div 
+      data-ui-id="landing-layout"
+      data-ui-class="page-layout"
+      data-ui-role="layout"
+      className="min-h-screen flex flex-col"
+    >
       <Navigation {...navigation} />
-      <main className="flex-grow">
+      <main 
+        data-ui-id="main-content"
+        data-ui-class="content-area"
+        data-ui-role="main-content"
+        className="flex-grow"
+      >
         {children}
       </main>
       <Footer {...footer} />

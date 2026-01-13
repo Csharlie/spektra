@@ -24,20 +24,45 @@ export const Features: React.FC<FeaturesProps> = ({
   };
 
   return (
-    <section className={cn('py-20 bg-gray-50', className)}>
+    <section 
+      data-ui-id="features-section"
+      data-ui-class="features-section"
+      data-ui-role="features"
+      className={cn('py-20 bg-gray-50', className)}
+    >
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div 
+          data-ui-id="features-header"
+          data-ui-class="section-header"
+          data-ui-role="section-header"
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
           {subtitle && (
-            <p className="text-primary-600 font-semibold text-lg mb-4">
+            <p 
+              data-ui-id="features-subtitle"
+              data-ui-class="section-subtitle"
+              data-ui-role="subtitle"
+              className="text-primary-600 font-semibold text-lg mb-4"
+            >
               {subtitle}
             </p>
           )}
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 
+            data-ui-id="features-title"
+            data-ui-class="section-title"
+            data-ui-role="heading"
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+          >
             {title}
           </h2>
         </div>
         
-        <div className={cn('grid grid-cols-1 gap-8', gridCols[columns])}>
+        <div 
+          data-ui-id="features-grid"
+          data-ui-class="features-grid"
+          data-ui-role="feature-list"
+          className={cn('grid grid-cols-1 gap-8', gridCols[columns])}
+        >
           {features.map((feature, index) => (
             <FeatureCard key={index} {...feature} />
           ))}

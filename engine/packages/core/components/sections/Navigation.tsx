@@ -31,10 +31,18 @@ export const Navigation: React.FC<NavigationProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className={cn('bg-white border-b border-gray-200 sticky top-0 z-50', className)}>
+    <nav 
+      data-ui-id="main-navigation"
+      data-ui-role="navigation"
+      className={cn('bg-white border-b border-gray-200 sticky top-0 z-50', className)}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
+          <div 
+            data-ui-id="nav-logo"
+            data-ui-role="logo"
+            className="flex-shrink-0"
+          >
             {logo ? (
               <img src={logo} alt={logoText} className="h-8" />
             ) : (
@@ -42,10 +50,17 @@ export const Navigation: React.FC<NavigationProps> = ({
             )}
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div 
+            data-ui-id="nav-links-desktop"
+            data-ui-role="nav-links"
+            className="hidden md:flex items-center space-x-8"
+          >
             {links.map((link, index) => (
               <a
                 key={index}
+                data-ui-id={`nav-link-${index}`}
+                data-ui-class="nav-link"
+                data-ui-role="link"
                 href={link.href}
                 onClick={(e) => {
                   if (link.onClick) {
@@ -59,13 +74,21 @@ export const Navigation: React.FC<NavigationProps> = ({
               </a>
             ))}
             {cta && (
-              <Button onClick={cta.onClick} size="md">
+              <Button 
+                data-ui-id="nav-cta"
+                data-ui-class="primary-cta"
+                data-ui-role="cta-button"
+                onClick={cta.onClick} 
+                size="md"
+              >
                 {cta.text}
               </Button>
             )}
           </div>
 
           <button
+            data-ui-id="nav-mobile-toggle"
+            data-ui-role="toggle-button"
             className="md:hidden p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
@@ -78,11 +101,18 @@ export const Navigation: React.FC<NavigationProps> = ({
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div 
+            data-ui-id="nav-mobile-menu"
+            data-ui-role="mobile-menu"
+            className="md:hidden py-4 border-t border-gray-200"
+          >
             <div className="flex flex-col space-y-4">
               {links.map((link, index) => (
                 <a
                   key={index}
+                  data-ui-id={`nav-mobile-link-${index}`}
+                  data-ui-class="nav-link"
+                  data-ui-role="link"
                   href={link.href}
                   onClick={(e) => {
                     if (link.onClick) {
@@ -97,7 +127,13 @@ export const Navigation: React.FC<NavigationProps> = ({
                 </a>
               ))}
               {cta && (
-                <Button onClick={cta.onClick} fullWidth>
+                <Button 
+                  data-ui-id="nav-mobile-cta"
+                  data-ui-class="primary-cta"
+                  data-ui-role="cta-button"
+                  onClick={cta.onClick} 
+                  fullWidth
+                >
                   {cta.text}
                 </Button>
               )}

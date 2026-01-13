@@ -30,7 +30,11 @@ export const About: React.FC<AboutProps> = ({
   className,
 }) => {
   return (
-    <section className={cn('py-20 bg-white', className)}>
+    <section 
+      data-ui-id="about-section"
+      data-ui-role="about"
+      className={cn('py-20 bg-white', className)}
+    >
       <div className="container mx-auto px-4">
         <div
           className={cn(
@@ -40,16 +44,28 @@ export const About: React.FC<AboutProps> = ({
         >
           <div className={imagePosition === 'left' ? 'md:col-start-2' : ''}>
             {subtitle && (
-              <p className="text-primary-600 font-semibold text-lg mb-4">
+              <p 
+                data-ui-id="about-subtitle"
+                data-ui-role="subtitle"
+                className="text-primary-600 font-semibold text-lg mb-4"
+              >
                 {subtitle}
               </p>
             )}
             
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 
+              data-ui-id="about-title"
+              data-ui-role="heading"
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+            >
               {title}
             </h2>
             
-            <div className="text-lg text-gray-600 leading-relaxed mb-8">
+            <div 
+              data-ui-id="about-content"
+              data-ui-role="content"
+              className="text-lg text-gray-600 leading-relaxed mb-8"
+            >
               {typeof content === 'string' ? (
                 <p>{content}</p>
               ) : (
@@ -58,9 +74,18 @@ export const About: React.FC<AboutProps> = ({
             </div>
             
             {stats && stats.length > 0 && (
-              <div className="grid grid-cols-2 gap-6 mb-8">
+              <div 
+                data-ui-id="about-stats"
+                data-ui-role="stats-group"
+                className="grid grid-cols-2 gap-6 mb-8"
+              >
                 {stats.map((stat, index) => (
-                  <div key={index}>
+                  <div 
+                    key={index}
+                    data-ui-id={`about-stat-${index}`}
+                    data-ui-class="stat-item"
+                    data-ui-role="stat"
+                  >
                     <div className="text-4xl font-bold text-primary-600 mb-1">
                       {stat.value}
                     </div>
@@ -71,7 +96,13 @@ export const About: React.FC<AboutProps> = ({
             )}
             
             {cta && (
-              <Button size="lg" onClick={cta.onClick}>
+              <Button 
+                data-ui-id="about-cta"
+                data-ui-class="primary-cta"
+                data-ui-role="cta-button"
+                size="lg" 
+                onClick={cta.onClick}
+              >
                 {cta.text}
               </Button>
             )}
@@ -79,6 +110,8 @@ export const About: React.FC<AboutProps> = ({
           
           {image && (
             <div
+              data-ui-id="about-image"
+              data-ui-role="image"
               className={cn(
                 'relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl',
                 imagePosition === 'left' && 'md:col-start-1'

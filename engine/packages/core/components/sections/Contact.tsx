@@ -92,26 +92,56 @@ export const Contact: React.FC<ContactProps> = ({
   };
 
   return (
-    <section className={cn('py-20 bg-gray-50', className)}>
+    <section 
+      data-ui-id="contact-section"
+      data-ui-role="contact"
+      className={cn('py-20 bg-gray-50', className)}
+    >
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div 
+          data-ui-id="contact-header"
+          data-ui-role="section-header"
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
           {subtitle && (
-            <p className="text-primary-600 font-semibold text-lg mb-4">
+            <p 
+              data-ui-id="contact-subtitle"
+              data-ui-role="subtitle"
+              className="text-primary-600 font-semibold text-lg mb-4"
+            >
               {subtitle}
             </p>
           )}
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 
+            data-ui-id="contact-title"
+            data-ui-role="heading"
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+          >
             {title}
           </h2>
           {description && (
-            <p className="text-lg text-gray-600">{description}</p>
+            <p 
+              data-ui-id="contact-description"
+              data-ui-role="description"
+              className="text-lg text-gray-600"
+            >
+              {description}
+            </p>
           )}
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <div 
+            data-ui-id="contact-form-container"
+            data-ui-role="form-container"
+            className="bg-white rounded-2xl shadow-lg p-8"
+          >
             {submitSuccess ? (
-              <div className="text-center py-12">
+              <div 
+                data-ui-id="contact-success-message"
+                data-ui-role="success-message"
+                className="text-center py-12"
+              >
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -123,12 +153,21 @@ export const Contact: React.FC<ContactProps> = ({
                 <p className="text-gray-600 mb-6">
                   Hamarosan felvesszük Önnel a kapcsolatot.
                 </p>
-                <Button onClick={() => setSubmitSuccess(false)}>
+                <Button 
+                  data-ui-id="contact-reset-button"
+                  data-ui-role="reset-button"
+                  onClick={() => setSubmitSuccess(false)}
+                >
                   Új üzenet küldése
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form 
+                data-ui-id="contact-form"
+                data-ui-role="contact-form"
+                onSubmit={handleSubmit} 
+                className="space-y-6"
+              >
                 <ContactFormField
                   type="text"
                   name="name"
@@ -173,6 +212,9 @@ export const Contact: React.FC<ContactProps> = ({
                 />
                 
                 <Button
+                  data-ui-id="contact-submit-button"
+                  data-ui-class="primary-cta"
+                  data-ui-role="submit-button"
                   type="submit"
                   size="lg"
                   fullWidth
@@ -185,20 +227,35 @@ export const Contact: React.FC<ContactProps> = ({
           </div>
 
           {contactInfo && (
-            <div className="space-y-8">
+            <div 
+              data-ui-id="contact-info-section"
+              data-ui-role="contact-info"
+              className="space-y-8"
+            >
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                <h3 
+                  data-ui-id="contact-info-title"
+                  data-ui-role="heading"
+                  className="text-2xl font-bold text-gray-900 mb-6"
+                >
                   Kapcsolat
                 </h3>
                 <div className="space-y-4">
                   {contactInfo.email && (
-                    <div className="flex items-start gap-4">
+                    <div 
+                      data-ui-id="contact-email"
+                      data-ui-class="contact-item"
+                      data-ui-role="contact-detail"
+                      className="flex items-start gap-4"
+                    >
                       <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
                         <Mail className="w-6 h-6 text-primary-600" />
                       </div>
                       <div>
                         <div className="font-semibold text-gray-900 mb-1">Email</div>
                         <a
+                          data-ui-id="contact-email-link"
+                          data-ui-role="link"
                           href={`mailto:${contactInfo.email}`}
                           className="text-primary-600 hover:text-primary-700"
                         >
@@ -209,13 +266,20 @@ export const Contact: React.FC<ContactProps> = ({
                   )}
                   
                   {contactInfo.phone && (
-                    <div className="flex items-start gap-4">
+                    <div 
+                      data-ui-id="contact-phone"
+                      data-ui-class="contact-item"
+                      data-ui-role="contact-detail"
+                      className="flex items-start gap-4"
+                    >
                       <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
                         <Phone className="w-6 h-6 text-primary-600" />
                       </div>
                       <div>
                         <div className="font-semibold text-gray-900 mb-1">Telefon</div>
                         <a
+                          data-ui-id="contact-phone-link"
+                          data-ui-role="link"
                           href={`tel:${contactInfo.phone}`}
                           className="text-primary-600 hover:text-primary-700"
                         >
@@ -226,13 +290,23 @@ export const Contact: React.FC<ContactProps> = ({
                   )}
                   
                   {contactInfo.address && (
-                    <div className="flex items-start gap-4">
+                    <div 
+                      data-ui-id="contact-address"
+                      data-ui-class="contact-item"
+                      data-ui-role="contact-detail"
+                      className="flex items-start gap-4"
+                    >
                       <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
                         <MapPin className="w-6 h-6 text-primary-600" />
                       </div>
                       <div>
                         <div className="font-semibold text-gray-900 mb-1">Cím</div>
-                        <p className="text-gray-600">{contactInfo.address}</p>
+                        <p 
+                          data-ui-id="contact-address-text"
+                          className="text-gray-600"
+                        >
+                          {contactInfo.address}
+                        </p>
                       </div>
                     </div>
                   )}
