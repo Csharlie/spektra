@@ -34,7 +34,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     <nav 
       data-ui-id="main-navigation"
       data-ui-role="navigation"
-      className={cn('bg-white border-b border-gray-200 sticky top-0 z-50', className)}
+      className={cn('bg-white border-b border-gray-200 sticky top-0 z-50 font-sans', className)}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
@@ -46,7 +46,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             {logo ? (
               <img src={logo} alt={logoText} className="h-8" />
             ) : (
-              <Logo text={logoText} size="md" />
+              <Logo text={logoText} size="md" className="font-sans" />
             )}
           </div>
 

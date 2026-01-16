@@ -18,9 +18,11 @@ export const Logo: React.FC<LogoProps> = ({
     lg: 'text-3xl',
   };
 
+  const hasTextColor = className?.includes('text-');
+
   return (
     <div className={cn('font-display font-bold', sizes[size], className)}>
-      <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+      <span className={hasTextColor ? '' : 'bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent'}>
         {text}
       </span>
     </div>
