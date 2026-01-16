@@ -1,3 +1,9 @@
+## [0.12.0](https://github.com/Csharlie/spektra/compare/engine-v0.11.0...engine-v0.12.0) (2026-01-16)
+
+### ✨ Features
+
+* add specific package 'bcb-test-01' to pnpm workspace configuration ([23d3afe](https://github.com/Csharlie/spektra/commit/23d3afebc0300dfaaaf8acdb2152f2525e59661b))
+
 ## [0.11.0](https://github.com/Csharlie/spektra/compare/engine-v0.10.1...engine-v0.11.0) (2026-01-13)
 
 ### ✨ Features
