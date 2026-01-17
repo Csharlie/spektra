@@ -13,6 +13,8 @@ export interface NavigationLink {
 export interface NavigationProps {
   logo?: string;
   logoText?: string;
+  logoLink?: string;
+  onLogoClick?: () => void;
   links: NavigationLink[];
   cta?: {
     text: string;
@@ -24,6 +26,8 @@ export interface NavigationProps {
 export const Navigation: React.FC<NavigationProps> = ({
   logo,
   logoText = 'Spektra',
+  logoLink = '/',
+  onLogoClick,
   links,
   cta,
   className,
@@ -34,21 +38,28 @@ export const Navigation: React.FC<NavigationProps> = ({
     <nav 
       data-ui-id="main-navigation"
       data-ui-role="navigation"
-      className={cn('bg-white border-b border-gray-200 sticky top-0 z-50 font-sans', className)}
+      className={cn('bg-white sticky top-0 z-50 font-sans border-b border-gray-200', className)}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative">
         <div className="flex items-center justify-between h-16">
-          <div 
+          <a
+            href={logoLink}
+            onClick={(e) => {
+              if (onLogoClick) {
+                e.preventDefault();
+                onLogoClick();
+              }
+            }}
             data-ui-id="nav-logo"
             data-ui-role="logo"
-            className="flex-shrink-0"
+            className="flex-shrink-0 cursor-pointer"
           >
             {logo ? (
               <img src={logo} alt={logoText} className="h-8" />
             ) : (
               <Logo text={logoText} size="md" className="font-sans" />
             )}
-          </div>
+          </a>
 
           <div 
             data-ui-id="nav-links-desktop"
@@ -104,7 +115,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           <div 
             data-ui-id="nav-mobile-menu"
             data-ui-role="mobile-menu"
-            className="md:hidden py-4 border-t border-gray-200"
+            className="md:hidden absolute top-16 left-0 right-0 bg-white border-t border-gray-200 py-4 px-4"
           >
             <div className="flex flex-col space-y-4">
               {links.map((link, index) => (
