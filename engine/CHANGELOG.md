@@ -1,3 +1,9 @@
+## [0.12.1](https://github.com/Csharlie/spektra/compare/engine-v0.12.0...engine-v0.12.1) (2026-01-17)
+
+### 🐛 Bug Fixes
+
+* **core:** mobil navigáció pozícionálás javítása absolute-ra ([e092bec](https://github.com/Csharlie/spektra/commit/e092becdd9f8f4c7414032417fe9344bcd6b3a13))
+
 ## [0.12.0](https://github.com/Csharlie/spektra/compare/engine-v0.11.0...engine-v0.12.0) (2026-01-16)
 
 ### ✨ Features
