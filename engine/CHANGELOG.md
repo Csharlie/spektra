@@ -1,3 +1,23 @@
+## [0.13.0](https://github.com/Csharlie/spektra/compare/engine-v0.12.1...engine-v0.13.0) (2026-01-18)
+
+### ✨ Features
+
+* add demo package to pnpm workspace and enhance project creation script ([3929524](https://github.com/Csharlie/spektra/commit/3929524222a3d0ddbf664a1677248f94a35adb45))
+* update Navigation component styles and add demo-02 package to workspace ([678467d](https://github.com/Csharlie/spektra/commit/678467d3504acbd2d8a1b47157c35f18502f8ec9))
+
+### 🐛 Bug Fixes
+
+* **Navigation:** change nav class from sticky to fixed for better positioning ([aecd1ee](https://github.com/Csharlie/spektra/commit/aecd1ee2be554cdcb1ce1e07d8930be60b60d631))
+
+### ♻️ Code Refactoring
+
+* **engine:** replace any types with unknown for type safety ([9b7b978](https://github.com/Csharlie/spektra/commit/9b7b978c5fa1241dd66baf2ae7bfb2bfcb7ff289))
+
+### 🔨 Maintenance
+
+* **engine:** update pnpm-lock.yaml to fix CI frozen-lockfile error ([7f80214](https://github.com/Csharlie/spektra/commit/7f8021466b67184b99c2b04593a941ada0b2cafd))
+* remove demo from workspace, keep it gitignored ([2a5f084](https://github.com/Csharlie/spektra/commit/2a5f084186ca4d4e3ae593cc05e817fc64ed6d10))
+
 ## [0.12.1](https://github.com/Csharlie/spektra/compare/engine-v0.12.0...engine-v0.12.1) (2026-01-17)
 
 ### 🐛 Bug Fixes
