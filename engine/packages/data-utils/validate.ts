@@ -8,7 +8,7 @@ export interface ValidationResult {
   errors: string[];
 }
 
-export function validate(data: any, _schema: any): ValidationResult {
+export function validate(data: unknown, _schema: unknown): ValidationResult {
   const errors: string[] = [];
   
   // Basic validation logic
@@ -22,7 +22,7 @@ export function validate(data: any, _schema: any): ValidationResult {
   };
 }
 
-export function validateRequired(data: any, requiredFields: string[]): ValidationResult {
+export function validateRequired(data: Record<string, unknown>, requiredFields: string[]): ValidationResult {
   const errors: string[] = [];
 
   requiredFields.forEach(field => {

@@ -22,7 +22,7 @@ export interface ThemeConfig {
   name: string;
   colors?: Record<string, string>;
   fonts?: Record<string, string>;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface Page {
@@ -35,7 +35,7 @@ export interface Page {
 export interface Section {
   type: string;
   id: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 export interface NavigationItem {

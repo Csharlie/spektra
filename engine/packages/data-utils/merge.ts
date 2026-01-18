@@ -10,17 +10,18 @@ export function merge<T extends object>(...objects: Partial<T>[]): T {
 }
 
 export function deepMerge<T extends object>(...objects: Partial<T>[]): T {
-  const isObject = (obj: any) => obj && typeof obj === 'object' && !Array.isArray(obj);
+  const isObject = (obj: unknown): obj is Record<string, unknown> => 
+    obj !== null && typeof obj === 'object' && !Array.isArray(obj);
 
   return objects.reduce<T>((acc, obj) => {
     Object.keys(obj).forEach(key => {
-      const accValue = (acc as any)[key];
-      const objValue = (obj as any)[key];
+      const accValue = (acc as Record<string, unknown>)[key];
+      const objValue = (obj as Record<string, unknown>)[key];
 
       if (isObject(accValue) && isObject(objValue)) {
-        (acc as any)[key] = deepMerge(accValue, objValue);
+        (acc as Record<string, unknown>)[key] = deepMerge(accValue, objValue);
       } else {
-        (acc as any)[key] = objValue;
+        (acc as Record<string, unknown>)[key] = objValue;
       }
     });
     return acc;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Hero } from '../components/sections/Hero';
-import type { SiteData } from '../types/SiteData';
+import type { SiteData, Section } from '../types/SiteData';
 
 export interface AppProps {
   data: SiteData;
@@ -9,7 +9,7 @@ export interface AppProps {
 export const App: React.FC<AppProps> = ({ data }) => {
   const { pages } = data;
 
-  const renderSection = (section: any) => {
+  const renderSection = (section: Section) => {
     switch (section.type) {
       case 'hero':
         return (
