@@ -38,7 +38,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     <nav 
       data-ui-id="main-navigation"
       data-ui-role="navigation"
-      className={cn('bg-white sticky top-0 z-50 font-sans border-b border-gray-200', className)}
+      className={cn(' bg-white/75 backdrop-blur-sm sticky top-0 z-50 font-sans border-b border-gray-200', className)}
     >
       <div className="container mx-auto px-4 relative">
         <div className="flex items-center justify-between h-16">
@@ -115,7 +115,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           <div 
             data-ui-id="nav-mobile-menu"
             data-ui-role="mobile-menu"
-            className="md:hidden absolute top-16 left-0 right-0 bg-white border-t border-gray-200 py-4 px-4"
+            className="md:hidden top-0 left-0 right-0 border-t border-gray-200 py-8 px-4"
           >
             <div className="flex flex-col space-y-4">
               {links.map((link, index) => (

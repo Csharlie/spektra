@@ -100,6 +100,52 @@ importers:
         specifier: ^5.1.0
         version: 5.4.21
 
+  demo-02:
+    dependencies:
+      '@spektra/core':
+        specifier: link:../../engine/packages/core
+        version: link:../../engine/packages/core
+      lucide-react:
+        specifier: ^0.263.1
+        version: 0.263.1(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      react-router-dom:
+        specifier: ^7.12.0
+        version: 7.12.0(react-dom@18.3.1)(react@18.3.1)
+    devDependencies:
+      '@spektra/config':
+        specifier: link:../../engine/packages/config
+        version: link:../../engine/packages/config
+      '@types/react':
+        specifier: ^18.3.1
+        version: 18.3.27
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.7(@types/react@18.3.27)
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.7.0(vite@5.4.21)
+      autoprefixer:
+        specifier: ^10.4.17
+        version: 10.4.23(postcss@8.5.6)
+      postcss:
+        specifier: ^8.4.35
+        version: 8.5.6
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.19
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+      vite:
+        specifier: ^5.1.0
+        version: 5.4.21
+
   pappanett:
     dependencies:
       '@spektra/core':

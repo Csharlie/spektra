@@ -1,3 +1,4 @@
 packages:
+  - 'demo-02'
   - 'bcb-test-01'
   - '*'
