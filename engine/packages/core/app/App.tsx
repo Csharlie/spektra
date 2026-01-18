@@ -15,11 +15,11 @@ export const App: React.FC<AppProps> = ({ data }) => {
         return (
           <Hero
             key={section.id}
-            title={section.data.title}
-            subtitle={section.data.subtitle}
-            description={section.data.description || ''}
-            primaryCTA={section.data.primaryCTA}
-            secondaryCTA={section.data.secondaryCTA}
+            title={section.data.title as string}
+            subtitle={section.data.subtitle as string | undefined}
+            description={(section.data.description as string) || ''}
+            primaryCTA={section.data.primaryCTA as { text: string; onClick: () => void } | undefined}
+            secondaryCTA={section.data.secondaryCTA as { text: string; onClick: () => void } | undefined}
           />
         );
       default:
