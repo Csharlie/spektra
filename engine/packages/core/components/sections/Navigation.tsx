@@ -38,7 +38,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     <nav 
       data-ui-id="main-navigation"
       data-ui-role="navigation"
-      className={cn(' bg-white/75 backdrop-blur-sm sticky top-0 z-50 font-sans border-b border-gray-200', className)}
+      className={cn(' bg-white/75 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 font-sans border-b border-gray-200', className)}
     >
       <div className="container mx-auto px-4 relative">
         <div className="flex items-center justify-between h-16">
