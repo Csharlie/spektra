@@ -49,6 +49,11 @@ function copyDirectoryRecursive(source: string, target: string): void {
   const items = fs.readdirSync(source);
 
   for (const item of items) {
+    // Skip node_modules directory
+    if (item === 'node_modules') {
+      continue;
+    }
+
     const sourcePath = path.join(source, item);
     const targetPath = path.join(target, item);
     const stat = fs.statSync(sourcePath);
@@ -188,25 +193,46 @@ async function main(): Promise<void> {
     break;
   }
 
+  // 3. Ask for template
+  let template = '';
+  while (true) {
+    console.log('\nElérhető template-ek:');
+    console.log('  1. baseline  - Alap sablon (egyszerű, routing nélkül)');
+    console.log('  2. routeline - Routing-al és AppShell komponenssel');
+    
+    const choice = await question('\nVálassz template-et (1 vagy 2): ');
+
+    if (choice === '1' || choice.toLowerCase() === 'baseline') {
+      template = 'baseline';
+      break;
+    } else if (choice === '2' || choice.toLowerCase() === 'routeline') {
+      template = 'routeline';
+      break;
+    } else {
+      console.error('❌ Érvénytelen választás! Válassz 1 vagy 2-t.\n');
+    }
+  }
+
   rl.close();
 
   console.log('\n📦 Projekt létrehozása...\n');
 
-  // 3. Define paths
+  // 4. Define paths
   const rootDir = process.cwd();
-  const sourceDir = path.join(rootDir, 'engine', 'templates', 'baseline');
+  const sourceDir = path.join(rootDir, 'engine', 'templates', template);
   const targetDir = path.join(rootDir, 'projects', folderName);
 
-  // 4. Validate source exists
+  // 5. Validate source exists
   if (!fs.existsSync(sourceDir)) {
-    console.error('❌ Hiba: A baseline sablon nem található!');
+    console.error(`❌ Hiba: A ${template} sablon nem található!`);
     console.error(`   Keresett útvonal: ${sourceDir}`);
     process.exit(1);
   }
 
   // 5. Copy template
-  console.log(`📁 Másolás: ${sourceDir}`);
-  console.log(`📁 Cél:     ${targetDir}\n`);
+  console.log(`📁 Template:  ${template}`);
+  console.log(`📁 Forrás:    ${sourceDir}`);
+  console.log(`📁 Cél:       ${targetDir}\n`);
 
   try {
     copyDirectoryRecursive(sourceDir, targetDir);
