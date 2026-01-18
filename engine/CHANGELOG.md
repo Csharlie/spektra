@@ -1,3 +1,9 @@
+## [0.13.1](https://github.com/Csharlie/spektra/compare/engine-v0.13.0...engine-v0.13.1) (2026-01-18)
+
+### 🐛 Bug Fixes
+
+* **core:** add type assertions for Section data to resolve TypeScript errors ([32b7715](https://github.com/Csharlie/spektra/commit/32b7715ca9cc5c919e60515471105c6b654d3642))
+
 ## [0.13.0](https://github.com/Csharlie/spektra/compare/engine-v0.12.1...engine-v0.13.0) (2026-01-18)
 
 ### ✨ Features
