@@ -538,7 +538,7 @@ devDependencies:
 
 ---
 
-## Fázis 7 — @spektra/themes (...) · #___ `___`
+## Fázis 7 — @spektra/themes (...) · #16 `4f45cfe`
 
 ### Cél
 
