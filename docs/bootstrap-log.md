@@ -538,6 +538,93 @@ devDependencies:
 
 ---
 
-## Fázis 7 — @spektra/themes (...)
+## Fázis 7 — @spektra/themes (...) · #___ `___`
 
-> _Következő fázis — ide kerül a dokumentáció._
+### Cél
+
+Pure Tailwind CSS preset-ek — platform szintű design token-ök (szín, tipográfia, spacing). ZERO @spektra import, ZERO React. Build-time konfigurációk, nem runtime CSS változók.
+
+### Fájlstruktúra
+
+```
+packages/themes/
+├── package.json
+├── tsconfig.json
+└── src/
+    ├── index.ts         ← barrel: basePreset, baseColors, baseTypography, corporatePreset, starterPreset
+    ├── base.ts          ← baseColors (blue primary, purple secondary, 50–950), baseTypography (Inter + Lexend), basePreset
+    ├── corporate.ts     ← corporateColors (sky primary, teal secondary), corporateTypography (Inter + Poppins), corporatePreset
+    └── starter.ts       ← starterPreset — base alias, zero override
+```
+
+### Hierarchikus preset cascade
+
+```
+basePreset            ← platform foundation (colors, fonts, spacing)
+├── corporatePreset   ← professional sky/teal palette, Poppins headings
+├── starterPreset     ← zero override — base alias
+└── (kliens preset)   ← tailwind.config.ts-ben: presets: [corporatePreset]
+```
+
+### Tervezési döntések
+
+| Döntés | Indok |
+|--------|-------|
+| Pure Tailwind presets, nem runtime CSS vars | Build-time optimalizálás. Tailwind tree-shake-eli a nem használt class-okat. CSS vars runtime overhead |
+| ZERO @spektra import | A themes package NEM importál semmit a platform-ból. Tailwind preset = standalone konfiguráció. Boundary: `allow: []` |
+| ZERO React | Nincs JSX, nincs React import. `types: []` a tsconfig-ban (nincs @types/react) |
+| `content: []` a basePreset-ben | A downstream preset `presets: [basePreset]` megköveteli, hogy a preset `Config`-nak feleljen meg. A `content: []` explicit üres, a végső tailwind.config.ts felülírja |
+| `satisfies Config` / `satisfies Partial<Config>` | basePreset `satisfies Config` (teljes), downstream presetek `satisfies Partial<Config>` (a presets[] mező felveszi a base-t) |
+| 50–950 tint scale | Tailwind 3.x convention. Teljes paletta: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 |
+| Szétválasztott colors/typography export | `baseColors` és `baseTypography` külön exportálva — consumer félhívhatja csak a színeket, ha custom font-ot akar |
+| CVA nem bevezetve | YAGNI — a preset cascade és Record lookup elegendő. CVA értékelése Phase 8-ban, ha compound variant kell |
+
+### Color palette-ek
+
+| Preset | Primary | Secondary |
+|--------|---------|-----------|
+| base | blue (#3b82f6 500) | purple (#a855f7 500) |
+| corporate | sky (#0ea5e9 500) | teal (#14b8a6 500) |
+| starter | = base | = base |
+
+### Typography
+
+| Preset | Body (sans) | Display |
+|--------|-------------|---------|
+| base | Inter | Lexend |
+| corporate | Inter | Poppins |
+| starter | = base | = base |
+
+### API surface
+
+```typescript
+// Preset használat kliens tailwind.config.ts-ben:
+import { corporatePreset } from '@spektra/themes'
+import type { Config } from 'tailwindcss'
+
+export default {
+  presets: [corporatePreset],
+  content: ['./src/**/*.{ts,tsx}'],
+} satisfies Config
+
+// Vagy csak tokenek használata:
+import { baseColors, baseTypography } from '@spektra/themes'
+```
+
+### Boundary szabályok (eslint.config.cjs)
+
+```
+themes → []   (ZERO @spektra import allowed)
+```
+
+A themes package izolált — sem runtime-ot, sem types-ot nem importál. Ez szándékos: a Tailwind preset-eknek nem kell tudniuk a platform típusrendszeréről.
+
+### Függőségek
+
+```
+dependencies: (none)
+
+devDependencies:
+  tailwindcss          ^3.4.0
+  typescript           ^5.9.3
+```

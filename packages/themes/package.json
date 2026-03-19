@@ -1,0 +1,26 @@
+{
+  "name": "@spektra/themes",
+  "version": "0.1.0",
+  "description": "Tailwind CSS theme presets — base, corporate, starter",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "lint": "eslint src/"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
