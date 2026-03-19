@@ -232,6 +232,110 @@ Code review után 2 issue javítva.
 
 ---
 
-## Fázis 4 — @spektra/runtime (...)
+## Fázis 4 — @spektra/runtime (2026-03-19) · #8
+
+**Commit:** `feat(runtime): react runtime — context, registry, renderer`
+
+### Mi jött létre
+
+```
+packages/runtime/
+├── package.json               ← @spektra/runtime, dep: types, peer: react ^18
+├── tsconfig.json              ← composite, types: ["react"], project ref → types
+└── src/
+    ├── index.ts               ← barrel export
+    ├── types.ts               ← SectionDefinition<T> (React-aware plugin contract)
+    ├── section-registry.ts    ← createSectionRegistry + registerSections
+    ├── section-renderer.tsx   ← SectionRenderer component
+    └── context.tsx            ← SiteDataProvider + useSiteData hook
+```
+
+### Mi változott az sp-engine-hez képest
+
+| sp-engine (régi) | @spektra/runtime (új) | Miért |
+|---|---|---|
+| `AppRuntime` component — all-in-one | `SiteDataProvider` + `SectionRenderer` szétválasztva | Separation of concerns: context ≠ rendering |
+| `SiteData` useState + useEffect kézzel az App-ban | `SiteDataProvider` automatikus adapter.load() | Nincs boilerplate a kliens App-ban |
+| Nincs loading/error state kezelés | `useSiteData()` → `{ data, loading, error }` | Strukturált állapotkezelés |
+| `registry.resolve()` csak component-et ad | `SectionRegistry` interface: resolve + has + types() | Introspection lehetőség (debug, admin UI) |
+| `SectionDefinition.component: ComponentType<any>` | `SectionDefinition<T>.component: ComponentType<T>` | Type-safe section data |
+| `SectionDefinition.metadata: { label?, category? }` | `SectionDefinition.metadata: SectionMeta` (from @spektra/types) | Közös SectionMeta type a types package-ből |
+| Ismeretlen section → dev-only `<div>` | Ismeretlen section → `null` (vagy custom `fallback` prop) | Nincs Vite-specifikus `import.meta.env` dependency |
+
+### Architektúrális döntések
+
+1. **SiteDataProvider + useSiteData** — Az sp-engine-ben az App.tsx-ben volt kézzel `useState<SiteData | null>` + `useEffect(() => adapter.load().then(…))`. Most ez platform-szintű: a Provider mount-kor hívja `adapter.load()`-ot, cleanup-pal (`cancelled` flag) véd a race condition ellen
+2. **SectionRenderer szeparálva** — az sp-engine AppRuntime-ja egyben volt a section loop-pal. Most a SectionRenderer önálló component: újrafelhasználható layout-okon belül szeletekre (pl. csak header sections, csak content sections)
+3. **fallback prop** a SectionRenderer-en — `import.meta.env.DEV` Vite-specifikus, platform package-ben nem használható. Helyette a kliens adhat `fallback` callback-et ismeretlen section type-okra
+4. **React = peerDependency** — a runtime nem hozza magával a react-et, a kliens app-é a felelősség. `@types/react` devDependency a build-hez
+5. **Nincs @spektra/data import** — a boundary rule (`runtime → types, data`) engedi, de a runtime nem importál közvetlenül data-ból. Az adapter-t a kliens adja props-ként a Provider-nek. Laza coupling.
+6. **SectionRegistry interface** — az sp-engine-ben az object literal volt a registry. Most explicit interface: `register`, `resolve`, `has`, `types()`. A `has` + `types()` debug/admin UI-nak fontos
+
+### Forrásanyag
+
+| Forrás | Mi lett belőle |
+|---|---|
+| sp-engine `runtime/AppRuntime.tsx` | Szétválasztva: `context.tsx` (Provider) + `section-renderer.tsx` (rendering) |
+| sp-engine `runtime/sectionRegistry.ts` | `section-registry.ts` — ugyanaz a Map pattern, de SectionDefinition-nel és explicit interface-szel |
+| sp-benettcar-consumer `App.tsx` useState+useEffect | Beolvadt a `SiteDataProvider`-be — kliensnél nem kell többé kézzel kezelni |
+| sp-engine `SectionDefinition` type | `types.ts` — generic `<T>`, SectionMeta import |
+| spektra-private `DesignSystemContext` | Pattern átvéve (createContext + Provider + hook), de SiteData-ra alkalmazva |
+| sp-modules hooks (`useDocumentTitle`, stb.) | KIZÁRVA — utility hook-ok, nem runtime responsibility |
+| spektra-private `data/wp/rest/hooks.ts` | KIZÁRVA — CMS-specifikus React hook, ez az adapter réteg felelőssége |
+
+### API surface
+
+```typescript
+import {
+  SiteDataProvider,
+  useSiteData,
+  createSectionRegistry,
+  registerSections,
+  SectionRenderer,
+} from '@spektra/runtime'
+import type { SectionDefinition } from '@spektra/runtime'
+
+// 1. Registry létrehozás + section pluginok regisztrálása
+const registry = createSectionRegistry()
+registerSections(registry, [heroDefinition, aboutDefinition, ...])
+
+// 2. Provider → az app gyökerében
+function App() {
+  return (
+    <SiteDataProvider adapter={myAdapter}>
+      <Layout />
+    </SiteDataProvider>
+  )
+}
+
+// 3. Consume data + render
+function Layout() {
+  const { data, loading, error } = useSiteData()
+  if (loading) return <Spinner />
+  if (error) return <Error message={error.message} />
+  if (!data) return null
+
+  const page = data.pages[0]
+  return (
+    <SectionRenderer
+      sections={page.sections}
+      registry={registry}
+      fallback={(type) => `Missing: ${type}`}
+    />
+  )
+}
+```
+
+### Guardrails aktív
+
+- `dependencies: { "@spektra/types": "workspace:*" }` — egyetlen real dep
+- `peerDependencies: { "react": "^18.0.0" }` — React a kliens hozza
+- `tsconfig.json types: ["react"]` → csak React típusok engedélyezve
+- `eslint-plugin-boundaries` rule: `from: 'runtime', allow: ['types', 'data']`
+- Barrel export: Provider, hook, registry factory, renderer, types
+
+---
+
+## Fázis 5 — @spektra/components (...)
 
 > _Következő fázis — ide kerül a dokumentáció._
