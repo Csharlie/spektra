@@ -628,3 +628,123 @@ devDependencies:
   tailwindcss          ^3.4.0
   typescript           ^5.9.3
 ```
+
+---
+
+## Fázis 8 — @spektra/templates (...) · #___ `___`
+
+### Cél
+
+Page template-ek — layout kompozíciók, amik összerakják a teljes oldalt: header slot → section terület → footer slot. A template a `SiteDataProvider` kontextusán belül él, `useSiteData()` hook-kal olvassa az adatot, és `SectionRenderer`-rel rendereli a page sections-öket.
+
+A NavigationBar és FooterBlock NEM importálható közvetlenül (boundary rule: `templates → [types, runtime]`). Ehelyett **dependency injection**: a consumer app `ComponentType<TemplateShellProps>` props-ként adja be a header/footer komponenseket.
+
+### Fájlstruktúra
+
+```
+packages/templates/
+├── package.json
+├── tsconfig.json
+└── src/
+    ├── index.ts               ← barrel: LandingTemplate + types
+    ├── types.ts               ← TemplateShellProps, LandingTemplateProps
+    └── LandingTemplate.tsx    ← single-page marketing template
+```
+
+### Tervezési döntések
+
+| Döntés | Indok |
+|--------|-------|
+| Header/footer DI (`ComponentType<TemplateShellProps>`) | Boundary rule: `templates → [types, runtime]` — NEM importálhat components-ből. A consumer app wrapperben mappeli a SiteData-t a komponens props-aira |
+| `TemplateShellProps = { siteData: SiteData }` | A teljes SiteData-t kapja a shell component, nem részleteket. A consumer a `siteData.navigation`, `siteData.site.name` stb. mezőkből szedi ki, amit akar |
+| Template a `SiteDataProvider`-en belül | `useSiteData()` hook-kal kéri az adatot. A Provider a template FELETT van, az app gyökerénél |
+| Loading/error a headert/footert nem rendereli | A shell komponenseknek kell a SiteData (navigáció, branding). Amíg nincs adat, nincs mit renderelni → csak loading/error state |
+| `pageSlug` prop | Több oldalas SiteData esetén kiválasztja melyik page sections-jeit renderelje. Default: az első page |
+| `className` prop felülírja a default layout-ot | Default: `min-h-screen flex flex-col`. Ha a consumer más layout-ot akar, felülírja |
+| Csak `LandingTemplate` | YAGNI — a multi-page router template (BrowserRouter + Routes) jövőbeli Phase. A jelenlegi use case-ek (benettcar, starter) mind single-page |
+| Nincs document title / meta kezelés | Az app réteg felelőssége. `useEffect(() => { document.title = ... })` vagy react-helmet-async |
+
+### Data flow
+
+```
+App.tsx
+├── SiteDataProvider adapter={adapter}
+│   └── LandingTemplate registry={registry} header={AppHeader} footer={AppFooter}
+│       ├── useSiteData() → { data, loading, error }
+│       ├── loading? → loading prop vagy default text
+│       ├── error? → error prop vagy default div
+│       └── data?
+│           ├── page = data.pages.find(slug) ?? data.pages[0]
+│           ├── Header → <AppHeader siteData={data} />
+│           ├── <main> → <SectionRenderer sections={page.sections} registry={registry} />
+│           └── Footer → <AppFooter siteData={data} />
+```
+
+### Consumer használati minta
+
+```typescript
+import { SiteDataProvider } from '@spektra/runtime'
+import { LandingTemplate } from '@spektra/templates'
+import type { TemplateShellProps } from '@spektra/templates'
+import { NavigationBar, FooterBlock } from '@spektra/components'
+
+// Shell wrapper — maps SiteData to NavigationBar props
+function AppHeader({ siteData }: TemplateShellProps) {
+  return (
+    <NavigationBar
+      logoText={siteData.site.name}
+      links={siteData.navigation.primary.map(item => ({
+        label: item.label,
+        href: item.href,
+      }))}
+    />
+  )
+}
+
+// Shell wrapper — maps SiteData to FooterBlock props
+function AppFooter({ siteData }: TemplateShellProps) {
+  return (
+    <FooterBlock
+      logoText={siteData.site.name}
+      description={siteData.site.description ?? ''}
+      sections={[]}
+      copyright={`© ${new Date().getFullYear()} ${siteData.site.name}`}
+    />
+  )
+}
+
+// App composition
+function App() {
+  return (
+    <SiteDataProvider adapter={adapter}>
+      <LandingTemplate
+        registry={registry}
+        header={AppHeader}
+        footer={AppFooter}
+      />
+    </SiteDataProvider>
+  )
+}
+```
+
+### Boundary szabályok (eslint.config.cjs)
+
+```
+templates → [types, runtime]
+```
+
+A templates package NEM importálhat közvetlenül a components, sections, themes, vagy data rétegekből. Csak a types (type contracts) és runtime (SiteDataProvider, SectionRenderer, SectionRegistry) elérhető. Ez biztosítja, hogy a template layout-logika független a konkrét UI komponensektől.
+
+### Függőségek
+
+```
+dependencies:
+  @spektra/types       workspace:*
+  @spektra/runtime     workspace:*
+
+peerDependencies:
+  react                ^18.0.0
+
+devDependencies:
+  @types/react         ^18.3.0
+```

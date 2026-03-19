@@ -1,0 +1,23 @@
+{
+  "name": "@spektra/templates",
+  "version": "0.1.0",
+  "description": "Page templates — layout compositions for Spektra apps",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@spektra/types": "workspace:*",
+    "@spektra/runtime": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0"
+  }
+}
