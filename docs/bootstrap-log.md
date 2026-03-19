@@ -356,7 +356,7 @@ Code review után 2 issue javítva.
 
 ---
 
-## Fázis 5 — @spektra/components (...) · #12 `___`
+## Fázis 5 — @spektra/components (...) · #12 `bf5598a`
 
 **Commit:** `feat(components): atomic design component library (B→E→M→W)`
 
