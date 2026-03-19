@@ -4,7 +4,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ---
 
-## Fázis 1 — Monorepo csontváz (2026-03-19)
+## Fázis 1 — Monorepo csontváz (2026-03-19) · #1 `1f57f01`
 
 **Commit:** `chore: init platform monorepo`
 
@@ -55,7 +55,7 @@ platform/
 
 ---
 
-## Fázis 2 — @spektra/types (2026-03-19)
+## Fázis 2 — @spektra/types (2026-03-19) · #3 `7dc87ca`
 
 **Commit:** `feat(types): initial type contracts`
 
@@ -103,7 +103,7 @@ packages/types/
 
 ---
 
-## Post-Phase 2 — Audit fix (2026-03-19)
+## Post-Phase 2 — Audit fix (2026-03-19) · #4 `eb4884f`
 
 **Commit:** `fix: audit — boundaries pattern, rimraf, script cleanup`
 
@@ -137,9 +137,9 @@ Code review után 4 problémát azonosítottunk és javítottunk egyben.
 
 ---
 
-## Fázis 3 — @spektra/data (2026-03-19)
+## Fázis 3 — @spektra/data (2026-03-19) · #5 `ca114e2`
 
-**Commit:** `feat(data): CMS adapter layer`
+**Commit:** `feat(data): cms adapter layer — wordpress + json factories`
 
 ### Mi jött létre
 
@@ -206,6 +206,29 @@ const remote = createJsonAdapter({ url: '/data/site.json' }) // fetch
 ### Build fix megjegyzés
 
 A build teszt során kiderült, hogy a `tsbuildinfo` cache félrevezető: `tsc` zéró hibával futott le, de `dist/` nem jött létre. Oka: composite + incremental mode-ban a régi `.tsbuildinfo` azt gondolta, minden up-to-date, de a dist/ mappa nem létezett (clean után). A `clean` script (`rimraf dist *.tsbuildinfo`) ezért törli mindkettőt. Ez a types package-t is érintette — itt is pótoltuk a hiányzó dist-et.
+
+---
+
+## Post-Phase 3 — Data adapter fix (2026-03-19) · #6 `3777bcd`
+
+**Commit:** `fix(data): normalize wp url slash, clarify json adapter url+data behavior`
+
+Code review után 2 issue javítva.
+
+### 1. WordPress URL double-slash normalizálás (wordpress.ts)
+
+**Mi volt:** `${apiBase}${endpoint}` — ha `apiBase` trailing slash-sel végződött és `endpoint` leading slash-sel kezdődött (default), dupla `//` keletkezett. Egyes proxy-k/hostok érzékenyek erre.
+
+**Mi lett:** `apiBase` trailing slash-e levágva, `endpoint` leading slash-e megőrizve → mindig pontosan egy `/` a kettő között.
+
+### 2. JSON adapter url+data viselkedés tisztázása (json-adapter.ts)
+
+**Mi volt:** Ha `url` és `data` is meg volt adva, `load()` mindig az inline `data`-t adta vissza (mert az `if (config.data)` előbb volt). Ez meglepetést okozhatott: prodban a remote adat helyett a beégetett mock maradt.
+
+**Mi lett:** A viselkedés explicit és dokumentált (JSDoc-ban), a kód szétválasztva:
+- **url only**: `load()` + `revalidate()` is fetch-el
+- **data only**: `load()` inline-t ad, revalidate nincs
+- **url + data**: `load()` → instant inline (gyors first paint), `revalidate()` → fetch (frissítés)
 
 ---
 
