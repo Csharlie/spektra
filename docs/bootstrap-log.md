@@ -4,6 +4,89 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ---
 
+## Jelenlegi állapot (Architecture Snapshot)
+
+> Utolsó frissítés: Phase 9 (#20 `e3f2fbb`)
+
+### Workspace struktúra
+
+```
+D:\Projects\spektra\platform\        ← pnpm monorepo + Turborepo
+├── packages/                          ← 7 library package
+│   ├── types/        @spektra/types       ZERO dep root type contracts
+│   ├── data/         @spektra/data        CMS adapter layer (WP, JSON)
+│   ├── runtime/      @spektra/runtime     React context, registry, renderer
+│   ├── components/   @spektra/components  Atomic UI (B→E→M→W, 16 component)
+│   ├── sections/     @spektra/sections    Section definitions (5 section plugin)
+│   ├── themes/       @spektra/themes      Tailwind presets (base, corporate, starter)
+│   └── templates/    @spektra/templates   Page templates (LandingTemplate)
+├── apps/                              ← 1 app
+│   └── starter/      @spektra/starter     Vite demo app — full E2E integration
+└── docs/
+    └── bootstrap-log.md               ← ez a fájl
+```
+
+### Dependency graph
+
+```
+types ← data ← runtime ← sections
+  ↑              ↑          ↑
+  └── components ┘          │
+  └── themes (izolált)      │
+  └── templates ←───────────┘
+       ↑
+starter (app) ← minden package
+```
+
+### Boundary szabályok (eslint-plugin-boundaries)
+
+| Package | Importálhat |
+|---------|-------------|
+| types | — (ZERO dep) |
+| data | types |
+| runtime | types, data |
+| basics | types |
+| elements | types, basics |
+| modules | types, basics, elements |
+| wrappers | types |
+| sections | types, basics, elements, modules, wrappers, runtime |
+| themes | — (ZERO @spektra import) |
+| templates | types, runtime |
+
+### Tech stack
+
+| | Verzió |
+|---|---|
+| TypeScript | 5.9.3 |
+| React | ^18.3 |
+| Vite | ^5.4 |
+| Tailwind CSS | ^3.4 |
+| pnpm | 9.15.4 |
+| Turborepo | 2.8.19 |
+| ESLint | 9.39.4 (flat config) |
+| Node | ≥18 |
+
+### Commit history
+
+| # | Hash | Leírás |
+|---|------|--------|
+| 1 | `1f57f01` | chore: init platform monorepo |
+| 3 | `7dc87ca` | feat(types): initial type contracts |
+| 4 | `eb4884f` | fix: audit — boundaries, rimraf, script cleanup |
+| 5 | `ca114e2` | feat(data): cms adapter layer |
+| 6 | `3777bcd` | fix(data): normalize wp url, clarify json adapter |
+| 8 | `5538d1e` | feat(runtime): react runtime |
+| 10 | `77a65c1` | fix(runtime): @types/react ^18, duplicate warn |
+| 12 | `bf5598a` | feat(components): atomic design B→E→M→W |
+| 14 | `9602207` | feat(sections): platform section definitions |
+| 16 | `4f45cfe` | feat(themes): tailwind presets |
+| 18 | `5f8b585` | feat(templates): landing template with DI shell |
+| 20 | `e3f2fbb` | feat(starter): vite app — full platform integration |
+
+(Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21)
+
+---
+
 ## Fázis 1 — Monorepo csontváz (2026-03-19) · #1 `1f57f01`
 
 **Commit:** `chore: init platform monorepo`
@@ -16,7 +99,7 @@ platform/
 ├── pnpm-workspace.yaml        ← packages/*, apps/*, tools/*
 ├── turbo.json                 ← build/dev/lint/test/clean pipeline
 ├── tsconfig.base.json         ← strict, ES2022, React JSX, composite
-├── .eslintrc.cjs              ← eslint-plugin-boundaries import szabályok
+├── eslint.config.cjs          ← eslint-plugin-boundaries import szabályok (ESLint v9 flat config)
 ├── commitlint.config.js       ← conventional commits (feat, fix, chore, ...)
 ├── .husky/pre-commit           ← lint-staged futtatás commit előtt
 ├── .husky/commit-msg           ← commitlint ellenőrzés commit message-re
@@ -48,7 +131,7 @@ platform/
 
 ### Döntések
 
-1. **Flat packages/** — nincs engine/ almappa, 8 package esetén felesleges a csoportosítás
+1. **Flat packages/** — nincs engine/ almappa, <10 package esetén felesleges a csoportosítás
 2. **ESLint flat config (.cjs)** — ESLint v9 flat config formátum
 3. **--no-verify az első commiton** — husky hook még nem tud lint-staged-et futtatni .ts fájlok nélkül
 4. **GitHub repo:** `https://github.com/Csharlie/spektra` → `D:\Projects\spektra\platform\`
