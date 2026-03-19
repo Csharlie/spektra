@@ -631,7 +631,7 @@ devDependencies:
 
 ---
 
-## Fázis 8 — @spektra/templates (...) · #___ `___`
+## Fázis 8 — @spektra/templates (...) · #18 `5f8b585`
 
 ### Cél
 
