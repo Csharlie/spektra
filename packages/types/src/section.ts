@@ -5,6 +5,7 @@
  */
 export type PlatformSectionType =
   | 'hero'
+  | 'features'
   | 'about'
   | 'gallery'
   | 'contact'
@@ -23,7 +24,7 @@ export type SectionType<ClientSectionType extends string = never> =
  * Runtime helper — ellenőrzi, hogy egy string érvényes platform section type-e.
  */
 const platformSectionTypes: ReadonlySet<string> = new Set<PlatformSectionType>([
-  'hero', 'about', 'gallery', 'contact', 'faq', 'cta',
+  'hero', 'features', 'about', 'gallery', 'contact', 'faq', 'cta',
 ])
 
 export function isPlatformSectionType(type: string): type is PlatformSectionType {

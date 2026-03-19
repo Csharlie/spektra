@@ -434,6 +434,110 @@ devDependencies:
 
 ---
 
-## Fázis 6 — @spektra/sections (...)
+## Fázis 6 — @spektra/sections (...) · #14 `___`
+
+**Commit:** `feat(sections): platform section definitions — hero, features, about, contact, gallery`
+
+@spektra/sections — a híd @spektra/components (UI) és @spektra/runtime (SectionDefinition registry) között. Minden platform section type-hoz egy `SectionDefinition<T>` plugin.
+
+### Mi jött létre
+
+```
+packages/sections/
+├── package.json               ← deps: types + components + runtime; peer: react ^18
+├── tsconfig.json              ← refs: [types, components, runtime]
+└── src/
+    ├── index.ts               ← barrel export + platformSections[] convenience array
+    ├── hero.ts                ← heroDefinition: SectionDefinition<HeroBlockProps>
+    ├── features.ts            ← featuresDefinition: SectionDefinition<FeaturesBlockProps>
+    ├── about.ts               ← aboutDefinition: SectionDefinition<AboutBlockProps>
+    ├── contact.ts             ← contactDefinition: SectionDefinition<ContactBlockProps>
+    └── gallery.ts             ← galleryDefinition: SectionDefinition<GalleryBlockProps>
+```
+
+### Mi változott (`@spektra/types` — PlatformSectionType bővítés)
+
+**Előtte:** `'hero' | 'about' | 'gallery' | 'contact' | 'faq' | 'cta'`
+**Utána:** `'hero' | 'features' | 'about' | 'gallery' | 'contact' | 'faq' | 'cta'`
+
+A `'features'` hiányzott az eredeti union-ból, holott a FeaturesBlock platform-szintű komponens. Az `isPlatformSectionType()` runtime helper Set-je is frissült.
+
+### Tervezési döntések
+
+| Döntés | Indok |
+|--------|-------|
+| 5 section, nem 7 | Footer + NavigationBar ≠ section — layout-szintű, template felelősség. Nem CMS → SectionRenderer flow-ba valók |
+| Flat file struktúra | 1 definition = 1 fájl. Subdirectory overkill 5 fájlnál |
+| Individual export typed (`SectionDefinition<T>`) | Consumer type safety: `heroDefinition.component` → `ComponentType<HeroBlockProps>` |
+| `platformSections` array `SectionDefinition<any>[]` | `ComponentType<T>` kontravariant — mixed collection nem tud `Record<string, unknown>`-nak megfelelni. Az `any` bivariant, így a registry elfogadja |
+| `faq` + `cta` type reserved, nincs definition | A types union-ban vannak, de komponens még nincs. Jövőbeli Phase-ben kapnak definíciót |
+| Callback-ok (onClick, onSubmit) nem CMS-ből jönnek | A template/app réteg felelőssége a wiring. A section.data a szerializálható props-okat tartalmazza |
+
+### Section → Component mapping
+
+| Section Type | Component | Category | section.data típusa |
+|---|---|---|---|
+| `hero` | `HeroBlock` | marketing | `HeroBlockProps` |
+| `features` | `FeaturesBlock` | marketing | `FeaturesBlockProps` |
+| `about` | `AboutBlock` | content | `AboutBlockProps` |
+| `contact` | `ContactBlock` | conversion | `ContactBlockProps` |
+| `gallery` | `GalleryBlock` | content | `GalleryBlockProps` |
+
+### SectionRenderer flow
+
+```
+CMS / JSON adat → SiteDataAdapter.load() → SiteData → Page.sections[]
+                                                          ↓
+Section { type: 'hero', data: { title, description, ... } }
+                                                          ↓
+SectionRenderer → registry.resolve('hero') → HeroBlock
+                                                          ↓
+<HeroBlock {...section.data} />
+```
+
+### API surface
+
+```typescript
+// Egyéni definíciók (typed)
+import { heroDefinition, featuresDefinition } from '@spektra/sections'
+
+// Teljes platform barrel
+import { platformSections } from '@spektra/sections'
+import { createSectionRegistry, registerSections } from '@spektra/runtime'
+
+const registry = createSectionRegistry()
+registerSections(registry, platformSections)
+
+// Kliens override példa:
+import { contactDefinition } from '@spektra/sections'
+// → registry.register({ ...contactDefinition, component: CustomContactBlock })
+```
+
+### Boundary szabályok (eslint.config.cjs)
+
+```
+sections → [types, basics, elements, modules, wrappers, runtime]
+```
+
+A sections package az egyetlen, ami MINDKÉT irányba importálhat: components rétegeiből (basics–modules) ÉS runtime-ból. Ez a bridge szerepe.
+
+### Függőségek
+
+```
+dependencies:
+  @spektra/types       workspace:*
+  @spektra/components  workspace:*
+  @spektra/runtime     workspace:*
+
+peerDependencies:
+  react                ^18.0.0
+
+devDependencies:
+  @types/react         ^18.3.0
+```
+
+---
+
+## Fázis 7 — @spektra/themes (...)
 
 > _Következő fázis — ide kerül a dokumentáció._
