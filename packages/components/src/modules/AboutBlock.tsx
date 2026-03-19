@@ -1,12 +1,12 @@
 import React from 'react'
-import type { CallToAction } from '@spektra/types'
+import type { CallToAction, Media } from '@spektra/types'
 import { cn } from '../utils/cn'
 
 export interface AboutBlockProps {
   title: string
   subtitle?: string
   content: string | React.ReactNode
-  image?: string
+  image?: Media
   imagePosition?: 'left' | 'right'
   cta?: CallToAction
   stats?: Array<{
@@ -79,7 +79,7 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
                 imagePosition === 'left' && 'md:col-start-1',
               )}
             >
-              <img src={image} alt={title} className="w-full h-full object-cover" />
+              <img src={image.src} alt={image.alt} className="w-full h-full object-cover" />
             </div>
           )}
         </div>

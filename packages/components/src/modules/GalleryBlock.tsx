@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
+import type { Media } from '@spektra/types'
 import { cn } from '../utils/cn'
 import { X } from 'lucide-react'
 
-export interface GalleryImage {
-  src: string
-  alt: string
-  category?: string
-}
+export type GalleryImage = Media & { category?: string }
 
 export interface GalleryBlockProps {
   subtitle?: string

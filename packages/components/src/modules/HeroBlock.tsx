@@ -1,5 +1,5 @@
 import React from 'react'
-import type { CallToAction } from '@spektra/types'
+import type { CallToAction, Media } from '@spektra/types'
 import { cn } from '../utils/cn'
 import { ArrowRight } from 'lucide-react'
 
@@ -9,7 +9,7 @@ export interface HeroBlockProps {
   description: string
   primaryCTA?: CallToAction
   secondaryCTA?: CallToAction
-  backgroundImage?: string
+  backgroundImage?: Media
   className?: string
 }
 
@@ -32,7 +32,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = ({
       style={
         backgroundImage
           ? {
-              backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${backgroundImage})`,
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${backgroundImage.src})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }
