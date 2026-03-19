@@ -232,7 +232,7 @@ Code review után 2 issue javítva.
 
 ---
 
-## Fázis 4 — @spektra/runtime (2026-03-19) · #8
+## Fázis 4 — @spektra/runtime (2026-03-19) · #8 `5538d1e`
 
 **Commit:** `feat(runtime): react runtime — context, registry, renderer`
 
