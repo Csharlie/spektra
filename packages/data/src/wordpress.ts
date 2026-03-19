@@ -29,7 +29,9 @@ export function createWordPressAdapter(
   } = config
 
   async function fetchSiteData(): Promise<SiteData> {
-    const url = `${apiBase}${endpoint}`
+    const base = apiBase.replace(/\/+$/, '')
+    const path = endpoint.replace(/^\/+/, '/')
+    const url = `${base}${path}`
 
     const headers: Record<string, string> = {
       'Accept': 'application/json',

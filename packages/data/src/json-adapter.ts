@@ -3,9 +3,10 @@ import type { SiteData, SiteDataAdapter } from '@spektra/types'
 /**
  * JSON adapter konfiguráció.
  *
- * Két mód:
- *  - url: SiteData JSON-t tölt be URL-ről (fetch)
- *  - data: inline SiteData objektum (dev/mock)
+ * Három mód:
+ *  - url only: load() és revalidate() is fetch-el
+ *  - data only: load() inline-t ad, revalidate nincs
+ *  - url + data: load() inline-t ad (instant), revalidate() fetch-el (frissítés)
  *
  * Legalább az egyiket meg kell adni.
  */
@@ -23,24 +24,18 @@ export function createJsonAdapter(
     throw new Error('JsonAdapter: either url or data must be provided')
   }
 
-  async function fetchSiteData(): Promise<SiteData> {
-    if (config.data) {
-      return config.data
-    }
-
-    // config.url is guaranteed by the constructor guard above
+  async function fetchFromUrl(): Promise<SiteData> {
     const response = await fetch(config.url!)
     if (!response.ok) {
       throw new Error(
         `JSON fetch error: ${response.status} ${response.statusText}`,
       )
     }
-
     return response.json() as Promise<SiteData>
   }
 
   return {
-    load: () => fetchSiteData(),
-    revalidate: config.url ? () => fetchSiteData() : undefined,
+    load: () => config.data ? Promise.resolve(config.data) : fetchFromUrl(),
+    revalidate: config.url ? () => fetchFromUrl() : undefined,
   }
 }
