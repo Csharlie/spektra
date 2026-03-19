@@ -137,6 +137,78 @@ Code review után 4 problémát azonosítottunk és javítottunk egyben.
 
 ---
 
-## Fázis 3 — @spektra/data (...)
+## Fázis 3 — @spektra/data (2026-03-19)
+
+**Commit:** `feat(data): CMS adapter layer`
+
+### Mi jött létre
+
+```
+packages/data/
+├── package.json               ← @spektra/data, egyetlen dep: @spektra/types
+├── tsconfig.json              ← composite, noEmit: false, project ref → types
+└── src/
+    ├── index.ts               ← barrel export (adapter factories + config types)
+    ├── wordpress.ts           ← createWordPressAdapter factory
+    └── json-adapter.ts        ← createJsonAdapter factory (URL vagy inline)
+```
+
+### Architektúrális döntések
+
+1. **ZERO external dependency** — natív `fetch`, nem axios. A package-nek egyetlen függősége van: `@spektra/types: workspace:*`
+2. **ZERO React** — tiszta async TS. React hook-ok (useSiteData, stb.) a `@spektra/runtime` package-be kerülnek
+3. **Factory pattern** — `createWordPressAdapter(config)` és `createJsonAdapter(config)` → mindkettő `SiteDataAdapter`-t ad vissza
+4. **mapResponse a projekt adja** — a WP adapter nem tartalmaz beépített mapping logikát, mert minden WP site más REST endpoint struktúrát használ. A `mapResponse: (response: unknown) => SiteData` config param a kliens feladata
+5. **No Apollo/GraphQL** — a WP REST adapter natív fetch-et használ. GraphQL adapter később adható hozzá, ha kell
+6. **No caching, no retry** — az adapter réteg felelőssége a fetch + transform. Cache és retry logika a runtime rétegbe tartozik
+7. **tsconfig project references** — `"references": [{ "path": "../types" }]` biztosítja a helyes build sorrendet
+
+### Forrásanyag
+
+| Forrás | Mi lett belőle |
+|---|---|
+| sp-benettcar-consumer `wordpressAdapter.ts` | `wordpress.ts` — ugyanaz a fetch+map pattern, de factory-ként (SiteDataAdapter-t ad vissza) és konfigurálható endpoint-tel |
+| sp-benettcar-consumer `loadSiteData.ts` | A mock/fallback pattern → `json-adapter.ts` inline `data` módban |
+| spektra-private `wp/rest/client.ts` | NEM vettük át — axios-ból natív fetch-re váltottunk |
+| spektra-private `wp/rest/hooks.ts` | KIZÁRVA — React hook, @spektra/runtime-ba tartozik |
+| spektra-private `wp/graphql/*` | KIZÁRVA — Apollo dependency, YAGNI. Később Phase-ölhető ha kell |
+| spektra-legacy `data-utils/*` | KIZÁRVA — normalize/merge/validate stub-ok, nem hoznak értéket |
+
+### API surface
+
+```typescript
+// WordPress adapter — configurable REST endpoint + custom mapper
+import { createWordPressAdapter } from '@spektra/data'
+
+const adapter = createWordPressAdapter({
+  apiBase: 'https://example.com',
+  endpoint: '/wp-json/benettcar/v1/page/home',  // default: /wp-json/spektra/v1/site
+  mapResponse: (raw) => transformWpResponse(raw), // projekt-specifikus mapping
+  auth: { token: '...' },                         // opcionális Bearer token
+})
+
+const siteData = await adapter.load()
+
+// JSON adapter — dev/mock/static
+import { createJsonAdapter } from '@spektra/data'
+
+const mock = createJsonAdapter({ data: mockSiteData })     // inline
+const remote = createJsonAdapter({ url: '/data/site.json' }) // fetch
+```
+
+### Guardrails aktív
+
+- `dependencies: { "@spektra/types": "workspace:*" }` — egyetlen dep, ZERO external
+- `tsconfig.json types: []` → @types/* auto-inclusion blokkolva
+- `eslint-plugin-boundaries` rule: `from: 'data', allow: ['types']` — más package-ből nem importálhat
+- Barrel export: csak factory function-ök + config type-ok
+
+### Build fix megjegyzés
+
+A build teszt során kiderült, hogy a `tsbuildinfo` cache félrevezető: `tsc` zéró hibával futott le, de `dist/` nem jött létre. Oka: composite + incremental mode-ban a régi `.tsbuildinfo` azt gondolta, minden up-to-date, de a dist/ mappa nem létezett (clean után). A `clean` script (`rimraf dist *.tsbuildinfo`) ezért törli mindkettőt. Ez a types package-t is érintette — itt is pótoltuk a hiányzó dist-et.
+
+---
+
+## Fázis 4 — @spektra/runtime (...)
 
 > _Következő fázis — ide kerül a dokumentáció._

@@ -42,6 +42,12 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
 
+  packages/data:
+    dependencies:
+      '@spektra/types':
+        specifier: workspace:*
+        version: link:../types
+
   packages/types: {}
 
 packages:
