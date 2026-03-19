@@ -103,6 +103,40 @@ packages/types/
 
 ---
 
+## Post-Phase 2 — Audit fix (2026-03-19)
+
+**Commit:** `fix: audit — boundaries pattern, rimraf, script cleanup`
+
+Code review után 4 problémát azonosítottunk és javítottunk egyben.
+
+### 1. `check-boundaries` script eltávolítva (package.json)
+
+**Mi volt:** `"check-boundaries": "node scripts/check-boundaries.js"` — a hivatkozott `scripts/` mappa nem létezett, a script törött volt.
+
+**Mi lett:** Eltávolítva. A boundary ellenőrzés az `eslint-plugin-boundaries` rule-okon keresztül fut a lint pipeline-ban, dedikált script nem szükséges egyelőre.
+
+**TODO (Phase 5-6):** Ha szükség lesz futásidejű `package.json dependencies` auditra (pl. hogy egy package ne importáljon olyat, ami nincs a `dependencies`-ben), akkor visszahozzuk dedikált scriptként.
+
+### 2. `rm -rf` → `rimraf` (packages/types/package.json)
+
+**Mi volt:** `"clean": "rm -rf dist *.tsbuildinfo"` — POSIX parancs, Windows-on nem fut.
+
+**Mi lett:** `"clean": "rimraf dist *.tsbuildinfo"` + `rimraf ^6.1.3` root devDependency. Cross-platform, minden jövőbeli package clean scriptje is ezt fogja használni.
+
+### 3. Boundaries pattern javítás (eslint.config.cjs)
+
+**Mi volt:** `pattern: ['packages/types/*']` — csak egy szint mélyre illeszkedett, a `packages/types/src/section.ts` útvonal nem matchelt → az összes boundary rule de facto kikapcsolt állapotban volt.
+
+**Mi lett:** `pattern: ['packages/types/src/**']` — minden element pattern `src/**` végződésű lett, ami pontosan illeszkedik az ESLint `files` glob által vizsgált fájlútvonalakra. Ez volt a legkritikusabb javítás: e nélkül a guardrail rendszer nem működött.
+
+### 4. Bootstrap log frissítés
+
+**Mi volt:** Fázis 1 fájl-fában `.eslintrc.cjs` szerepelt, pedig az ESLint v9 flat config migráció részeként a Phase 2 commitban `eslint.config.cjs`-re lett átnevezve.
+
+**Mi lett:** A korábbi log bejegyzés NEM lett felülírva (történelmi pontosság). Helyette ez a post-phase entry dokumentálja az eltérést. A logban innentől a tényleges fájlnév: `eslint.config.cjs`.
+
+---
+
 ## Fázis 3 — @spektra/data (...)
 
 > _Következő fázis — ide kerül a dokumentáció._

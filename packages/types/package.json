@@ -14,7 +14,7 @@
   "files": ["dist"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf dist *.tsbuildinfo",
+    "clean": "rimraf dist *.tsbuildinfo",
     "lint": "eslint src/"
   },
   "dependencies": {},
