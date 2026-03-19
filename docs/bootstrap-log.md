@@ -751,7 +751,7 @@ devDependencies:
 
 ---
 
-## Fázis 9 — @spektra/starter app (...) · #___ `___`
+## Fázis 9 — @spektra/starter app (...) · #20 `e3f2fbb`
 
 ### Cél
 
