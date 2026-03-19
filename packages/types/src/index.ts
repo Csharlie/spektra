@@ -1,3 +1,6 @@
+// CTA
+export type { CallToAction } from './cta'
+
 // Section
 export type {
   PlatformSectionType,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '../basics/Button'
+import type { CallToAction } from '@spektra/types'
 import { cn } from '../utils/cn'
 import { ArrowRight } from 'lucide-react'
 
@@ -7,14 +7,8 @@ export interface HeroBlockProps {
   title: string
   subtitle?: string
   description: string
-  primaryCTA?: {
-    text: string
-    onClick: () => void
-  }
-  secondaryCTA?: {
-    text: string
-    onClick: () => void
-  }
+  primaryCTA?: CallToAction
+  secondaryCTA?: CallToAction
   backgroundImage?: string
   className?: string
 }
@@ -62,26 +56,32 @@ export const HeroBlock: React.FC<HeroBlockProps> = ({
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
           {primaryCTA && (
-            <Button
-              size="xl"
-              variant="primary"
-              onClick={primaryCTA.onClick}
-              className="bg-white text-primary-700 hover:bg-gray-100"
+            <a
+              href={primaryCTA.href}
+              className={cn(
+                'inline-flex items-center justify-center font-medium transition-all',
+                'focus:outline-none focus:ring-2 focus:ring-offset-2',
+                'px-8 py-4 text-xl rounded-xl',
+                'bg-white text-primary-700 hover:bg-gray-100',
+              )}
             >
               {primaryCTA.text}
               <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
+            </a>
           )}
 
           {secondaryCTA && (
-            <Button
-              size="xl"
-              variant="outline"
-              onClick={secondaryCTA.onClick}
-              className="border-white text-white hover:bg-white/10"
+            <a
+              href={secondaryCTA.href}
+              className={cn(
+                'inline-flex items-center justify-center font-medium transition-all',
+                'focus:outline-none focus:ring-2 focus:ring-offset-2',
+                'px-8 py-4 text-xl rounded-xl',
+                'border-2 border-white text-white hover:bg-white/10',
+              )}
             >
               {secondaryCTA.text}
-            </Button>
+            </a>
           )}
         </div>
       </div>

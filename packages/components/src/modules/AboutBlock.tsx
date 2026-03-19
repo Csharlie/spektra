@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '../basics/Button'
+import type { CallToAction } from '@spektra/types'
 import { cn } from '../utils/cn'
 
 export interface AboutBlockProps {
@@ -8,10 +8,7 @@ export interface AboutBlockProps {
   content: string | React.ReactNode
   image?: string
   imagePosition?: 'left' | 'right'
-  cta?: {
-    text: string
-    onClick: () => void
-  }
+  cta?: CallToAction
   stats?: Array<{
     value: string
     label: string
@@ -61,9 +58,17 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
             )}
 
             {cta && (
-              <Button size="lg" onClick={cta.onClick}>
+              <a
+                href={cta.href}
+                className={cn(
+                  'inline-flex items-center justify-center font-medium transition-all',
+                  'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500',
+                  'px-6 py-3 text-lg rounded-lg',
+                  'bg-primary-600 text-white hover:bg-primary-700',
+                )}
+              >
                 {cta.text}
-              </Button>
+              </a>
             )}
           </div>
 

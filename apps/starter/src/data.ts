@@ -41,8 +41,8 @@ export const demoSiteData: SiteData = {
             subtitle: 'Platform Demo',
             description:
               'Modern, moduláris frontend platform kis- és középvállalkozásoknak. React, Tailwind és TypeScript alapokon.',
-            primaryCTA: { text: 'Kapcsolat', onClick: () => { /* scroll */ } },
-            secondaryCTA: { text: 'Szolgáltatások', onClick: () => { /* scroll */ } },
+            primaryCTA: { text: 'Kapcsolat', href: '#contact' },
+            secondaryCTA: { text: 'Szolgáltatások', href: '#features' },
           },
         },
         {
