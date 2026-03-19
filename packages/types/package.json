@@ -1,0 +1,24 @@
+{
+  "name": "@spektra/types",
+  "version": "0.1.0",
+  "description": "Core type contracts for the Spektra platform",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "lint": "eslint src/"
+  },
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

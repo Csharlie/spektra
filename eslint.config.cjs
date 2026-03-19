@@ -1,23 +1,28 @@
 // @ts-check
+const boundaries = require('eslint-plugin-boundaries')
+const tseslint = require('typescript-eslint')
+
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [
+  ...tseslint.configs.recommended,
   {
+    files: ['packages/*/src/**/*.{ts,tsx}'],
     plugins: {
-      boundaries: require('eslint-plugin-boundaries'),
+      boundaries,
     },
     settings: {
       'boundaries/elements': [
-        { type: 'types',     pattern: 'packages/types/*' },
-        { type: 'data',      pattern: 'packages/data/*' },
-        { type: 'runtime',   pattern: 'packages/runtime/*' },
-        { type: 'config',    pattern: 'packages/config/*' },
-        { type: 'basics',    pattern: 'packages/components/src/basics/*' },
-        { type: 'elements',  pattern: 'packages/components/src/elements/*' },
-        { type: 'modules',   pattern: 'packages/components/src/modules/*' },
-        { type: 'wrappers',  pattern: 'packages/components/src/wrappers/*' },
-        { type: 'sections',  pattern: 'packages/sections/*' },
-        { type: 'themes',    pattern: 'packages/themes/*' },
-        { type: 'templates', pattern: 'packages/templates/*' },
+        { type: 'types',     pattern: ['packages/types/*'] },
+        { type: 'data',      pattern: ['packages/data/*'] },
+        { type: 'runtime',   pattern: ['packages/runtime/*'] },
+        { type: 'config',    pattern: ['packages/config/*'] },
+        { type: 'basics',    pattern: ['packages/components/src/basics/*'] },
+        { type: 'elements',  pattern: ['packages/components/src/elements/*'] },
+        { type: 'modules',   pattern: ['packages/components/src/modules/*'] },
+        { type: 'wrappers',  pattern: ['packages/components/src/wrappers/*'] },
+        { type: 'sections',  pattern: ['packages/sections/*'] },
+        { type: 'themes',    pattern: ['packages/themes/*'] },
+        { type: 'templates', pattern: ['packages/templates/*'] },
       ],
     },
     rules: {
@@ -45,4 +50,4 @@ module.exports = [
       }],
     },
   },
-];
+]

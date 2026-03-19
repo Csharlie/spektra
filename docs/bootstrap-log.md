@@ -55,6 +55,54 @@ platform/
 
 ---
 
-## Fázis 2 — @spektra/types (...)
+## Fázis 2 — @spektra/types (2026-03-19)
+
+**Commit:** `feat(types): initial type contracts`
+
+### Mi jött létre
+
+```
+packages/types/
+├── package.json               ← @spektra/types, ZERO dependencies
+├── tsconfig.json              ← composite, types: [] (NO React, NO DOM)
+└── src/
+    ├── index.ts               ← barrel export (MINDEN type)
+    ├── section.ts             ← PlatformSectionType, SectionType<T>, Section<T>, SectionMeta
+    ├── media.ts               ← Media, MediaVariant, MediaSource
+    ├── navigation.ts          ← Navigation, NavItem
+    ├── page.ts                ← Page, PageMeta
+    ├── site.ts                ← SiteData, SiteMeta
+    ├── theme.ts               ← ThemeConfig, ThemeColors, ThemeFonts
+    └── adapter.ts             ← SiteDataAdapter interface
+```
+
+### Mi változott az sp-engine-hez képest
+
+| sp-engine (régi) | @spektra/types (új) | Miért |
+|---|---|---|
+| `Section.data: unknown` | `Section<T>.data: T` | Generic — type-safe section data |
+| `Section.type: string` | `PlatformSectionType` union + `SectionType<Client>` | Kontrollált, bővíthető |
+| Media: nem létezett | `Media { src, alt, width, height, variants }` | Egységes képkezelés |
+| `Navigation \| NavItem[]` | Csak `Navigation { primary, footer }` | Egységesítés |
+| `ogImage?: string` | `ogImage?: Media` | Media típust használ |
+| SiteData.navigation optional | SiteData.navigation required | Site-nak mindig van navigációja |
+| `isPlatformSectionType` nem létezett | Runtime helper + ReadonlySet | Section type validáció |
+
+### Guardrails aktív
+
+- `tsconfig.json types: []` → React import = TS error
+- `package.json dependencies: {}` → ZERO dependency, pont
+- Barrel export only `type` + egyetlen runtime helper (`isPlatformSectionType`)
+
+### Döntések
+
+1. **NavItem.external** mező hozzáadva — külső link jelölés (target="_blank")
+2. **SectionMeta opcionális a Section-ön** — definition-ben kötelező, de a raw CMS adatban nem biztos, hogy van
+3. **ThemeConfig** a runtime theme metadata-hoz — NEM a Tailwind preset (az @spektra/themes-ben lesz)
+4. **Section.type marad `string`** a Section interface-ben, nem `SectionType` — mert a generic-nél a kliens bővítését is engedni kell
+
+---
+
+## Fázis 3 — @spektra/data (...)
 
 > _Következő fázis — ide kerül a dokumentáció._
