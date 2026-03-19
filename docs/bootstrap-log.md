@@ -336,6 +336,26 @@ function Layout() {
 
 ---
 
+## Post-Phase 4 — Runtime fix (2026-03-19) · #10 `77a65c1`
+
+**Commit:** `fix(runtime): align @types/react to ^18, warn on duplicate section registration`
+
+Code review után 2 issue javítva.
+
+### 1. @types/react verzió összehangolás (package.json)
+
+**Mi volt:** `devDependencies: { "@types/react": "^19.2.14" }` miközben `peerDependencies: { "react": "^18.0.0" }`. A React 19 types inkompatibilis API-kat tartalmaznak (pl. `useRef` signature változás), ami hamis TS hibákat okozhat React 18-as fogyasztói appokban.
+
+**Mi lett:** `@types/react: "^18.3.0"` — szinkronban a peer dependency-vel.
+
+### 2. Section registry duplicate warning (section-registry.ts)
+
+**Mi volt:** `register()` csendben felülírta az azonos type-ú korábbi definíciót. Több plugin regisztrálásánál ez rejtett, order-dependent bug-ot okozhat.
+
+**Mi lett:** `console.warn` hozzáadva, ha már létezik azonos type. Policy: "utolsó nyer, de figyelmeztet". Nem error, mert a kliens override (pl. custom hero a platform default hero helyett) legitim use case.
+
+---
+
 ## Fázis 5 — @spektra/components (...)
 
 > _Következő fázis — ide kerül a dokumentáció._
