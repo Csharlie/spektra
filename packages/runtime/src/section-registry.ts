@@ -19,6 +19,12 @@ export function createSectionRegistry(): SectionRegistry {
 
   return {
     register(def) {
+      if (map.has(def.type)) {
+        console.warn(
+          `[SectionRegistry] Overriding existing section "${def.type}". ` +
+          `This may be intentional (client override), but check for duplicate registrations.`,
+        )
+      }
       map.set(def.type, def)
     },
     resolve(type) {
