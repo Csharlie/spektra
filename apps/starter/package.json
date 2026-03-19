@@ -1,0 +1,33 @@
+{
+  "name": "@spektra/starter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Spektra platform starter app — demo & scaffold",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@spektra/types": "workspace:*",
+    "@spektra/data": "workspace:*",
+    "@spektra/runtime": "workspace:*",
+    "@spektra/components": "workspace:*",
+    "@spektra/sections": "workspace:*",
+    "@spektra/themes": "workspace:*",
+    "@spektra/templates": "workspace:*",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.4.0"
+  }
+}

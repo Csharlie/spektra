@@ -748,3 +748,126 @@ peerDependencies:
 devDependencies:
   @types/react         ^18.3.0
 ```
+
+---
+
+## Fázis 9 — @spektra/starter app (...) · #___ `___`
+
+### Cél
+
+Az első valódi Vite + React app, ami MINDEN platform package-et összefog. Demo adattal működik, scaffoldként szolgál új kliens projektek számára.
+
+Ez az `apps/` mappa első lakója — a `pnpm-workspace.yaml` eddig üres `apps/*` glob-ja most kap tartalmat.
+
+### Fájlstruktúra
+
+```
+apps/starter/
+├── package.json               ← private app, ALL @spektra/* deps
+├── tsconfig.json              ← bundler moduleResolution, noEmit: true
+├── vite.config.ts             ← @vitejs/plugin-react
+├── tailwind.config.ts         ← presets: [starterPreset] from @spektra/themes
+├── postcss.config.js          ← tailwindcss + autoprefixer
+├── index.html                 ← Inter + Lexend Google Fonts
+└── src/
+    ├── main.tsx               ← StrictMode + createRoot entry
+    ├── index.css              ← @tailwind base/components/utilities
+    ├── App.tsx                ← SiteDataProvider + LandingTemplate composition
+    ├── data.ts                ← demoSiteData: SiteData — 5 section demo
+    ├── registry.ts            ← createSectionRegistry + platformSections
+    └── shell.tsx              ← AppHeader + AppFooter (DI wrappers)
+```
+
+### Tervezési döntések
+
+| Döntés | Indok |
+|--------|-------|
+| `apps/starter/`, nem `packages/` | App, nem library — `private: true`, Vite build, nem tsc. A workspace config (`apps/*`) erre van kitalálva |
+| ALL @spektra/* dependencies | A starter app az egyetlen hely, ahol MINDEN platform réteg találkozik: types, data, runtime, components, sections, themes, templates |
+| `createJsonAdapter({ data: demoSiteData })` | Mock adapter — inline demo adat, nincs szerver dependency. Prod-ban `createWordPressAdapter()` vagy `createJsonAdapter({ url })` váltja |
+| `AppHeader` / `AppFooter` shell wrappers | DI bridge: a template `ComponentType<TemplateShellProps>`-ot vár, a wrapper mappeli a SiteData-t NavigationBar/FooterBlock props-aira. Ez a template↔components boundary respect |
+| `starterPreset` a tailwind.config.ts-ben | Platform default theme: blue primary, purple secondary, Inter + Lexend |
+| `noEmit: true` tsconfig | App-ot Vite buildeli, nem tsc. A tsconfig csak IDE + type-check-hez kell |
+| `bundler` moduleResolution | Vite-kompatibilis: nem kell `.js` extension-t írni import-oknál |
+| Magyar demo tartalom | A célpiac nyelve. Az i18n overrideable a section props-okon keresztül |
+| `picsum.photos` galéria | Placeholder képek — seed-alapú, determinisztikus URL-ek |
+
+### Data flow (teljes E2E)
+
+```
+main.tsx → StrictMode → App
+                          ↓
+App.tsx
+├── adapter = createJsonAdapter({ data: demoSiteData })
+├── registry = createSectionRegistry() + registerSections(platformSections)
+│
+└── <SiteDataProvider adapter={adapter}>
+        <LandingTemplate
+            registry={registry}
+            header={AppHeader}       ← shell.tsx
+            footer={AppFooter}       ← shell.tsx
+        />
+    </SiteDataProvider>
+                          ↓
+LandingTemplate (useSiteData)
+├── data.pages[0] (home)
+├── <AppHeader siteData={data} />    → <NavigationBar logoText links />
+├── <main>
+│     <SectionRenderer sections={page.sections} registry={registry} />
+│     ├── hero-1   → <HeroBlock title subtitle description primaryCTA secondaryCTA />
+│     ├── features-1 → <FeaturesBlock title subtitle columns features />
+│     ├── about-1  → <AboutBlock title subtitle content imagePosition stats />
+│     ├── gallery-1 → <GalleryBlock title subtitle description showCategories images />
+│     └── contact-1 → <ContactBlock title subtitle description contactInfo />
+│   </main>
+└── <AppFooter siteData={data} />    → <FooterBlock logoText description sections copyright />
+```
+
+### Build output
+
+```
+dist/index.html                    0.71 kB │ gzip:  0.40 kB
+dist/assets/index-[hash].css       5.08 kB │ gzip:  1.51 kB
+dist/assets/index-[hash].js      190.54 kB │ gzip: 60.82 kB
+```
+
+### Package-ok közti kapcsolat
+
+```
+@spektra/starter (app)
+├── @spektra/types       ← type contracts
+├── @spektra/data        ← createJsonAdapter
+├── @spektra/runtime     ← SiteDataProvider, createSectionRegistry, registerSections
+├── @spektra/components  ← NavigationBar, FooterBlock (shell.tsx-ben)
+├── @spektra/sections    ← platformSections barrel
+├── @spektra/themes      ← starterPreset (tailwind.config.ts-ben)
+└── @spektra/templates   ← LandingTemplate
+```
+
+### @spektra/themes exports fix
+
+A Vite build során kiderült, hogy a Tailwind config loader (jiti) `require()`-t használ, ami az ESM-only `exports` map-ot nem találta. Fix: `"require": "./dist/index.js"` hozzáadva a themes package.json exports-hoz.
+
+### Függőségek
+
+```
+dependencies:
+  @spektra/types       workspace:*
+  @spektra/data        workspace:*
+  @spektra/runtime     workspace:*
+  @spektra/components  workspace:*
+  @spektra/sections    workspace:*
+  @spektra/themes      workspace:*
+  @spektra/templates   workspace:*
+  react                ^18.3.0
+  react-dom            ^18.3.0
+
+devDependencies:
+  @types/react         ^18.3.0
+  @types/react-dom     ^18.3.0
+  @vitejs/plugin-react ^4.3.0
+  autoprefixer         ^10.4.0
+  postcss              ^8.4.0
+  tailwindcss          ^3.4.0
+  vite                 ^5.4.0
+```
