@@ -1,0 +1,35 @@
+{
+  "name": "@spektra/components",
+  "version": "0.1.0",
+  "description": "Atomic design component library — B→E→M→W hierarchy",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@spektra/types": "workspace:*",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.6.0",
+    "lucide-react": "^0.460.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

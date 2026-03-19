@@ -356,6 +356,84 @@ Code review után 2 issue javítva.
 
 ---
 
-## Fázis 5 — @spektra/components (...)
+## Fázis 5 — @spektra/components (...) · #12 `___`
+
+**Commit:** `feat(components): atomic design component library (B→E→M→W)`
+
+@spektra/components — az UI réteg teljes implementációja, 4-szintű atomi hierarchiával.
+
+### Mi jött létre
+
+```
+packages/components/
+├── package.json               ← clsx, tailwind-merge, lucide-react; peer: react ^18
+├── tsconfig.json              ← noEmit: false, types: ["react"], refs: [types]
+└── src/
+    ├── index.ts               ← barrel export (minden publikus szimbólum)
+    ├── utils/
+    │   └── cn.ts              ← clsx + tailwind-merge composition utility
+    ├── basics/                ← (B) atomok — CSAK types-tól importálnak
+    │   ├── Button.tsx         ← variant/size/fullWidth/isLoading, forwardRef
+    │   ├── Card.tsx           ← padding/shadow/hover variantek
+    │   ├── Input.tsx          ← label/error/helperText, forwardRef
+    │   └── Textarea.tsx       ← label/error/helperText, forwardRef
+    ├── elements/              ← (E) molekulák — basics + types
+    │   ├── FeatureCard.tsx    ← LucideIcon + title + description
+    │   ├── ContactFormField.tsx ← type-aware Input/Textarea wrapper
+    │   └── Logo.tsx           ← gradient text, size variantek
+    ├── modules/               ← (M) organizmusok — basics + elements + types
+    │   ├── HeroBlock.tsx      ← CTA pair, background image, animation classes
+    │   ├── FeaturesBlock.tsx  ← configurable grid (2/3/4 col), FeatureCard lista
+    │   ├── AboutBlock.tsx     ← image position, stats grid, CTA
+    │   ├── ContactBlock.tsx   ← form validation, success state, contact info
+    │   ├── GalleryBlock.tsx   ← responsive grid, category filter, lightbox
+    │   ├── FooterBlock.tsx    ← section links, social icons, copyright
+    │   └── NavigationBar.tsx  ← fixed navbar, mobile hamburger, CTA
+    └── wrappers/              ← (W) strukturális — CSAK types-tól, cn()-tól
+        ├── Container.tsx      ← max-width + responsive padding
+        └── Section.tsx        ← spacing + background variantek
+```
+
+### Tervezési döntések
+
+| Döntés | Indok |
+|--------|-------|
+| `cn()` lokális utility, nem külön package | Egyetlen felhasználó (components), DRY elég ezen a szinten |
+| `lucide-react` dep, nem peer | Icon-ok a komponensek integráns részei, nem cserélhetők |
+| Wrappers → CSAK types import | B→E→M hierarchia-független layout primitívek |
+| LandingLayout NEM wrapper | NavigationBar + FooterBlock importálna → ez template szintű, @spektra/templates-be kerül |
+| Magyar default labels (ContactBlock) | i18n overrideable, de a default a célpiac nyelve |
+| Tailwind-safe grid mapping (Record lookup) | JIT-kompatibilis, nincs dinamikus class interpoláció |
+
+### Boundary szabályok (eslint.config.cjs)
+
+```
+basics   → [types]
+elements → [types, basics]
+modules  → [types, basics, elements]
+wrappers → [types]
+```
+
+Mindegyik `eslint-plugin-boundaries` által kikényszerített. `pnpm --filter @spektra/components run lint` → PASS.
+
+### Függőségek
+
+```
+dependencies:
+  @spektra/types   workspace:*
+  clsx             ^2.1.0
+  tailwind-merge   ^2.6.0
+  lucide-react     ^0.460.0
+
+peerDependencies:
+  react            ^18.0.0
+
+devDependencies:
+  @types/react     ^18.3.0
+```
+
+---
+
+## Fázis 6 — @spektra/sections (...)
 
 > _Következő fázis — ide kerül a dokumentáció._
