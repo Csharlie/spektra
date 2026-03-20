@@ -11,4 +11,4 @@ export { SectionRenderer } from './section-renderer'
 export type { SectionRendererProps } from './section-renderer'
 
 // Types
-export type { SectionDefinition } from './types'
+export type { SectionDefinition, AnySectionDefinition } from './types'

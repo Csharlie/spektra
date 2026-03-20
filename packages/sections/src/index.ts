@@ -1,4 +1,4 @@
-import type { SectionDefinition } from '@spektra/runtime'
+import type { AnySectionDefinition } from '@spektra/runtime'
 import { heroDefinition } from './hero'
 import { featuresDefinition } from './features'
 import { aboutDefinition } from './about'
@@ -20,12 +20,12 @@ export { galleryDefinition } from './gallery'
  *
  *   const registry = createSectionRegistry()
  *   registerSections(registry, platformSections)
+ *
+ * Típustörlési határ: az egyedi definíciók (SectionDefinition<HeroBlockProps> stb.)
+ * itt AnySectionDefinition-re szűkülnek. A típusbiztonság a definíció fájlokban él
+ * (hero.ts, about.ts stb.), ahol a compiler ellenőrzi a component↔props egyezést.
  */
-// Individual definitions are typed (e.g., SectionDefinition<HeroBlockProps>) for
-// consumer type safety. The barrel array uses `any` because a mixed collection of
-// different section data types cannot satisfy ComponentType contravariance.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const platformSections: SectionDefinition<any>[] = [
+export const platformSections: readonly AnySectionDefinition[] = [
   heroDefinition,
   featuresDefinition,
   aboutDefinition,

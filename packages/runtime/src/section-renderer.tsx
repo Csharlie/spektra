@@ -16,9 +16,10 @@ export interface SectionRendererProps {
 /**
  * SectionRenderer — sections tömböt renderel a registry alapján.
  *
- * Az sp-engine AppRuntime belsejéből lett kiemelve önálló component-ként,
- * hogy újrafelhasználható legyen layout-okon belül szeletekben is
- * (pl. csak a hero section renderelése, vagy only a footer sections).
+ * Ez a runtime típustörlési határ másik oldala:
+ * a registry.resolve() ComponentType<any>-t ad, a section.data-t
+ * spread-eljük propsként. A típusbiztonsági garancia: a SectionDefinition<T>
+ * regisztrációnál a compiler ellenőrzi, hogy T és a component props egyeznek.
  */
 export function SectionRenderer({
   sections,
@@ -35,7 +36,7 @@ export function SectionRenderer({
           return null
         }
 
-        return <Component key={section.id} {...(section.data as Record<string, unknown>)} />
+        return <Component key={section.id} {...section.data as Record<string, unknown>} />
       })}
     </>
   )
