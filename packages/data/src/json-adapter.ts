@@ -1,4 +1,5 @@
 import type { SiteData, SiteDataAdapter } from '@spektra/types'
+import { validateSiteData } from './validate'
 
 /**
  * JSON adapter konfiguráció.
@@ -31,7 +32,14 @@ export function createJsonAdapter(
         `JSON fetch error: ${response.status} ${response.statusText}`,
       )
     }
-    return response.json() as Promise<SiteData>
+    const json: unknown = await response.json()
+    const result = validateSiteData(json)
+    if (!result.valid) {
+      throw new Error(
+        `Invalid SiteData from JSON source: ${result.errors.join('; ')}`,
+      )
+    }
+    return result.data
   }
 
   return {

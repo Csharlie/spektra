@@ -1,4 +1,5 @@
 import type { SiteData, SiteDataAdapter } from '@spektra/types'
+import { validateSiteData } from './validate'
 
 /**
  * WordPress REST adapter konfiguráció.
@@ -48,7 +49,14 @@ export function createWordPressAdapter(
     }
 
     const data: unknown = await response.json()
-    return mapResponse(data)
+    const mapped = mapResponse(data)
+    const result = validateSiteData(mapped)
+    if (!result.valid) {
+      throw new Error(
+        `Invalid SiteData from WordPress adapter: ${result.errors.join('; ')}`,
+      )
+    }
+    return result.data
   }
 
   return {
