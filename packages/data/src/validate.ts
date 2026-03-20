@@ -92,6 +92,9 @@ function validateNavItems(
     }
     if (typeof item.label !== 'string') errors.push(`${p}.label must be a string`)
     if (typeof item.href !== 'string') errors.push(`${p}.href must be a string`)
+    if (item.external !== undefined && typeof item.external !== 'boolean') {
+      errors.push(`${p}.external must be a boolean`)
+    }
     if (item.children !== undefined) {
       if (!Array.isArray(item.children)) {
         errors.push(`${p}.children must be an array`)
@@ -114,6 +117,7 @@ function validatePage(
   if (typeof page.slug !== 'string') {
     errors.push(`${path}.slug must be a string`)
   }
+  assertOptionalString(page, 'title', path, errors)
   if (!Array.isArray(page.sections)) {
     errors.push(`${path}.sections must be an array`)
   } else {
@@ -161,6 +165,27 @@ function validateSection(
   if (section.data === undefined || section.data === null) {
     errors.push(`${path}.data must be defined`)
   }
+  if (section.meta !== undefined) {
+    validateSectionMeta(section.meta, `${path}.meta`, errors)
+  }
+}
+
+function validateSectionMeta(
+  meta: unknown,
+  path: string,
+  errors: string[],
+): void {
+  if (!isObject(meta)) {
+    errors.push(`${path} must be an object`)
+    return
+  }
+  if (typeof meta.label !== 'string') {
+    errors.push(`${path}.label must be a string`)
+  }
+  if (typeof meta.category !== 'string') {
+    errors.push(`${path}.category must be a string`)
+  }
+  assertOptionalString(meta, 'description', path, errors)
 }
 
 function validateMedia(

@@ -42,8 +42,18 @@ export function createJsonAdapter(
     return result.data
   }
 
+  function validateInlineData(data: SiteData): SiteData {
+    const result = validateSiteData(data)
+    if (!result.valid) {
+      throw new Error(
+        `Invalid inline SiteData: ${result.errors.join('; ')}`,
+      )
+    }
+    return result.data
+  }
+
   return {
-    load: () => config.data ? Promise.resolve(config.data) : fetchFromUrl(),
+    load: () => config.data ? Promise.resolve(validateInlineData(config.data)) : fetchFromUrl(),
     revalidate: config.url ? () => fetchFromUrl() : undefined,
   }
 }
