@@ -6,7 +6,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ## Jelenlegi állapot (Architecture Snapshot)
 
-> Utolsó frissítés: Phase 9 (#20 `e3f2fbb`)
+> Utolsó frissítés: v1 hotfix round (#22–#24)
 
 ### Workspace struktúra
 
@@ -82,6 +82,9 @@ starter (app) ← minden package
 | 16 | `4f45cfe` | feat(themes): tailwind presets |
 | 18 | `5f8b585` | feat(templates): landing template with DI shell |
 | 20 | `e3f2fbb` | feat(starter): vite app — full platform integration |
+| 22 | `30bd7e3` | docs: architecture snapshot + fix stale references |
+| 23 | `21ac257` | fix: serializable CTA contract — CallToAction type |
+| 24 | `712034c` | fix: unify image props to canonical Media type |
 
 (Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21)
 
@@ -954,3 +957,116 @@ devDependencies:
   tailwindcss          ^3.4.0
   vite                 ^5.4.0
 ```
+
+---
+
+## Post-Phase 9 — v1 Stabilitási és Konzisztencia Fixek
+
+> A Phase 1–9 bootstrap után azonosított strukturális hiányosságok javítása.
+> Ezek nem új feature-ök, hanem a meglévő contractok élesítése: publish surface, serializable data, egységes content model.
+
+---
+
+### Update 3.1 — Build stabilitás audit (2026-03-19)
+
+**Probléma:** `TS2688: Cannot find type definition file for 'react'` a templates package-nél.
+
+**Diagnózis:** A `pnpm install` nem futott le teljesen — 403-as registry fetch hiba a `react-dom` tarball-nál. Az `@types/react` symlink hiányzott a `node_modules`-ból. Ez **környezeti probléma** (hálózat/proxy/auth), nem kódhiba.
+
+**Audit eredménye:**
+
+| Package | react peer | @types/react dev | tsconfig types |
+|---------|-----------|-----------------|---------------|
+| types | — | — | `[]` ✅ |
+| data | — | — | `[]` ✅ |
+| themes | — | — | `[]` ✅ |
+| runtime | ✅ | ✅ | `["react"]` ✅ |
+| components | ✅ | ✅ | `["react"]` ✅ |
+| sections | ✅ | ✅ | `["react"]` ✅ |
+| templates | ✅ | ✅ | `["react"]` ✅ |
+
+**Eredmény:** Minden package korrekt. React-függők: `react` peerDep + `@types/react` devDep + `types: ["react"]`. Nem-React package-ek: `types: []` (explicit üres). Ha a registry fetch sikeres, `pnpm build` 8/8 PASS.
+
+**Javaslat 403 ismétlődése esetén:** `.npmrc` proxy/auth settings ellenőrzés, vagy `pnpm store prune && pnpm install --force`.
+
+**Kódmódosítás:** Nincs — strukturálisan rendben van.
+
+---
+
+### Update 3.2 — Templates publish surface fix (2026-03-19) · #23 `21ac257`
+
+**Probléma:** A `@spektra/templates` package.json-ból hiányzott az `exports`, `files`, és `publishConfig` mező, miközben a többi publisholható package használja ezeket. Workspace-ben működött, de publish/distribution szinten inkonzisztens volt.
+
+**Fix:**
+
+```json
+"exports": {
+  ".": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js"
+  }
+},
+"files": ["dist"],
+"publishConfig": {
+  "access": "public"
+}
+```
+
+**Döntés:** `require` export szándékosan kihagyva — az csak a themes-nél kellett (jiti/Tailwind config loader). A templates-t kizárólag ESM-ből importálják React appok.
+
+---
+
+### Update 3.3 — Szerializálható CTA contract (2026-03-19) · #23 `21ac257`
+
+**Probléma:** A HeroBlock és AboutBlock CTA propjai `onClick: () => void` callback-ot vártak. A starter demo data is `onClick: () => {}` függvényeket tartalmazott. Amíg inline mock adat jön, ez működik — de CMS/JSON payload-ból függvényt nem lehet deszerializálni. A `SectionRenderer` simán spread-eli a `section.data`-t propként, tehát ez valós design-törés.
+
+**Érintett komponensek:**
+
+| Komponens | Előtte | Utána |
+|-----------|--------|-------|
+| `HeroBlock.primaryCTA` | `{ text: string, onClick: () => void }` | `CallToAction` |
+| `HeroBlock.secondaryCTA` | `{ text: string, onClick: () => void }` | `CallToAction` |
+| `AboutBlock.cta` | `{ text: string, onClick: () => void }` | `CallToAction` |
+
+**Új type:** `packages/types/src/cta.ts`
+
+```typescript
+export interface CallToAction {
+  text: string
+  href?: string
+}
+```
+
+**Változtatások:**
+
+1. `CallToAction` interface hozzáadva az `@spektra/types`-hoz (új fájl: `cta.ts`, export az `index.ts`-ben)
+2. `HeroBlock` / `AboutBlock`: CTA propok `CallToAction`-re cserélve, render: `<Button onClick>` → `<a href>`
+3. Starter demo data: `onClick: () => {}` → `href: '#contact'` / `'#features'`
+
+**Nem érintett:** `ContactBlock.onSubmit` — ez optional runtime callback, nem CMS data (a demo data nem is tartalmazza). A `NavigationBar` CTA és link onClick-jai szintén nem érintettek — ezek shell-level DI propok, nem SectionRenderer spread.
+
+**Contract:** CMS/JSON payload → `Section<T>` → `SectionRenderer` spread → component `<a href>`. Függvény sehol nem szerepel az adat-felületen.
+
+---
+
+### Update 3.4 — Media modell egységesítés (2026-03-19) · #24 `712034c`
+
+**Probléma:** A `@spektra/types` deklarálja a kanonikus `Media` modellt (`src`, `alt`, `width?`, `height?`, `variants?`, `mimeType?`), de a komponensek nem használták:
+
+- `HeroBlock.backgroundImage?: string` — sima string
+- `AboutBlock.image?: string` — sima string, alt text a `title`-ből jött
+- `GalleryBlock` — saját lokális `GalleryImage { src, alt, category? }` interface
+
+**Fix:**
+
+| Komponens | Előtte | Utána |
+|-----------|--------|-------|
+| `HeroBlock` | `backgroundImage?: string` | `backgroundImage?: Media` → `.src` a CSS `url()`-ben |
+| `AboutBlock` | `image?: string`, `alt={title}` | `image?: Media` → `.src` + `.alt` (helyes alt text) |
+| `GalleryBlock` | lokális `GalleryImage { src, alt, category? }` | `Media & { category?: string }` (re-export `GalleryImage` típusként) |
+
+**Starter demo data:** Nem igényelt módosítást — a gallery items `{ src, alt, category }` struktúrája kielégíti a `Media & { category? }` contractot, hero/about nem használ képet a demo-ban.
+
+**Nem érintett:** `FooterBlock.logo?: string` és `NavigationBar.logo?: string` — ezek shell-level DI propok, nem CMS section data. `Logo` komponens szöveges, nem használ képet.
+
+**Eredmény:** A platform content modellje egységes: `CallToAction` (CTA) + `Media` (képek) — mindkettő szerializálható, CMS-kompatibilis, a kanonikus `@spektra/types`-ból jön.
