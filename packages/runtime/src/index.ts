@@ -2,6 +2,10 @@
 export { SiteDataProvider, useSiteData } from './context'
 export type { SiteDataProviderProps } from './context'
 
+// Document head
+export { useDocumentHead } from './use-document-head'
+export type { DocumentHeadOptions } from './use-document-head'
+
 // Section registry
 export { createSectionRegistry, registerSections } from './section-registry'
 export type { SectionRegistry } from './section-registry'

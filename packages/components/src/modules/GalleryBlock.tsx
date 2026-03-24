@@ -117,7 +117,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
 
         <div className={cn('grid', gridColsClasses, gap)}>
           {filteredImages.map((image, index) => (
-            <div
+            <figure
               key={index}
               className={cn(
                 'relative aspect-square overflow-hidden cursor-pointer group rounded-lg',
@@ -135,13 +135,17 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
                   View
                 </span>
               </div>
-            </div>
+              {image.category && <figcaption className="sr-only">{image.category}</figcaption>}
+            </figure>
           ))}
         </div>
       </div>
 
       {selectedImage && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image lightbox"
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >

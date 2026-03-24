@@ -106,13 +106,16 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             data-ui-action="toggle"
             className="md:hidden p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="nav-mobile-menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden top-0 left-0 right-0 border-t border-border py-8 px-4">
+          <div id="nav-mobile-menu" className="md:hidden top-0 left-0 right-0 border-t border-border py-8 px-4">
             <div className="flex flex-col space-y-4">
               {links.map((link, index) => (
                 <a

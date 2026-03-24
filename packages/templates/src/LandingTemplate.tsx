@@ -1,4 +1,4 @@
-import { useSiteData, SectionRenderer } from '@spektra/runtime'
+import { useSiteData, SectionRenderer, useDocumentHead } from '@spektra/runtime'
 import type { LandingTemplateProps } from './types'
 
 /**
@@ -34,6 +34,17 @@ export function LandingTemplate({
 }: LandingTemplateProps) {
   const { data, loading: isLoading, error } = useSiteData()
 
+  const page = data
+    ? (pageSlug
+        ? data.pages.find(p => p.slug === pageSlug) ?? data.pages[0]
+        : data.pages[0])
+    : undefined
+
+  useDocumentHead({
+    siteMeta: data?.site ?? { name: '' },
+    pageMeta: page?.meta,
+  })
+
   if (isLoading) {
     return <>{loading ?? 'Loading…'}</>
   }
@@ -43,18 +54,15 @@ export function LandingTemplate({
     return <div role="alert">{error.message}</div>
   }
 
-  if (!data) return null
-
-  const page = pageSlug
-    ? data.pages.find(p => p.slug === pageSlug) ?? data.pages[0]
-    : data.pages[0]
-
-  if (!page) return null
+  if (!data || !page) return null
 
   return (
     <div className={className ?? 'min-h-screen flex flex-col'}>
+      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background focus:text-foreground">
+        Skip to main content
+      </a>
       {Header && <Header siteData={data} />}
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <SectionRenderer
           sections={page.sections}
           registry={registry}
