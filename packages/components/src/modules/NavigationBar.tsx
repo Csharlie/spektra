@@ -88,6 +88,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     link.onClick()
                   }
                 }}
+                data-ui-type="link"
+                data-ui-id={`nav-link-${link.href.replace(/^#/, '')}`}
+                data-ui-action="navigate"
+                data-ui-trigger="click"
                 className="text-foreground hover:text-accent font-medium transition-colors"
               >
                 {link.label}
@@ -104,6 +108,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             data-ui-type="button"
             data-ui-id="nav-mobile-toggle"
             data-ui-action="toggle"
+            data-ui-trigger="click"
             className="md:hidden p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
@@ -129,7 +134,9 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     setMobileMenuOpen(false)
                   }}
                   data-ui-type="link"
+                  data-ui-id={`nav-link-${link.href.replace(/^#/, '')}`}
                   data-ui-action="navigate"
+                  data-ui-trigger="click"
                   className="text-foreground hover:text-accent font-medium"
                 >
                   {link.label}

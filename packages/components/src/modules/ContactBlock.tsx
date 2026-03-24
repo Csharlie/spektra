@@ -181,6 +181,7 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
                 data-ui-type="form"
                 data-ui-id="contact-form"
                 data-ui-action="submit-form"
+                data-ui-trigger="submit"
               >
                 <ContactFormField
                   type="text"

@@ -66,6 +66,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = ({
               data-ui-type="link"
               data-ui-id="hero-primary-cta"
               data-ui-action="navigate"
+              data-ui-trigger="click"
               className={cn(
                 'inline-flex items-center justify-center font-medium transition-all',
                 'focus:outline-none focus:ring-2 focus:ring-offset-2',
@@ -84,6 +85,7 @@ export const HeroBlock: React.FC<HeroBlockProps> = ({
               data-ui-type="link"
               data-ui-id="hero-secondary-cta"
               data-ui-action="navigate"
+              data-ui-trigger="click"
               className={cn(
                 'inline-flex items-center justify-center font-medium transition-all',
                 'focus:outline-none focus:ring-2 focus:ring-offset-2',
