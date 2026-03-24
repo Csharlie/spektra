@@ -15,6 +15,7 @@ export function AppHeader({ siteData }: TemplateShellProps) {
     <NavigationBar
       logoText={siteData.site.name}
       links={links}
+      variant="light"
     />
   )
 }

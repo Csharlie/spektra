@@ -84,6 +84,7 @@ export const demoSiteData: SiteData = {
           id: 'about-1',
           type: 'about',
           data: {
+            colorScheme: 'dark' as const,
             title: 'Rólunk',
             subtitle: 'A Spektra Platform',
             content:
@@ -119,6 +120,7 @@ export const demoSiteData: SiteData = {
           id: 'contact-1',
           type: 'contact',
           data: {
+            colorScheme: 'dark' as const,
             title: 'Kapcsolat',
             subtitle: 'Írj nekünk',
             description: 'Kérdésed van? Töltsd ki az alábbi űrlapot, és hamarosan felvesszük veled a kapcsolatot.',

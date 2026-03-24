@@ -15,13 +15,13 @@ export default function App() {
         header={AppHeader}
         footer={AppFooter}
         fallback={(type) => (
-          <div className="p-8 text-center text-gray-400">
+          <div className="p-8 text-center text-muted-foreground">
             Ismeretlen szekció: {type}
           </div>
         )}
         loading={
           <div className="min-h-screen flex items-center justify-center">
-            <p className="text-lg text-gray-500">Betöltés…</p>
+            <p className="text-lg text-muted-foreground">Betöltés…</p>
           </div>
         }
       />
