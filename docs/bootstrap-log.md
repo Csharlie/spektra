@@ -6,7 +6,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ## Jelenlegi állapot (Architecture Snapshot)
 
-> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció (#29–#33)
+> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció + SEO (#29–#34)
 
 ### Workspace struktúra
 
@@ -93,6 +93,7 @@ starter (app) ← minden package
 | 31 | `0fb3609` | docs: bootstrap-log update #7-#8 |
 | 32 | `363e313` | fix: audit — destructive tokens, data-ui gaps, docs update |
 | 33 | `edff50c` | feat: starter app semantic tokens + colorscheme + nav variant |
+| 34 | `e784e51` | feat: seo + aria accessibility pass |
 
 (Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21, #25)
 
@@ -1314,5 +1315,35 @@ A `colorScheme` a section `data`-ban utazik, spread-elődik a modul props-ként 
 **3) NavigationBar explicit variant**
 
 `shell.tsx`: `variant="light"` explicit megadása a `NavigationBar`-on (korábban default/undefined volt).
+
+**Build 16/16 PASS, Lint 16/16 PASS.**
+
+---
+
+### Update #11 — SEO + ARIA accessibility pass (2026-03-24) · #34 `e784e51`
+
+**Commit:** `feat: seo + aria accessibility pass`
+
+Komplett accessibility + SEO javítás a platform csomagokon.
+
+**1) Form accessibility (Input, Textarea)**
+
+`useId()` hook → stabil `id` generálás. `<label htmlFor>` → `<input id>` kötés. ARIA attribútumok: `aria-invalid` (error state), `aria-describedby` (error/helper szöveg referencia), `aria-required`. Error `<p>` kap `role="alert"`.
+
+**2) NavigationBar mobile toggle**
+
+`aria-label="Toggle navigation menu"`, `aria-expanded={mobileMenuOpen}`, `aria-controls="nav-mobile-menu"`. A mobil menü `<div>` kap `id="nav-mobile-menu"`.
+
+**3) GalleryBlock lightbox + figure**
+
+Lightbox overlay: `role="dialog"`, `aria-modal="true"`, `aria-label="Image lightbox"`. Galéria képek: `<div>` → `<figure>` + `<figcaption className="sr-only">` a kategóriával.
+
+**4) Skip navigation (LandingTemplate)**
+
+Skip-to-content link: `<a href="#main" className="sr-only focus:not-sr-only ...">Skip to main content</a>`. A `<main>` kap `id="main"`.
+
+**5) useDocumentHead hook (runtime → templates)**
+
+Új hook `packages/runtime/src/use-document-head.ts`. Frissíti: `document.title`, `<meta name="description">`, `og:title`, `og:description`, `og:image`, `og:url`, `<link rel="canonical">`, `<html lang>`. A `LandingTemplate` hívja a `PageMeta` + `SiteMeta` alapján.
 
 **Build 16/16 PASS, Lint 16/16 PASS.**
