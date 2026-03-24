@@ -58,6 +58,8 @@ export const semanticColors = {
   border: 'hsl(var(--border) / <alpha-value>)',
   accent: 'hsl(var(--accent) / <alpha-value>)',
   'accent-foreground': 'hsl(var(--accent-foreground) / <alpha-value>)',
+  destructive: 'hsl(var(--destructive) / <alpha-value>)',
+  'destructive-foreground': 'hsl(var(--destructive-foreground) / <alpha-value>)',
 } satisfies Record<string, string>
 
 /**

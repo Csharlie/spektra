@@ -63,6 +63,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = ({
           {primaryCTA && (
             <a
               href={primaryCTA.href}
+              data-ui-type="link"
+              data-ui-id="hero-primary-cta"
               data-ui-action="navigate"
               className={cn(
                 'inline-flex items-center justify-center font-medium transition-all',
@@ -79,6 +81,8 @@ export const HeroBlock: React.FC<HeroBlockProps> = ({
           {secondaryCTA && (
             <a
               href={secondaryCTA.href}
+              data-ui-type="link"
+              data-ui-id="hero-secondary-cta"
               data-ui-action="navigate"
               className={cn(
                 'inline-flex items-center justify-center font-medium transition-all',

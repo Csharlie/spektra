@@ -175,7 +175,13 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
                 <Button onClick={() => setSubmitSuccess(false)}>{l.newMessage}</Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6" data-ui-type="form" data-ui-action="submit-form">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-6"
+                data-ui-type="form"
+                data-ui-id="contact-form"
+                data-ui-action="submit-form"
+              >
                 <ContactFormField
                   type="text"
                   name="name"

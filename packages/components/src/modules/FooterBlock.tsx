@@ -53,7 +53,7 @@ export const FooterBlock: React.FC<FooterBlockProps> = ({
               <img src={logo} alt={logoText} className="h-8 mb-4" />
             ) : (
               <div className="mb-4">
-                <Logo text={logoText} size="md" className="text-white" />
+                <Logo text={logoText} size="md" className="text-foreground" />
               </div>
             )}
             {description && (

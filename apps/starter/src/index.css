@@ -12,6 +12,8 @@
     --border: 214 32% 91%;
     --accent: 221 83% 53%;
     --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
   }
 
   [data-color-scheme="dark"] {
@@ -23,5 +25,7 @@
     --border: 217 33% 17%;
     --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
   }
 }

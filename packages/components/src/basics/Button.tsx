@@ -11,7 +11,7 @@ export const buttonVariants = cva(
         secondary: 'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500',
         outline: 'border-2 border-accent text-accent hover:bg-accent/10 focus:ring-accent',
         ghost: 'text-accent hover:bg-accent/10 focus:ring-accent',
-        danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+        danger: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:ring-destructive',
       },
       size: {
         sm: 'px-3 py-1.5 text-sm rounded-md',

@@ -100,7 +100,13 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             )}
           </div>
 
-          <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <button
+            data-ui-type="button"
+            data-ui-id="nav-mobile-toggle"
+            data-ui-action="toggle"
+            className="md:hidden p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
@@ -119,6 +125,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     }
                     setMobileMenuOpen(false)
                   }}
+                  data-ui-type="link"
+                  data-ui-action="navigate"
                   className="text-foreground hover:text-accent font-medium"
                 >
                   {link.label}

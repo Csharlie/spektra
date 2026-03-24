@@ -350,6 +350,8 @@ Semantic tokens are the DEFAULT for surfaces, text, borders — they enable ligh
 | border | `border-border` | `--border` | slate-200 | slate-700 |
 | accent | `bg-accent` | `--accent` | slate-100 | slate-800 |
 | accent-foreground | `text-accent-foreground` | `--accent-foreground` | slate-900 | slate-50 |
+| destructive | `bg-destructive` | `--destructive` | red-500 | red-600 |
+| destructive-foreground | `text-destructive-foreground` | `--destructive-foreground` | white | white |
 
 ---
 
@@ -384,15 +386,26 @@ compoundVariants: [
 ]
 ```
 
-### 17.3 Section wrapper responsibility
+### 17.3 data-color-scheme responsibility
 
-The Section wrapper (`packages/components/src/wrappers/Section.tsx`) applies the attribute:
+The `data-color-scheme` attribute can be set at **two levels**:
+
+1. **Section wrapper** (`Section.tsx`) — when the page uses the generic `Section` wrapper
+   to compose layout, the wrapper applies `data-color-scheme={colorScheme}`.
+2. **Module components** (HeroBlock, AboutBlock, etc.) — modules render their own `<section>`
+   element and do NOT use the Section wrapper. They accept a `colorScheme` prop and apply
+   `data-color-scheme={colorScheme ?? undefined}` directly on their root `<section>`.
+
+**Rule:** The attribute must appear exactly once per section subtree — never both on a wrapping
+`Section` AND on the inner module. Since platform modules render their own `<section>`, they
+own the attribute. The Section wrapper is for custom/composed layouts only.
 
 ```tsx
-<section
-  data-color-scheme={colorScheme ?? 'light'}
-  className={cn(sectionVariants({ colorScheme, ...otherVariants }), className)}
->
+// Module pattern (HeroBlock, AboutBlock, etc.) — module owns the attribute
+<section data-color-scheme={colorScheme ?? undefined} className={...}>
+
+// Wrapper pattern (Section.tsx) — for custom compositions
+<Section colorScheme="dark"><CustomContent /></Section>
 ```
 
 ---
