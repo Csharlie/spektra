@@ -6,7 +6,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ## Jelenlegi állapot (Architecture Snapshot)
 
-> Utolsó frissítés: v1 stabilizáció (#22–#28)
+> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció (#29–#30)
 
 ### Workspace struktúra
 
@@ -88,6 +88,8 @@ starter (app) ← minden package
 | 26 | `2dfdb17` | fix(runtime): type erasure boundaries in section pipeline |
 | 27 | `0e2057b` | feat(data): runtime SiteData validation at adapter boundary |
 | 28 | `9fb4581` | fix(data): tighten runtime validation gaps |
+| 29 | `bc51469` | docs: platform standards + bootstrap-log update #1-#6 |
+| 30 | `dafcf7f` | feat: cva + semantic tokens + data-ui migration |
 
 (Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21, #25)
 
@@ -1197,3 +1199,55 @@ A `validateSiteData` publikus — kliensek is használhatják saját adapter-jei
 **Utána:** Új `validateInlineData()` helper — az inline `data` is átmegy a validáción.
 
 **Eredmény:** A teljes SiteData outer shape validálva van az adapter határon — fetch és inline path egyaránt. A validator 195 soros, ~20 ellenőrzési pontra bontva.
+
+---
+
+### Update #7 — Platform standard docs (2026-03-24) · #29 `bc51469`
+
+**Commit:** `docs: platform standards + bootstrap-log update #1-#6`
+
+Három új platform-szintű standard dokumentum, mindegyik AI-agent-barát referencia:
+
+- **`docs/cva-standard.md`** (21 §) — CVA architektúra: variant vs colorScheme szabály, semantic token layer, colorScheme mechanism, section data→variant TypeScript, per-component before→after referencia.
+- **`docs/data-ui-standard.md`** (17 §) — `data-ui-*` attribútum standard: kanonikus `data-ui-type` (16 érték), `data-ui-action` zárt lista (14 ige), per-component mapping.
+- **`docs/semantic-tags-standard.md`** (11 §) — HTML semantic tag standard: id vs data-ui-id purpose split, class naming konvenciók.
+
+Bootstrap-log Update #1–#6 renumbering + #4–#6 gap-fill.
+
+---
+
+### Update #8 — CVA + semantic tokens + data-ui migráció (2026-03-24) · #30 `dafcf7f`
+
+**Commit:** `feat: cva + semantic tokens + data-ui migration`
+
+22 fájl, +303 / -167 sor. A platform összes komponense áttérve hardcoded Tailwind színekről semantic token classokra.
+
+**Token layer:**
+
+- `@spektra/themes` base preset: 8 semantic token (`background`, `foreground`, `muted`, `muted-foreground`, `surface`, `border`, `accent`, `accent-foreground`) → `hsl(var(--...) / <alpha-value>)` Tailwind mapping.
+- Starter `index.css`: `@layer base { :root { ... } [data-color-scheme="dark"] { ... } }` CSS var defaults.
+- CVA dep: `class-variance-authority ^0.7.0` → `@spektra/components` only.
+
+**CVA variánsok:**
+
+| Komponens | CVA export | Variánsok |
+|---|---|---|
+| Button | `buttonVariants` | variant (primary/secondary/outline/ghost/danger), size (sm/md/lg/xl), fullWidth |
+| Card | `cardVariants` | padding (none/sm/md/lg), shadow, hover |
+| Section | `sectionVariants` | spacing (none/sm/md/lg/xl), background (default/muted/accent) |
+| NavigationBar | `navVariants` | variant (light/dark/transparent) |
+
+**Semantic token migráció — minden komponens:**
+
+| Réteg | Fájlok | Fő változás |
+|---|---|---|
+| basics | Button, Card, Input, Textarea | `bg-white` → `bg-surface`, `border-gray-*` → `border-border`, `text-gray-*` → `text-foreground` |
+| elements | FeatureCard, Logo | `bg-primary-*` → `bg-accent/*`, `text-gray-*` → `text-muted-foreground` |
+| modules | HeroBlock, AboutBlock, FeaturesBlock, ContactBlock, GalleryBlock, FooterBlock, NavigationBar | Teljes semantic token átállás + `colorScheme` prop |
+| wrappers | Section | CVA + `data-color-scheme` attr |
+
+**data-ui attribútumok:** `data-ui-component`, `data-ui-role`, `data-ui-type`, `data-ui-action` — minden komponensre.
+
+**colorScheme:** Section modulok (`HeroBlock`, `AboutBlock`, `FeaturesBlock`, `ContactBlock`, `GalleryBlock`, `FooterBlock`) kaptak `colorScheme?: 'light' | 'dark'` propot. FooterBlock default `'dark'`. NavigationBar `variant`-ot használ (§5 szabály: variant vs colorScheme nem koexisztál).
+
+**Build 8/8 PASS, Lint 8/8 PASS.**
