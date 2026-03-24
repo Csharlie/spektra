@@ -6,7 +6,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ## Jelenlegi állapot (Architecture Snapshot)
 
-> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció + SEO (#29–#34)
+> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció + SEO (#29–#35)
 
 ### Workspace struktúra
 
@@ -94,6 +94,7 @@ starter (app) ← minden package
 | 32 | `363e313` | fix: audit — destructive tokens, data-ui gaps, docs update |
 | 33 | `edff50c` | feat: starter app semantic tokens + colorscheme + nav variant |
 | 34 | `e784e51` | feat: seo + aria accessibility pass |
+| 35 | `658903a` | fix: data-ui-trigger + data-ui-id standard compliance |
 
 (Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21, #25)
 
@@ -1345,5 +1346,32 @@ Skip-to-content link: `<a href="#main" className="sr-only focus:not-sr-only ..."
 **5) useDocumentHead hook (runtime → templates)**
 
 Új hook `packages/runtime/src/use-document-head.ts`. Frissíti: `document.title`, `<meta name="description">`, `og:title`, `og:description`, `og:image`, `og:url`, `<link rel="canonical">`, `<html lang>`. A `LandingTemplate` hívja a `PageMeta` + `SiteMeta` alapján.
+
+**Build 16/16 PASS, Lint 16/16 PASS.**
+
+---
+
+### Update #12 — data-ui-trigger + data-ui-id standard compliance (2026-03-24) · #35 `658903a`
+
+**Commit:** `fix: data-ui-trigger + data-ui-id standard compliance`
+
+A `data-ui-standard.md` §5.2 („Interactive element”) és §5.3 („Form element”) szerint kötelező attribútumok pótlása:
+
+**1) `data-ui-trigger` pótlás**
+
+| Komponens | Elem | Trigger |
+|---|---|---|
+| NavigationBar | mobile toggle | `click` |
+| NavigationBar | nav linkek (desktop + mobile) | `click` |
+| GalleryBlock | filter gombok | `click` |
+| GalleryBlock | lightbox close | `click` |
+| HeroBlock | primary + secondary CTA | `click` |
+| ContactBlock | form | `submit` |
+
+**2) `data-ui-id` + `data-ui-type` pótlás nav linkeken**
+
+Desktop nav linkek korábban semmilyen `data-ui-*` attribútumot nem kaptak. Most: `data-ui-type="link"`, `data-ui-id="nav-link-{href}"`, `data-ui-action="navigate"`, `data-ui-trigger="click"`. Mobile nav linkek: `data-ui-id` pótolva (korábban hiányzott).
+
+Az id-k stabil, nem index-alapú: `nav-link-hero`, `nav-link-features` stb.
 
 **Build 16/16 PASS, Lint 16/16 PASS.**
