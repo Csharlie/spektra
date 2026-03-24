@@ -6,7 +6,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ## Jelenlegi állapot (Architecture Snapshot)
 
-> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció (#29–#30)
+> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció (#29–#32)
 
 ### Workspace struktúra
 
@@ -90,6 +90,8 @@ starter (app) ← minden package
 | 28 | `9fb4581` | fix(data): tighten runtime validation gaps |
 | 29 | `bc51469` | docs: platform standards + bootstrap-log update #1-#6 |
 | 30 | `dafcf7f` | feat: cva + semantic tokens + data-ui migration |
+| 31 | `0fb3609` | docs: bootstrap-log update #7-#8 |
+| 32 | `363e313` | fix: audit — destructive tokens, data-ui gaps, docs update |
 
 (Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21, #25)
 
@@ -1249,5 +1251,43 @@ Bootstrap-log Update #1–#6 renumbering + #4–#6 gap-fill.
 **data-ui attribútumok:** `data-ui-component`, `data-ui-role`, `data-ui-type`, `data-ui-action` — minden komponensre.
 
 **colorScheme:** Section modulok (`HeroBlock`, `AboutBlock`, `FeaturesBlock`, `ContactBlock`, `GalleryBlock`, `FooterBlock`) kaptak `colorScheme?: 'light' | 'dark'` propot. FooterBlock default `'dark'`. NavigationBar `variant`-ot használ (§5 szabály: variant vs colorScheme nem koexisztál).
+
+**Build 8/8 PASS, Lint 8/8 PASS.**
+
+---
+
+### Update #9 — Audit fix: destructive tokens + data-ui gaps (2026-03-24) · #32 `363e313`
+
+**Commit:** `fix: audit — destructive tokens, data-ui gaps, docs update`
+
+Post-migration audit alapján 4 gap javítása:
+
+**1) Destructive/error semantic tokenek**
+
+Új token pár: `destructive` + `destructive-foreground`. Hozzáadva:
+- `@spektra/themes` base preset: `hsl(var(--destructive) / <alpha-value>)` mapping
+- Starter `index.css`: light `0 84% 60%` (red-500), dark `0 62% 50%` (red-600)
+- `cva-standard.md` §16.3 token tábla bővítve
+
+Komponens migráció: `bg-red-600` → `bg-destructive`, `border-red-500` → `border-destructive`, `text-red-600` → `text-destructive` (Button danger variant, Input/Textarea error state).
+
+**2) data-ui-type + data-ui-id pótlás interaktív elemeken**
+
+| Komponens | Elem | Hozzáadott attribútumok |
+|---|---|---|
+| HeroBlock | primaryCTA, secondaryCTA | `data-ui-type="link"` + `data-ui-id` |
+| GalleryBlock | filter buttons | `data-ui-type="button"` + `data-ui-id` + `data-ui-action="filter"` |
+| GalleryBlock | lightbox close | `data-ui-type="button"` + `data-ui-id` + `data-ui-action="close"` |
+| NavigationBar | nav links (desktop+mobile) | `data-ui-type="link"` + `data-ui-action="navigate"` |
+| NavigationBar | mobile toggle | `data-ui-type="button"` + `data-ui-id` + `data-ui-action="toggle"` |
+| ContactBlock | form element | `data-ui-id="contact-form"` (type+action already existed) |
+
+**3) Footer Logo `text-white` → `text-foreground`**
+
+A `data-color-scheme="dark"` alatt a `--foreground` CSS var fehérre oldódik — nincs szükség hardcoded `text-white`-ra.
+
+**4) Doksi: `data-color-scheme` felelősség (§17.3)**
+
+Pontosítva: a modulok (HeroBlock, AboutBlock stb.) saját `<section>`-t renderelnek, ők tulajdonolják a `data-color-scheme` attribútumot. A Section wrapper csak custom/composed layout-okhoz használatos. Nincs duplikáció.
 
 **Build 8/8 PASS, Lint 8/8 PASS.**
