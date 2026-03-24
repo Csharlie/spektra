@@ -17,6 +17,7 @@ export interface GalleryBlockProps {
   }
   gap?: string
   showCategories?: boolean
+  colorScheme?: 'light' | 'dark'
   className?: string
   imageClassName?: string
   filterButtonClassName?: string
@@ -49,6 +50,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
   columns = { mobile: 2, tablet: 3, desktop: 4 },
   gap = 'gap-4',
   showCategories = true,
+  colorScheme,
   className,
   imageClassName,
   filterButtonClassName,
@@ -70,19 +72,24 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
   )
 
   return (
-    <section className={cn('py-20 md:py-32 bg-white', className)}>
+    <section
+      data-ui-component="gallery-block"
+      data-ui-role="gallery"
+      data-color-scheme={colorScheme ?? undefined}
+      className={cn('py-20 md:py-32 bg-background', className)}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           {subtitle && (
-            <p className="text-sm font-semibold tracking-wider uppercase text-primary-600 mb-2">
+            <p className="text-sm font-semibold tracking-wider uppercase text-accent mb-2">
               {subtitle}
             </p>
           )}
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
             {title}
           </h2>
           {description && (
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">{description}</p>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">{description}</p>
           )}
         </div>
 
@@ -95,8 +102,8 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
                 className={cn(
                   'px-6 py-2 font-semibold uppercase tracking-wider text-sm transition-all rounded-md',
                   filter === category
-                    ? activeFilterClassName || 'bg-primary-600 text-white'
-                    : filterButtonClassName || 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+                    ? activeFilterClassName || 'bg-accent text-accent-foreground'
+                    : filterButtonClassName || 'bg-muted text-foreground hover:bg-muted/80',
                 )}
               >
                 {category}
@@ -136,7 +143,7 @@ export const GalleryBlock: React.FC<GalleryBlockProps> = ({
           onClick={() => setSelectedImage(null)}
         >
           <button
-            className="absolute top-4 right-4 text-white hover:text-primary-400 transition-colors"
+            className="absolute top-4 right-4 text-white hover:text-accent transition-colors"
             onClick={() => setSelectedImage(null)}
             aria-label="Close lightbox"
           >

@@ -1,5 +1,5 @@
 // Base
-export { basePreset, baseColors, baseTypography } from './base'
+export { basePreset, baseColors, baseTypography, semanticColors } from './base'
 
 // Corporate
 export { corporatePreset } from './corporate'

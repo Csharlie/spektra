@@ -13,6 +13,7 @@ export interface AboutBlockProps {
     value: string
     label: string
   }>
+  colorScheme?: 'light' | 'dark'
   className?: string
 }
 
@@ -24,10 +25,16 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
   imagePosition = 'right',
   cta,
   stats,
+  colorScheme,
   className,
 }) => {
   return (
-    <section className={cn('py-20 bg-white', className)}>
+    <section
+      data-ui-component="about-block"
+      data-ui-role="about"
+      data-color-scheme={colorScheme ?? undefined}
+      className={cn('py-20 bg-background text-foreground', className)}
+    >
       <div className="container mx-auto px-4">
         <div
           className={cn(
@@ -37,12 +44,12 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
         >
           <div className={imagePosition === 'left' ? 'md:col-start-2' : ''}>
             {subtitle && (
-              <p className="text-primary-600 font-semibold text-lg mb-4">{subtitle}</p>
+              <p className="text-accent font-semibold text-lg mb-4">{subtitle}</p>
             )}
 
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{title}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">{title}</h2>
 
-            <div className="text-lg text-gray-600 leading-relaxed mb-8">
+            <div className="text-lg text-muted-foreground leading-relaxed mb-8">
               {typeof content === 'string' ? <p>{content}</p> : content}
             </div>
 
@@ -50,8 +57,8 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
               <div className="grid grid-cols-2 gap-6 mb-8">
                 {stats.map((stat, index) => (
                   <div key={index}>
-                    <div className="text-4xl font-bold text-primary-600 mb-1">{stat.value}</div>
-                    <div className="text-gray-600">{stat.label}</div>
+                    <div className="text-4xl font-bold text-accent mb-1">{stat.value}</div>
+                    <div className="text-muted-foreground">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -62,9 +69,9 @@ export const AboutBlock: React.FC<AboutBlockProps> = ({
                 href={cta.href}
                 className={cn(
                   'inline-flex items-center justify-center font-medium transition-all',
-                  'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500',
+                  'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent',
                   'px-6 py-3 text-lg rounded-lg',
-                  'bg-primary-600 text-white hover:bg-primary-700',
+                  'bg-accent text-accent-foreground hover:bg-accent/90',
                 )}
               >
                 {cta.text}

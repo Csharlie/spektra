@@ -40,6 +40,7 @@ export interface ContactBlockProps {
     phonePlaceholder?: string
     messagePlaceholder?: string
   }
+  colorScheme?: 'light' | 'dark'
   className?: string
 }
 
@@ -70,6 +71,7 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
   onSubmit,
   contactInfo,
   labels: labelOverrides,
+  colorScheme,
   className,
 }) => {
   const l = { ...defaultLabels, ...labelOverrides }
@@ -134,18 +136,23 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
   }
 
   return (
-    <section className={cn('py-20 bg-gray-50', className)}>
+    <section
+      data-ui-component="contact-block"
+      data-ui-role="contact"
+      data-color-scheme={colorScheme ?? undefined}
+      className={cn('py-20 bg-muted', className)}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           {subtitle && (
-            <p className="text-primary-600 font-semibold text-lg mb-4">{subtitle}</p>
+            <p className="text-accent font-semibold text-lg mb-4">{subtitle}</p>
           )}
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{title}</h2>
-          {description && <p className="text-lg text-gray-600">{description}</p>}
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">{title}</h2>
+          {description && <p className="text-lg text-muted-foreground">{description}</p>}
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <div className="bg-surface rounded-2xl shadow-lg p-8">
             {submitSuccess ? (
               <div className="text-center py-12">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -163,12 +170,12 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
                     />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{l.successTitle}</h3>
-                <p className="text-gray-600 mb-6">{l.successMessage}</p>
+                <h3 className="text-2xl font-bold text-foreground mb-2">{l.successTitle}</h3>
+                <p className="text-muted-foreground mb-6">{l.successMessage}</p>
                 <Button onClick={() => setSubmitSuccess(false)}>{l.newMessage}</Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" data-ui-type="form" data-ui-action="submit-form">
                 <ContactFormField
                   type="text"
                   name="name"
@@ -222,18 +229,18 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
           {contactInfo && (
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">{l.contactHeading}</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">{l.contactHeading}</h3>
                 <div className="space-y-4">
                   {contactInfo.email && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-6 h-6 text-primary-600" />
+                      <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Mail className="w-6 h-6 text-accent" />
                       </div>
                       <div>
-                        <div className="font-semibold text-gray-900 mb-1">Email</div>
+                        <div className="font-semibold text-foreground mb-1">Email</div>
                         <a
                           href={`mailto:${contactInfo.email}`}
-                          className="text-primary-600 hover:text-primary-700"
+                          className="text-accent hover:text-accent/90"
                         >
                           {contactInfo.email}
                         </a>
@@ -243,14 +250,14 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
 
                   {contactInfo.phone && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-6 h-6 text-primary-600" />
+                      <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Phone className="w-6 h-6 text-accent" />
                       </div>
                       <div>
-                        <div className="font-semibold text-gray-900 mb-1">Telefon</div>
+                        <div className="font-semibold text-foreground mb-1">Telefon</div>
                         <a
                           href={`tel:${contactInfo.phone}`}
-                          className="text-primary-600 hover:text-primary-700"
+                          className="text-accent hover:text-accent/90"
                         >
                           {contactInfo.phone}
                         </a>
@@ -260,12 +267,12 @@ export const ContactBlock: React.FC<ContactBlockProps> = ({
 
                   {contactInfo.address && (
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-6 h-6 text-primary-600" />
+                      <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-6 h-6 text-accent" />
                       </div>
                       <div>
-                        <div className="font-semibold text-gray-900 mb-1">Cím</div>
-                        <p className="text-gray-600">{contactInfo.address}</p>
+                        <div className="font-semibold text-foreground mb-1">Cím</div>
+                        <p className="text-muted-foreground">{contactInfo.address}</p>
                       </div>
                     </div>
                   )}

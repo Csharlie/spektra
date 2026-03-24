@@ -2,7 +2,7 @@
 export { cn } from './utils/cn'
 
 // Basics (atoms)
-export { Button } from './basics'
+export { Button, buttonVariants } from './basics'
 export type { ButtonProps } from './basics'
 export { Card } from './basics'
 export type { CardProps } from './basics'
@@ -32,7 +32,7 @@ export { GalleryBlock } from './modules'
 export type { GalleryBlockProps, GalleryImage } from './modules'
 export { FooterBlock } from './modules'
 export type { FooterBlockProps, FooterLink, FooterSection } from './modules'
-export { NavigationBar } from './modules'
+export { NavigationBar, navVariants } from './modules'
 export type { NavigationBarProps, NavigationLink } from './modules'
 
 // Wrappers (structural)

@@ -8,6 +8,7 @@ export interface FeaturesBlockProps {
   subtitle?: string
   features: Omit<FeatureCardProps, 'className'>[]
   columns?: 2 | 3 | 4
+  colorScheme?: 'light' | 'dark'
   className?: string
 }
 
@@ -22,16 +23,22 @@ export const FeaturesBlock: React.FC<FeaturesBlockProps> = ({
   subtitle,
   features,
   columns = 3,
+  colorScheme,
   className,
 }) => {
   return (
-    <section className={cn('py-20 bg-gray-50', className)}>
+    <section
+      data-ui-component="features-block"
+      data-ui-role="features"
+      data-color-scheme={colorScheme ?? undefined}
+      className={cn('py-20 bg-muted', className)}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           {subtitle && (
-            <p className="text-primary-600 font-semibold text-lg mb-4">{subtitle}</p>
+            <p className="text-accent font-semibold text-lg mb-4">{subtitle}</p>
           )}
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{title}</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">{title}</h2>
         </div>
 
         <div className={cn('grid grid-cols-1 gap-8', gridCols[columns])}>

@@ -17,7 +17,7 @@ export const Logo: React.FC<LogoProps> = ({ text = 'Spektra', className, size = 
   const hasTextColor = className?.includes('text-')
 
   return (
-    <div className={cn('font-display font-bold', logoSizes[size], className)}>
+    <div className={cn('font-display font-bold', logoSizes[size], className)} data-ui-component="logo">
       <span
         className={
           hasTextColor

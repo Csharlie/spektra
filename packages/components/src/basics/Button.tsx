@@ -1,54 +1,48 @@
 import React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../utils/cn'
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  fullWidth?: boolean
+export const buttonVariants = cva(
+  'inline-flex items-center justify-center font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
+  {
+    variants: {
+      variant: {
+        primary: 'bg-accent text-accent-foreground hover:bg-accent/90 focus:ring-accent',
+        secondary: 'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500',
+        outline: 'border-2 border-accent text-accent hover:bg-accent/10 focus:ring-accent',
+        ghost: 'text-accent hover:bg-accent/10 focus:ring-accent',
+        danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+      },
+      size: {
+        sm: 'px-3 py-1.5 text-sm rounded-md',
+        md: 'px-4 py-2 text-base rounded-lg',
+        lg: 'px-6 py-3 text-lg rounded-lg',
+        xl: 'px-8 py-4 text-xl rounded-xl',
+      },
+      fullWidth: {
+        true: 'w-full',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+    },
+  },
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
   isLoading?: boolean
 }
 
-const variants = {
-  primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500',
-  secondary: 'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500',
-  outline: 'border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
-  ghost: 'text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
-  danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-}
-
-const sizes = {
-  sm: 'px-3 py-1.5 text-sm rounded-md',
-  md: 'px-4 py-2 text-base rounded-lg',
-  lg: 'px-6 py-3 text-lg rounded-lg',
-  xl: 'px-8 py-4 text-xl rounded-xl',
-}
-
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      children,
-      variant = 'primary',
-      size = 'md',
-      fullWidth = false,
-      isLoading = false,
-      className,
-      disabled,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ children, variant, size, fullWidth, isLoading = false, className, disabled, ...props }, ref) => {
     return (
       <button
         ref={ref}
-        className={cn(
-          'inline-flex items-center justify-center font-medium transition-all',
-          'focus:outline-none focus:ring-2 focus:ring-offset-2',
-          'disabled:opacity-50 disabled:pointer-events-none',
-          variants[variant],
-          sizes[size],
-          fullWidth && 'w-full',
-          className,
-        )}
+        data-ui-component="button"
+        className={cn(buttonVariants({ variant, size, fullWidth }), className)}
         disabled={disabled || isLoading}
         {...props}
       >

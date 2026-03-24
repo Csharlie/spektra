@@ -1,36 +1,47 @@
 import React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '../utils/cn'
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  padding?: 'none' | 'sm' | 'md' | 'lg'
-  shadow?: boolean
-  hover?: boolean
-}
+const cardVariants = cva(
+  'bg-surface rounded-xl border border-border',
+  {
+    variants: {
+      padding: {
+        none: '',
+        sm: 'p-4',
+        md: 'p-6',
+        lg: 'p-8',
+      },
+      shadow: {
+        true: 'shadow-lg',
+      },
+      hover: {
+        true: 'transition-transform hover:scale-105',
+      },
+    },
+    defaultVariants: {
+      padding: 'md',
+      shadow: true,
+    },
+  },
+)
 
-const paddingStyles = {
-  none: '',
-  sm: 'p-4',
-  md: 'p-6',
-  lg: 'p-8',
-}
+export interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants> {}
 
 export const Card: React.FC<CardProps> = ({
   children,
-  padding = 'md',
-  shadow = true,
-  hover = false,
+  padding,
+  shadow,
+  hover,
   className,
   ...props
 }) => {
   return (
     <div
-      className={cn(
-        'bg-white rounded-xl border border-gray-200',
-        shadow && 'shadow-lg',
-        hover && 'transition-transform hover:scale-105',
-        paddingStyles[padding],
-        className,
-      )}
+      data-ui-component="card"
+      className={cn(cardVariants({ padding, shadow, hover }), className)}
       {...props}
     >
       {children}

@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --surface: 0 0% 100%;
+    --border: 214 32% 91%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 0 0% 100%;
+  }
+
+  [data-color-scheme="dark"] {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --surface: 217 33% 17%;
+    --border: 217 33% 17%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+  }
+}

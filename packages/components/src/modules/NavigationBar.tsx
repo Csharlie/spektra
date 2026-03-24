@@ -1,8 +1,25 @@
 import React, { useState } from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { Logo } from '../elements/Logo'
 import { Button } from '../basics/Button'
 import { cn } from '../utils/cn'
 import { Menu, X } from 'lucide-react'
+
+export const navVariants = cva(
+  'fixed top-0 left-0 right-0 z-50 font-sans border-b',
+  {
+    variants: {
+      variant: {
+        light: 'bg-background/75 backdrop-blur-sm border-border',
+        dark: 'bg-background border-border',
+        transparent: 'bg-transparent border-transparent',
+      },
+    },
+    defaultVariants: {
+      variant: 'light',
+    },
+  },
+)
 
 export interface NavigationLink {
   label: string
@@ -10,7 +27,7 @@ export interface NavigationLink {
   onClick?: () => void
 }
 
-export interface NavigationBarProps {
+export interface NavigationBarProps extends VariantProps<typeof navVariants> {
   logo?: string
   logoText?: string
   logoLink?: string
@@ -30,16 +47,16 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   onLogoClick,
   links,
   cta,
+  variant,
   className,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <nav
-      className={cn(
-        'bg-white/75 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 font-sans border-b border-gray-200',
-        className,
-      )}
+      data-ui-component="navigation-bar"
+      data-ui-role="navigation"
+      className={cn(navVariants({ variant }), className)}
     >
       <div className="container mx-auto px-4 relative">
         <div className="flex items-center justify-between h-16">
@@ -71,7 +88,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     link.onClick()
                   }
                 }}
-                className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
+                className="text-foreground hover:text-accent font-medium transition-colors"
               >
                 {link.label}
               </a>
@@ -89,7 +106,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden top-0 left-0 right-0 border-t border-gray-200 py-8 px-4">
+          <div className="md:hidden top-0 left-0 right-0 border-t border-border py-8 px-4">
             <div className="flex flex-col space-y-4">
               {links.map((link, index) => (
                 <a
@@ -102,7 +119,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     }
                     setMobileMenuOpen(false)
                   }}
-                  className="text-gray-700 hover:text-primary-600 font-medium"
+                  className="text-foreground hover:text-accent font-medium"
                 >
                   {link.label}
                 </a>

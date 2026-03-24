@@ -23,6 +23,7 @@ export interface FooterBlockProps {
     href: string
     label: string
   }>
+  colorScheme?: 'light' | 'dark'
   className?: string
 }
 
@@ -33,12 +34,18 @@ export const FooterBlock: React.FC<FooterBlockProps> = ({
   sections,
   copyright,
   socialLinks,
+  colorScheme = 'dark',
   className,
 }) => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className={cn('bg-gray-900 text-white', className)}>
+    <footer
+      data-ui-component="footer-block"
+      data-ui-role="contentinfo"
+      data-color-scheme={colorScheme}
+      className={cn('bg-background text-foreground', className)}
+    >
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div className="lg:col-span-1">
@@ -50,7 +57,7 @@ export const FooterBlock: React.FC<FooterBlockProps> = ({
               </div>
             )}
             {description && (
-              <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
             )}
           </div>
 
@@ -62,7 +69,7 @@ export const FooterBlock: React.FC<FooterBlockProps> = ({
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="text-gray-400 hover:text-white transition-colors"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {link.label}
                     </a>
@@ -73,8 +80,8 @@ export const FooterBlock: React.FC<FooterBlockProps> = ({
           ))}
         </div>
 
-        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center">
+          <p className="text-muted-foreground text-sm mb-4 md:mb-0">
             {copyright || `\u00A9 ${currentYear} ${logoText}. All rights reserved.`}
           </p>
 
@@ -85,7 +92,7 @@ export const FooterBlock: React.FC<FooterBlockProps> = ({
                   key={index}
                   href={social.href}
                   aria-label={social.label}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {social.icon}
                 </a>

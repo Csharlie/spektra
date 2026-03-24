@@ -43,6 +43,24 @@ export const baseTypography = {
 } satisfies Record<string, string[]>
 
 /**
+ * Semantic token color mapping — CSS custom-property bridge.
+ *
+ * Platform defines the Tailwind mapping only;
+ * concrete HSL values live in each client's index.css
+ * under `@layer base { :root { --background: 0 0% 100%; } }`.
+ */
+export const semanticColors = {
+  background: 'hsl(var(--background) / <alpha-value>)',
+  foreground: 'hsl(var(--foreground) / <alpha-value>)',
+  muted: 'hsl(var(--muted) / <alpha-value>)',
+  'muted-foreground': 'hsl(var(--muted-foreground) / <alpha-value>)',
+  surface: 'hsl(var(--surface) / <alpha-value>)',
+  border: 'hsl(var(--border) / <alpha-value>)',
+  accent: 'hsl(var(--accent) / <alpha-value>)',
+  'accent-foreground': 'hsl(var(--accent-foreground) / <alpha-value>)',
+} satisfies Record<string, string>
+
+/**
  * Base Tailwind preset — shared foundation for all themes.
  *
  * Usage in downstream preset or client tailwind.config.ts:
@@ -52,7 +70,10 @@ export const basePreset = {
   content: [],
   theme: {
     extend: {
-      colors: baseColors,
+      colors: {
+        ...baseColors,
+        ...semanticColors,
+      },
       fontFamily: baseTypography,
       spacing: {
         '18': '4.5rem',

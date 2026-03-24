@@ -16,5 +16,5 @@ export type { GalleryBlockProps, GalleryImage } from './GalleryBlock'
 export { FooterBlock } from './FooterBlock'
 export type { FooterBlockProps, FooterLink, FooterSection } from './FooterBlock'
 
-export { NavigationBar } from './NavigationBar'
+export { NavigationBar, navVariants } from './NavigationBar'
 export type { NavigationBarProps, NavigationLink } from './NavigationBar'
