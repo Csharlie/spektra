@@ -6,7 +6,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ## Jelenlegi állapot (Architecture Snapshot)
 
-> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció (#29–#32)
+> Utolsó frissítés: v1 stabilizáció (#22–#28), CVA migráció (#29–#33)
 
 ### Workspace struktúra
 
@@ -92,6 +92,7 @@ starter (app) ← minden package
 | 30 | `dafcf7f` | feat: cva + semantic tokens + data-ui migration |
 | 31 | `0fb3609` | docs: bootstrap-log update #7-#8 |
 | 32 | `363e313` | fix: audit — destructive tokens, data-ui gaps, docs update |
+| 33 | `edff50c` | feat: starter app semantic tokens + colorscheme + nav variant |
 
 (Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21, #25)
 
@@ -1291,3 +1292,27 @@ A `data-color-scheme="dark"` alatt a `--foreground` CSS var fehérre oldódik �
 Pontosítva: a modulok (HeroBlock, AboutBlock stb.) saját `<section>`-t renderelnek, ők tulajdonolják a `data-color-scheme` attribútumot. A Section wrapper csak custom/composed layout-okhoz használatos. Nincs duplikáció.
 
 **Build 8/8 PASS, Lint 8/8 PASS.**
+
+---
+
+### Update #10 — Starter app frissítés (2026-03-24) · #33 `edff50c`
+
+**Commit:** `feat: starter app semantic tokens + colorscheme + nav variant`
+
+A starter demo app igazítása a migrált komponensekhez:
+
+**1) Raw palette → semantic token**
+
+`App.tsx` fallback/loading szöveg: `text-gray-400`/`text-gray-500` → `text-muted-foreground`.
+
+**2) colorScheme váltakozás a section data-ban**
+
+`data.ts`: `colorScheme: 'dark'` hozzáadva az About és Contact szekciókhoz. Ez vizuális váltakozást ad a landing page-en: hero (light) → features (light/muted) → about (dark) → gallery (light) → contact (dark).
+
+A `colorScheme` a section `data`-ban utazik, spread-elődik a modul props-ként — a modulok saját `<section data-color-scheme>` attribútumot renderelnek.
+
+**3) NavigationBar explicit variant**
+
+`shell.tsx`: `variant="light"` explicit megadása a `NavigationBar`-on (korábban default/undefined volt).
+
+**Build 16/16 PASS, Lint 16/16 PASS.**
