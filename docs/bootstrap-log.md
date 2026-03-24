@@ -6,7 +6,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 
 ## Jelenlegi állapot (Architecture Snapshot)
 
-> Utolsó frissítés: v1 hotfix round (#22–#24)
+> Utolsó frissítés: v1 stabilizáció (#22–#28)
 
 ### Workspace struktúra
 
@@ -85,8 +85,11 @@ starter (app) ← minden package
 | 22 | `30bd7e3` | docs: architecture snapshot + fix stale references |
 | 23 | `21ac257` | fix: serializable CTA contract — CallToAction type |
 | 24 | `712034c` | fix: unify image props to canonical Media type |
+| 26 | `2dfdb17` | fix(runtime): type erasure boundaries in section pipeline |
+| 27 | `0e2057b` | feat(data): runtime SiteData validation at adapter boundary |
+| 28 | `9fb4581` | fix(data): tighten runtime validation gaps |
 
-(Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21)
+(Páros számok közt hash-update commitok — #2, #7, #9, #11, #13, #15, #17, #19, #21, #25)
 
 ---
 
@@ -963,11 +966,12 @@ devDependencies:
 ## Post-Phase 9 — v1 Stabilitási és Konzisztencia Fixek
 
 > A Phase 1–9 bootstrap után azonosított strukturális hiányosságok javítása.
-> Ezek nem új feature-ök, hanem a meglévő contractok élesítése: publish surface, serializable data, egységes content model.
+> Ezek nem új feature-ök, hanem a meglévő contractok élesítése: publish surface, serializable data, egységes content model, type safety boundaries, runtime validáció.
+> 6 update, commit #22–#28.
 
 ---
 
-### Update 3.1 — Build stabilitás audit (2026-03-19)
+### Update #1 — Build stabilitás audit (2026-03-19) · #22 `30bd7e3`
 
 **Probléma:** `TS2688: Cannot find type definition file for 'react'` a templates package-nél.
 
@@ -993,7 +997,11 @@ devDependencies:
 
 ---
 
-### Update 3.2 — Templates publish surface fix (2026-03-19) · #23 `21ac257`
+### Update #2 — Publish surface + szerializálható CTA contract (2026-03-19) · #23 `21ac257`
+
+Két logikailag összefüggő fix egy commitban: a templates package publish surface hiánya + a CTA callback → href refaktor.
+
+#### 2a) Templates publish surface fix
 
 **Probléma:** A `@spektra/templates` package.json-ból hiányzott az `exports`, `files`, és `publishConfig` mező, miközben a többi publisholható package használja ezeket. Workspace-ben működött, de publish/distribution szinten inkonzisztens volt.
 
@@ -1014,9 +1022,7 @@ devDependencies:
 
 **Döntés:** `require` export szándékosan kihagyva — az csak a themes-nél kellett (jiti/Tailwind config loader). A templates-t kizárólag ESM-ből importálják React appok.
 
----
-
-### Update 3.3 — Szerializálható CTA contract (2026-03-19) · #23 `21ac257`
+#### 2b) Szerializálható CTA contract
 
 **Probléma:** A HeroBlock és AboutBlock CTA propjai `onClick: () => void` callback-ot vártak. A starter demo data is `onClick: () => {}` függvényeket tartalmazott. Amíg inline mock adat jön, ez működik — de CMS/JSON payload-ból függvényt nem lehet deszerializálni. A `SectionRenderer` simán spread-eli a `section.data`-t propként, tehát ez valós design-törés.
 
@@ -1049,7 +1055,7 @@ export interface CallToAction {
 
 ---
 
-### Update 3.4 — Media modell egységesítés (2026-03-19) · #24 `712034c`
+### Update #3 — Media modell egységesítés (2026-03-19) · #24 `712034c`
 
 **Probléma:** A `@spektra/types` deklarálja a kanonikus `Media` modellt (`src`, `alt`, `width?`, `height?`, `variants?`, `mimeType?`), de a komponensek nem használták:
 
@@ -1070,3 +1076,124 @@ export interface CallToAction {
 **Nem érintett:** `FooterBlock.logo?: string` és `NavigationBar.logo?: string` — ezek shell-level DI propok, nem CMS section data. `Logo` komponens szöveges, nem használ képet.
 
 **Eredmény:** A platform content modellje egységes: `CallToAction` (CTA) + `Media` (képek) — mindkettő szerializálható, CMS-kompatibilis, a kanonikus `@spektra/types`-ból jön.
+
+---
+
+### Update #4 — Type erasure boundaries (2026-03-20) · #26 `2dfdb17`
+
+**Commit:** `fix(runtime): explicit type erasure boundaries in section pipeline`
+
+**Probléma:** A section pipeline-ban implicit `any` castok voltak szétszórva: a `SectionDefinition<T>` generic type a registry-ben elveszett, de ez sehol nem volt dokumentálva vagy tudatosan kezelve. A `platformSections` barrel `SectionDefinition<any>[]` típust használt, de ez „véletlenül" működött, nem szándékos architekturális döntés volt.
+
+**Fix — 3 fájl, 1 konzisztens pattern:**
+
+#### 1) `AnySectionDefinition` type (types.ts)
+
+```typescript
+export type AnySectionDefinition = SectionDefinition<any>
+```
+
+Explicit type alias a típustörlési határhoz. JSDoc komment dokumentálja, hogy ez SZÁNDÉKOS: a heterogén collection-ökben (registry Map, platformSections barrel) nem tartható meg az egyedi `T`. A típusbiztonság a definíció oldalán él, nem a tárolási/render oldalán.
+
+#### 2) Registry interface (section-registry.ts)
+
+`SectionRegistry.register()` → `AnySectionDefinition`-t vár.
+`SectionRegistry.resolve()` → `ComponentType<any>`-t ad vissza.
+`registerSections()` → `readonly AnySectionDefinition[]`-t fogad.
+
+Minden `// eslint-disable-next-line @typescript-eslint/no-explicit-any` kommenttel jelölve — a disable TUDATOS, nem lustaság.
+
+#### 3) SectionRenderer (section-renderer.tsx)
+
+```typescript
+return <Component key={section.id} {...section.data as Record<string, unknown>} />
+```
+
+A `section.data` spread-je explicit `as Record<string, unknown>` casttal történik. JSDoc kommentek dokumentálják, hogy ez „a típustörlési határ másik oldala": a garanciát a regisztrációs oldal adja (`SectionDefinition<T>` compiler-ellenőrzés), nem a renderelési oldal.
+
+**Architektúrális döntés:** A type erasure boundary koncepció a platform egyik alapvető mintája. `SectionDefinition<HeroBlockProps>` → compile-time safe a definíció helyén. A registry/barrel/renderer oldalon tudatosan `any` — nincs `unknown` erőltetés, mert az hamis biztonságérzetet adna és felesleges runtime castokat igényelne.
+
+---
+
+### Update #5 — Runtime SiteData validáció (2026-03-20) · #27 `0e2057b`
+
+**Commit:** `feat(data): runtime SiteData validation at adapter boundary`
+
+**Probléma:** Az adapterek (`createJsonAdapter`, `createWordPressAdapter`) bíztak a forrásadatban: a fetch response-t vagy az inline `data`-t közvetlenül `SiteData`-ként kezelték. CMS- vagy JSON-hibás payload csendben jutott el a UI-ig, ahol értelmezhetetlen hibákat okozott (Cannot read property 'map' of undefined, stb.).
+
+**Fix — új fájl: `packages/data/src/validate.ts`**
+
+```typescript
+export type SiteDataValidationResult =
+  | { valid: true; data: SiteData }
+  | { valid: false; errors: string[] }
+
+export function validateSiteData(input: unknown): SiteDataValidationResult
+```
+
+**Validált struktúra:**
+
+| Mező | Ellenőrzés |
+|------|-----------|
+| `site` | object, `name` string, opcionális `description`/`url`/`locale` string |
+| `navigation` | object, `primary` array (NavItem validáció), opcionális `footer` array |
+| `navigation[].items` | `label` + `href` string, opcionális `external` boolean, rekurzív `children` |
+| `pages` | array, min 1 elem, minden page validálva |
+| `pages[].slug` | string kötelező |
+| `pages[].title` | opcionális string |
+| `pages[].sections` | array, minden section validálva |
+| `pages[].meta` | opcionális: `title`, `description`, `canonical` string, `ogImage` Media |
+| `sections[].id` | string kötelező |
+| `sections[].type` | string kötelező |
+| `sections[].data` | defined (nem null/undefined) |
+| `sections[].meta` | opcionális: `label` + `category` string, opcionális `description` |
+| Media (ogImage) | `src` + `alt` string |
+
+**Adapter integráció (`json-adapter.ts`):**
+
+- `fetchFromUrl()` → fetch után `validateSiteData(json)` — invalid response-nál részletes hibaüzenet
+- `validateInlineData()` → inline `config.data` is validálva — dev/mock hibákat is megfogja
+- Mindkét esetben: `if (!result.valid) throw new Error(result.errors.join('; '))`
+
+**Publikus API (`index.ts`):**
+
+```typescript
+export { validateSiteData } from './validate'
+export type { SiteDataValidationResult } from './validate'
+```
+
+A `validateSiteData` publikus — kliensek is használhatják saját adapter-jeikben vagy teszteléshez.
+
+**Nem validált:** Section `data` tartalma (az section-specifikus, a platform validator nem ismeri a HeroBlockProps-ot). A deep section data validáció a section definition felelőssége lehetne (opcionális `validate` hook a `SectionDefinition`-ben — jövőbeli bővítés).
+
+---
+
+### Update #6 — Validációs gap-ek javítása (2026-03-20) · #28 `9fb4581`
+
+**Commit:** `fix(data): tighten runtime validation gaps`
+
+**Probléma:** Az Update #5-ben bevezetett `validateSiteData()` 4 gyenge pontot tartalmazott az első code review alapján.
+
+**Javított gap-ek:**
+
+#### 1) `NavItem.external` mező (validate.ts)
+
+**Előtte:** Nem validálta az `external` mezőt — bármilyen típus átment.
+**Utána:** `if (item.external !== undefined && typeof item.external !== 'boolean')` → hibaüzenet.
+
+#### 2) `Page.title` mező (validate.ts)
+
+**Előtte:** `Page.title`-t nem ellenőrizte (opcionális string az `@spektra/types`-ban, de a validator figyelmen kívül hagyta).
+**Utána:** `assertOptionalString(page, 'title', path, errors)` — ha létezik, string kell legyen.
+
+#### 3) `Section.meta` mezők (validate.ts)
+
+**Előtte:** `section.meta` létezését ellenőrizte, de a belső mezőit (`label`, `category`, `description`) nem.
+**Utána:** Új `validateSectionMeta()` belső függvény: `label` és `category` kötelező string, `description` opcionális string.
+
+#### 4) JSON adapter inline data bypass (json-adapter.ts)
+
+**Előtte:** `createJsonAdapter({ data: inlineData })` esetén a `config.data` közvetlenül ment tovább — a `validateSiteData()` csak a fetch path-on futott.
+**Utána:** Új `validateInlineData()` helper — az inline `data` is átmegy a validáción.
+
+**Eredmény:** A teljes SiteData outer shape validálva van az adapter határon — fetch és inline path egyaránt. A validator 195 soros, ~20 ellenőrzési pontra bontva.
