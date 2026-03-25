@@ -173,6 +173,32 @@ Structural elements:
 3. `header`
 4. `footer`
 
+### 5.7 Canonical `data-ui-role` values
+
+The following is the canonical list of allowed `data-ui-role` values.
+New roles may only be added if none of the below covers the intent.
+Any new role must be documented in this list before use.
+
+ARIA landmark roles (standard HTML5):
+1. `banner`
+2. `navigation`
+3. `main`
+4. `complementary`
+5. `contentinfo`
+6. `region`
+
+Section semantic roles:
+1. `hero` — primary landing/hero section
+2. `brand-bar` — brand or partner showcase strip
+3. `gallery` — image or media gallery
+4. `service-list` — overview of multiple services
+5. `service-detail` — single service deep-dive
+6. `about` — company or personal info
+7. `team` — team member listing
+8. `cta` — call-to-action block (e.g. emergency, promo)
+9. `contact` — contact information or form
+10. `map` — embedded map or location
+
 ---
 
 ## 6. Stable ID rules
@@ -233,6 +259,9 @@ Action values must be verbs from this canonical list:
 12. `copy`
 13. `expand`
 14. `collapse`
+15. `call`
+16. `email`
+17. `reset`
 
 New actions may only be added if none of the above covers the intent.
 Any new action must be documented in this list before use.
