@@ -98,7 +98,13 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               </a>
             ))}
             {cta && (
-              <Button onClick={cta.onClick} size="md">
+              <Button
+                onClick={cta.onClick}
+                size="md"
+                data-ui-id="nav-cta"
+                data-ui-action="navigate"
+                data-ui-trigger="click"
+              >
                 {cta.text}
               </Button>
             )}
@@ -143,7 +149,13 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                 </a>
               ))}
               {cta && (
-                <Button onClick={cta.onClick} fullWidth>
+                <Button
+                  onClick={cta.onClick}
+                  fullWidth
+                  data-ui-id="nav-cta-mobile"
+                  data-ui-action="navigate"
+                  data-ui-trigger="click"
+                >
                   {cta.text}
                 </Button>
               )}

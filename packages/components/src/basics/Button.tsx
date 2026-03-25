@@ -42,6 +42,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         data-ui-component="button"
+        data-ui-type="button"
         className={cn(buttonVariants({ variant, size, fullWidth }), className)}
         disabled={disabled || isLoading}
         {...props}
