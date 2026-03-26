@@ -199,6 +199,18 @@ Section semantic roles:
 9. `contact` — contact information or form
 10. `map` — embedded map or location
 
+Content element roles:
+1. `section-title` — primary heading of a section (h2/h3/h4)
+2. `section-subtitle` — secondary heading or tagline above the title
+3. `section-description` — introductory paragraph below the title
+4. `item-title` — heading of a repeated item (card, member, service)
+5. `item-description` — description of a repeated item
+6. `feedback-title` — heading of a success/error/info feedback block
+7. `feedback-description` — body text of a feedback block
+8. `meta` — auxiliary metadata (e.g. service area, date, category)
+9. `scroll-indicator` — visual scroll cue element
+10. `logo` — brand or site logo element
+
 ---
 
 ## 6. Stable ID rules
