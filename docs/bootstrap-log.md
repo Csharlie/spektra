@@ -11,7 +11,7 @@ Kronológikus napló: mi jött létre, mikor, miért.
 ### Workspace struktúra
 
 ```
-D:\Projects\spektra\platform\        ← pnpm monorepo + Turborepo
+D:\Projects\spektra\sp-platform\        ← pnpm monorepo + Turborepo
 ├── packages/                          ← 7 library package
 │   ├── types/        @spektra/types       ZERO dep root type contracts
 │   ├── data/         @spektra/data        CMS adapter layer (WP, JSON)
@@ -107,7 +107,7 @@ starter (app) ← minden package
 ### Mi jött létre
 
 ```
-platform/
+sp-platform/
 ├── package.json               ← workspace root, private: true
 ├── pnpm-workspace.yaml        ← packages/*, apps/*, tools/*
 ├── turbo.json                 ← build/dev/lint/test/clean pipeline
@@ -147,7 +147,7 @@ platform/
 1. **Flat packages/** — nincs engine/ almappa, <10 package esetén felesleges a csoportosítás
 2. **ESLint flat config (.cjs)** — ESLint v9 flat config formátum
 3. **--no-verify az első commiton** — husky hook még nem tud lint-staged-et futtatni .ts fájlok nélkül
-4. **GitHub repo:** `https://github.com/Csharlie/spektra` → `D:\Projects\spektra\platform\`
+4. **GitHub repo:** `https://github.com/Csharlie/spektra` → `D:\Projects\spektra\sp-platform\`
 
 ---
 
@@ -263,8 +263,8 @@ packages/data/
 
 | Forrás | Mi lett belőle |
 |---|---|
-| sp-benettcar-consumer `wordpressAdapter.ts` | `wordpress.ts` — ugyanaz a fetch+map pattern, de factory-ként (SiteDataAdapter-t ad vissza) és konfigurálható endpoint-tel |
-| sp-benettcar-consumer `loadSiteData.ts` | A mock/fallback pattern → `json-adapter.ts` inline `data` módban |
+| legacy consumer app `wordpressAdapter.ts` | `wordpress.ts` — ugyanaz a fetch+map pattern, de factory-ként (SiteDataAdapter-t ad vissza) és konfigurálható endpoint-tel |
+| legacy consumer app `loadSiteData.ts` | A mock/fallback pattern → `json-adapter.ts` inline `data` módban |
 | spektra-private `wp/rest/client.ts` | NEM vettük át — axios-ból natív fetch-re váltottunk |
 | spektra-private `wp/rest/hooks.ts` | KIZÁRVA — React hook, @spektra/runtime-ba tartozik |
 | spektra-private `wp/graphql/*` | KIZÁRVA — Apollo dependency, YAGNI. Később Phase-ölhető ha kell |
@@ -278,7 +278,7 @@ import { createWordPressAdapter } from '@spektra/data'
 
 const adapter = createWordPressAdapter({
   apiBase: 'https://example.com',
-  endpoint: '/wp-json/benettcar/v1/page/home',  // default: /wp-json/spektra/v1/site
+  endpoint: '/wp-json/custom/v1/site',  // default: /wp-json/spektra/v1/site
   mapResponse: (raw) => transformWpResponse(raw), // projekt-specifikus mapping
   auth: { token: '...' },                         // opcionális Bearer token
 })
@@ -373,7 +373,7 @@ packages/runtime/
 |---|---|
 | sp-engine `runtime/AppRuntime.tsx` | Szétválasztva: `context.tsx` (Provider) + `section-renderer.tsx` (rendering) |
 | sp-engine `runtime/sectionRegistry.ts` | `section-registry.ts` — ugyanaz a Map pattern, de SectionDefinition-nel és explicit interface-szel |
-| sp-benettcar-consumer `App.tsx` useState+useEffect | Beolvadt a `SiteDataProvider`-be — kliensnél nem kell többé kézzel kezelni |
+| legacy consumer app `App.tsx` useState+useEffect | Beolvadt a `SiteDataProvider`-be — a consumer appnak nem kell többé kézzel kezelni |
 | sp-engine `SectionDefinition` type | `types.ts` — generic `<T>`, SectionMeta import |
 | spektra-private `DesignSystemContext` | Pattern átvéve (createContext + Provider + hook), de SiteData-ra alkalmazva |
 | sp-modules hooks (`useDocumentTitle`, stb.) | KIZÁRVA — utility hook-ok, nem runtime responsibility |
@@ -757,7 +757,7 @@ packages/templates/
 | Loading/error a headert/footert nem rendereli | A shell komponenseknek kell a SiteData (navigáció, branding). Amíg nincs adat, nincs mit renderelni → csak loading/error state |
 | `pageSlug` prop | Több oldalas SiteData esetén kiválasztja melyik page sections-jeit renderelje. Default: az első page |
 | `className` prop felülírja a default layout-ot | Default: `min-h-screen flex flex-col`. Ha a consumer más layout-ot akar, felülírja |
-| Csak `LandingTemplate` | YAGNI — a multi-page router template (BrowserRouter + Routes) jövőbeli Phase. A jelenlegi use case-ek (benettcar, starter) mind single-page |
+| Csak `LandingTemplate` | YAGNI — a multi-page router template (BrowserRouter + Routes) jövőbeli Phase. A jelenlegi use case-ek mind single-page |
 | Nincs document title / meta kezelés | Az app réteg felelőssége. `useEffect(() => { document.title = ... })` vagy react-helmet-async |
 
 ### Data flow
