@@ -1046,7 +1046,7 @@ Két logikailag összefüggő fix egy commitban: a templates package publish sur
 ```typescript
 export interface CallToAction {
   text: string
-  href?: string
+  href: string
 }
 ```
 
