@@ -23,7 +23,7 @@ D:\Projects\spektra\sp-platform\        ← pnpm monorepo + Turborepo
 ├── apps/                              ← 1 app
 │   └── starter/      @spektra/starter     Vite demo app — full E2E integration
 └── docs/
-    └── bootstrap-log.md               ← ez a fájl
+    └── bootstrap-platform-log.md      ← ez a fájl
 ```
 
 ### Dependency graph
