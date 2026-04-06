@@ -32,7 +32,9 @@ export function SectionRenderer({
         const Component = registry.resolve(section.type)
 
         if (!Component) {
-          if (fallback) return <span key={section.id}>{fallback(section.type)}</span>
+          if (fallback) {
+            return <div key={section.id} data-section-fallback={section.type}>{fallback(section.type)}</div>
+          }
           return null
         }
 
