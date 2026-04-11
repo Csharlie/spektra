@@ -45,8 +45,8 @@ Ha a tartalom section‑ökben érkezik, akkor egyszerű:
    Tailwind preset + semantic token layer.
 7. `@spektra/layouts`  
    Oldalsablonok (pl. Landing).
-8. `apps/starter`  
-   Vite demo app teljes E2E integrációval.
+8. `apps/playground`  
+   Vite playground app — development & demo.
 
 ### Adapter, Runtime és Render – egyszerűen
 1. **Adapter**: az a réteg, ami megszerzi és Spektra formára alakítja az adatot.

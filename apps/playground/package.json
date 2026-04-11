@@ -1,8 +1,8 @@
 {
-  "name": "@spektra/starter",
+  "name": "@spektra/playground",
   "version": "0.1.0",
   "private": true,
-  "description": "Spektra platform starter app — demo & scaffold",
+  "description": "Spektra platform playground — development & demo app",
   "type": "module",
   "scripts": {
     "dev": "vite",
