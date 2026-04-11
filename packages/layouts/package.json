@@ -1,5 +1,5 @@
 {
-  "name": "@spektra/templates",
+  "name": "@spektra/layouts",
   "version": "0.1.0",
   "description": "Page templates — layout compositions for Spektra apps",
   "type": "module",

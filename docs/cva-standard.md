@@ -40,7 +40,7 @@ Allowed:
 
 Not allowed:
 1. `packages/sections/*` (definitions only)
-2. `packages/templates/*` (layout only)
+2. `packages/layouts/*` (layout only)
 3. `packages/runtime/*` (logic only)
 4. `packages/data/*` (logic only)
 5. `packages/themes/*` (tokens only)

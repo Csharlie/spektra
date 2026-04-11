@@ -6,7 +6,7 @@ import type { SectionRegistry } from '@spektra/runtime'
  * Props injected into header/footer shell components by the template.
  * The consumer extracts navigation, branding, etc. from SiteData.
  */
-export interface TemplateShellProps {
+export interface LayoutShellProps {
   siteData: SiteData
 }
 
@@ -22,10 +22,10 @@ export interface LandingTemplateProps {
   registry: SectionRegistry
 
   /** Header component — receives full SiteData for navigation/branding */
-  header?: ComponentType<TemplateShellProps>
+  header?: ComponentType<LayoutShellProps>
 
   /** Footer component — receives full SiteData for navigation/branding */
-  footer?: ComponentType<TemplateShellProps>
+  footer?: ComponentType<LayoutShellProps>
 
   /** Fallback renderer for unresolved section types */
   fallback?: (type: string) => ReactNode

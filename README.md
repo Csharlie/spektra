@@ -43,7 +43,7 @@ Ha a tartalom section‑ökben érkezik, akkor egyszerű:
    Platform section definíciók.
 6. `@spektra/themes`  
    Tailwind preset + semantic token layer.
-7. `@spektra/templates`  
+7. `@spektra/layouts`  
    Oldalsablonok (pl. Landing).
 8. `apps/starter`  
    Vite demo app teljes E2E integrációval.

@@ -1,11 +1,11 @@
 import { NavigationBar, FooterBlock } from '@spektra/components'
-import type { TemplateShellProps } from '@spektra/templates'
+import type { LayoutShellProps } from '@spektra/layouts'
 
 /**
  * App header — maps SiteData to NavigationBar props.
  * This is the DI bridge: template injects SiteData, we render the component.
  */
-export function AppHeader({ siteData }: TemplateShellProps) {
+export function AppHeader({ siteData }: LayoutShellProps) {
   const links = siteData.navigation.primary.map(item => ({
     label: item.label,
     href: item.href,
@@ -23,7 +23,7 @@ export function AppHeader({ siteData }: TemplateShellProps) {
 /**
  * App footer — maps SiteData to FooterBlock props.
  */
-export function AppFooter({ siteData }: TemplateShellProps) {
+export function AppFooter({ siteData }: LayoutShellProps) {
   const footerLinks = siteData.navigation.footer ?? []
 
   return (

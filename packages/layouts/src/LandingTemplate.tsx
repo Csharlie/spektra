@@ -7,7 +7,7 @@ import type { LandingTemplateProps } from './types'
  * Must be rendered inside a SiteDataProvider.
  * Renders: optional header → page sections → optional footer.
  *
- * Header/footer are injected as ComponentType<TemplateShellProps>.
+ * Header/footer are injected as ComponentType<LayoutShellProps>.
  * The consuming app wraps NavigationBar/FooterBlock and maps
  * SiteData fields to component props.
  *
