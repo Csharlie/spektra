@@ -30,6 +30,7 @@ export interface NavigationLink {
 export interface NavigationBarProps extends VariantProps<typeof navVariants> {
   logo?: string
   logoText?: string
+  logoClassName?: string
   logoLink?: string
   onLogoClick?: () => void
   links: NavigationLink[]
@@ -43,6 +44,7 @@ export interface NavigationBarProps extends VariantProps<typeof navVariants> {
 export const NavigationBar: React.FC<NavigationBarProps> = ({
   logo,
   logoText = 'Spektra',
+  logoClassName = 'h-8',
   logoLink = '/',
   onLogoClick,
   links,
@@ -71,7 +73,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
             className="flex-shrink-0 cursor-pointer"
           >
             {logo ? (
-              <img src={logo} alt={logoText} className="h-8" />
+              <img src={logo} alt={logoText} className={logoClassName} />
             ) : (
               <Logo text={logoText} size="md" className="font-sans" />
             )}
@@ -125,8 +127,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           </button>
         </div>
 
-        {mobileMenuOpen && (
-          <div id="nav-mobile-menu" className="md:hidden top-0 left-0 right-0 border-t border-border py-8 px-4">
+        <div
+          id="nav-mobile-menu"
+          className={`md:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out ${mobileMenuOpen ? 'max-h-96' : 'max-h-0'}`}
+        >
+          <div className="border-t border-border py-8 px-4 mt-6">
             <div className="flex flex-col space-y-4">
               {links.map((link, index) => (
                 <a
@@ -161,7 +166,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               )}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   )
