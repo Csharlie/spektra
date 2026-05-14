@@ -2,6 +2,13 @@
 export { SiteDataProvider, useSiteData } from './context'
 export type { SiteDataProviderProps } from './context'
 
+// Form handler context + hook (mirror of SiteDataProvider/useSiteData)
+export {
+  FormHandlerProvider,
+  useFormHandler,
+} from './form-handler-context'
+export type { FormHandlerProviderProps } from './form-handler-context'
+
 // Document head
 export { useDocumentHead } from './use-document-head'
 export type { DocumentHeadOptions } from './use-document-head'

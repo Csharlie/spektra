@@ -147,6 +147,9 @@ importers:
 
   packages/runtime:
     dependencies:
+      '@spektra/data':
+        specifier: workspace:*
+        version: link:../data
       '@spektra/types':
         specifier: workspace:*
         version: link:../types
