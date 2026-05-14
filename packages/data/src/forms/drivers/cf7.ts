@@ -117,6 +117,20 @@ export function createCf7FormHandler(
         }
       }
 
+      // CF7 expects a `_wpcf7_unit_tag` hidden field — the plugin's shortcode
+      // normally renders this on the host page, but headless integrations
+      // (us) must supply it manually. Without it, CF7 rejects the request
+      // with `wpcf7_unit_tag_not_found` (HTTP 400). The format is
+      // `wpcf7-f{formId}-p{containerPostId}-o{instance}` — we synthesize a
+      // syntactically valid value from `effectiveFormId`.
+      // Consumers may override by passing `_wpcf7_unit_tag` in `fields`.
+      if (!body.has('_wpcf7_unit_tag')) {
+        body.append('_wpcf7_unit_tag', `wpcf7-f${effectiveFormId}-p1-o1`)
+      }
+      if (!body.has('_wpcf7')) {
+        body.append('_wpcf7', effectiveFormId)
+      }
+
       let response: Response
       try {
         response = await fetch(endpoint, {

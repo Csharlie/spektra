@@ -237,4 +237,35 @@ describe('Cf7FormHandler', () => {
     const body = init.body as FormData
     expect(body.getAll('interests[]')).toEqual(['cars', 'service', 'rental'])
   })
+
+  it('auto-injects _wpcf7_unit_tag (anti-CSRF) and _wpcf7 (form id)', async () => {
+    const fetchMock = mockFetch({ status: 'mail_sent' })
+    vi.stubGlobal('fetch', fetchMock)
+    const handler = createCf7FormHandler({
+      apiBase: 'https://wp.example.com',
+      formId: '24',
+    })
+    await handler.submit('contact', { 'your-name': 'X' })
+    const init = fetchMock.mock.calls[0]![1] as RequestInit
+    const body = init.body as FormData
+    // Format: wpcf7-f{formId}-p{containerPostId}-o{instance}
+    expect(body.get('_wpcf7_unit_tag')).toBe('wpcf7-f24-p1-o1')
+    expect(body.get('_wpcf7')).toBe('24')
+  })
+
+  it('respects a caller-provided _wpcf7_unit_tag override', async () => {
+    const fetchMock = mockFetch({ status: 'mail_sent' })
+    vi.stubGlobal('fetch', fetchMock)
+    const handler = createCf7FormHandler({
+      apiBase: 'https://wp.example.com',
+      formId: '24',
+    })
+    await handler.submit('contact', {
+      'your-name': 'X',
+      _wpcf7_unit_tag: 'wpcf7-f24-p42-o3',
+    })
+    const init = fetchMock.mock.calls[0]![1] as RequestInit
+    const body = init.body as FormData
+    expect(body.get('_wpcf7_unit_tag')).toBe('wpcf7-f24-p42-o3')
+  })
 })
