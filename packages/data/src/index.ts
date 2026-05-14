@@ -9,3 +9,6 @@ export type { JsonAdapterConfig } from './json-adapter'
 // Validation
 export { validateSiteData } from './validate'
 export type { SiteDataValidationResult } from './validate'
+
+// Forms (write-side abstraction — mirror of the read-side adapters above)
+export * from './forms'
