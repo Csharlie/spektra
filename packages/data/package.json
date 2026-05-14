@@ -15,10 +15,15 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist *.tsbuildinfo",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@spektra/types": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.9"
   },
   "publishConfig": {
     "access": "public"

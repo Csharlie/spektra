@@ -17,7 +17,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist *.tsbuildinfo",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@spektra/types": "workspace:*"
@@ -29,6 +31,12 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/react": "^18.3.0"
+    "@testing-library/react": "^16.1.0",
+    "@types/react": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "jsdom": "^25.0.1",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "vitest": "^2.1.9"
   }
 }
